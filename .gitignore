@@ -2,3 +2,5 @@ node_modules
 out
 src/language-server/generated
 langium-quickstart.md
+.idea/workspace.xml
+.idea/vcs.xml
