@@ -1,64 +1,29 @@
 {
-    "name": "slide-deck-ml",
-    "displayName": "slide-deck-ml",
-    "description": "description",
+    "name": "slide-deck-ml-workspace",
+    "description": "Base workspace package",
     "version": "0.0.1",
-    "engines": {
-        "vscode": "^1.56.0"
-    },
-    "categories": [
-        "Programming Languages"
-    ],
-    "contributes": {
-        "languages": [{
-            "id": "slide-deck-ml",
-            "aliases": ["SlideDeckML", "slide-deck-ml"],
-            "extensions": [".lg"],
-            "configuration": "./language-configuration.json"
-        }],
-        "grammars": [{
-            "language": "slide-deck-ml",
-            "scopeName": "source.slide-deck-ml",
-            "path": "./syntaxes/slide-deck-ml.tmLanguage.json"
-        }]
-    },
-    "activationEvents": [
-        "onLanguage:slide-deck-ml"
-    ],
-    "main": "./out/extension.js",
-    "langium": {
-        "languageId": "slide-deck-ml",
-        "grammar": "src/language-server/slide-deck-ml.langium",
-        "extensions": [".lg"],
-        "out": "src/language-server/generated",
-        "textMate": {
-            "out": "syntaxes/slide-deck-ml.tmLanguage.json"
-        }
-    },
+    "type": "module",
+    "private": true,
     "scripts": {
-        "vscode:prepublish": "npm run build && npm run lint",
-        "build": "webpack",
-        "watch": "webpack --watch",
-        "lint": "eslint src --ext ts",
-        "langium:generate": "langium generate"
-    },
-    "dependencies": {
-        "langium": "^0.1.0",
-        "vscode-languageclient": "^7.0.0",
-        "vscode-languageserver": "^7.0.0"
+        "clean": "npm run clean --workspaces",
+        "watch": "tsc -b tsconfig.build.json --watch",
+        "build": "tsc -b tsconfig.build.json && npm run build --workspaces",
+        "build:clean": "npm run clean && npm run build",
+        "langium:generate": "npm run --workspace packages/language langium:generate",
+        "langium:watch": "npm run --workspace packages/language langium:watch"
     },
     "devDependencies": {
-        "@types/node": "^14.17.3",
-        "@types/vscode": "^1.56.0",
-        "@typescript-eslint/eslint-plugin": "^4.14.1",
-        "@typescript-eslint/parser": "^4.14.1",
-        "copy-webpack-plugin": "^9.0.0",
-        "eslint": "^7.19.0",
-        "langium-cli": "^0.1.0",
-        "source-map-loader": "^3.0.0",
-        "ts-loader": "^9.2.3",
-        "typescript": "^4.1.3",
-        "webpack": "^5.39.1",
-        "webpack-cli": "^4.7.2"
-    }
+        "@types/node": "~20.17.48",
+        "shx": "~0.4.0",
+        "typescript": "~5.8.3"
+    },
+    "volta": {
+        "node": "20.19.2",
+        "npm": "10.8.2"
+    },
+    "workspaces": [
+        "packages/language",
+        "packages/cli",
+        "packages/extension"
+    ]
 }

@@ -1,6 +1,11 @@
-node_modules
-out
-src/language-server/generated
-langium-quickstart.md
-.idea/workspace.xml
-.idea/vcs.xml
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
+node_modules/
+dist/
+out/
+**/src/generated
+syntaxes/
+*.tsbuildinfo
+*.vsix
