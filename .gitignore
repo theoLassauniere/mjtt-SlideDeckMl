@@ -9,3 +9,6 @@ out/
 syntaxes/
 *.tsbuildinfo
 *.vsix
+
+.idea/workspace.xml
+.idea/vcs.xml

@@ -11,7 +11,7 @@ export function generateJavaScript(model: Presentation, filePath: string, destin
     const fileNode = expandToNode`
         "use strict";
 
-        ${joinToNode(model.greetings, greeting => `console.log('Hello, ${greeting.person.ref?.name}!');`, { appendNewLineIfNotEmpty: true })}
+        ${joinToNode(model.slides)}
     `.appendNewLineIfNotEmpty();
 
     if (!fs.existsSync(data.destination)) {

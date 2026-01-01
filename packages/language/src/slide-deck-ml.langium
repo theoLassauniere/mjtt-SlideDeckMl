@@ -1,13 +1,14 @@
 grammar SlideDeckMl
 
 entry Presentation:
-    (persons+=Person | greetings+=Greeting)*;
+    'Presentation' name=ID '{'
+        slides+=Slide*
+    '}';
 
-Person:
-    'person' name=ID;
-
-Greeting:
-    'Hello' person=[Person:ID] '!';
+Slide:
+    'Slide' name=ID '{'
+        'titre' '=' titre=STRING
+    '}';
 
 hidden terminal WS: /\s+/;
 terminal ID: /[_a-zA-Z][\w_]*/;
