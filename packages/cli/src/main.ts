@@ -1,23 +1,21 @@
-import type { Presentation } from 'slide-deck-ml-language';
-import { createSlideDeckMlServices, SlideDeckMlLanguageMetaData } from 'slide-deck-ml-language';
-import chalk from 'chalk';
+// src/cli/main.ts
 import { Command } from 'commander';
 import { extractAstNode } from './util.js';
-import { generateJavaScript } from './generator.js';
+import { SlideDeckGenerator } from './generator.js';
+import { Presentation } from '../../language/out/generated/ast.js';
+import { createSlideDeckMlServices } from '../../language/out/slide-deck-ml-module.js';
 import { NodeFileSystem } from 'langium/node';
-import * as url from 'node:url';
-import * as fs from 'node:fs/promises';
-import * as path from 'node:path';
-const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
-const packagePath = path.resolve(__dirname, '..', 'package.json');
-const packageContent = await fs.readFile(packagePath, 'utf-8');
-
+/**
+ * Point d'entrée CLI pour générer les slides
+ */
 export const generateAction = async (fileName: string, opts: GenerateOptions): Promise<void> => {
     const services = createSlideDeckMlServices(NodeFileSystem).SlideDeckMl;
-    const model = await extractAstNode<Presentation>(fileName, services);
-    const generatedFilePath = generateJavaScript(model, fileName, opts.destination);
-    console.log(chalk.green(`JavaScript code generated successfully: ${generatedFilePath}`));
+    const presentation = await extractAstNode<Presentation>(fileName, services);
+    const generator = new SlideDeckGenerator();
+    const destination = opts.destination ?? '../../../demo/generated';
+    
+    generator.generateHtml(presentation.$document!, destination);
 };
 
 export type GenerateOptions = {
@@ -27,14 +25,15 @@ export type GenerateOptions = {
 export default function(): void {
     const program = new Command();
 
-    program.version(JSON.parse(packageContent).version);
+    program
+        .version('0.1.0')
+        .description('Générateur de présentations SlideDeckML');
 
-    const fileExtensions = SlideDeckMlLanguageMetaData.fileExtensions.join(', ');
     program
         .command('generate')
-        .argument('<file>', `source file (possible file extensions: ${fileExtensions})`)
-        .option('-d, --destination <dir>', 'destination directory of generating')
-        .description('generates JavaScript code that prints "Hello, {name}!" for each greeting in a source file')
+        .argument('<file>', 'Fichier source SlideDeckML (.sdml)')
+        .option('-d, --destination <dir>', 'Dossier de destination', '../../../demo/generated')
+        .description('Génère une présentation HTML/Reveal.js')
         .action(generateAction);
 
     program.parse(process.argv);
