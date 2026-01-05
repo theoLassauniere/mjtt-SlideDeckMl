@@ -1,17 +1,12 @@
-// src/cli/generator.ts
 import { LangiumDocument } from 'langium';
 import * as fs from 'fs';
 import * as path from 'path';
 import { Presentation, Slide } from '../../language/out/generated/ast.js';
 
-/**
- * Générateur de code HTML/Reveal.js pour SlideDeckML
- */
+
 export class SlideDeckGenerator {
     
-    /**
-     * Génère le fichier HTML à partir d'un document Langium
-     */
+    // Entrypoint : génère le JTML à partir du doc langium
     generateHtml(document: LangiumDocument, destination: string): void {
         const presentation = document.parseResult.value as Presentation;
         
@@ -31,9 +26,7 @@ export class SlideDeckGenerator {
         console.log(`✓ Fichier généré : ${outputPath}`);
     }
 
-    /**
-     * Génère le HTML complet de la présentation
-     */
+    // Génération de la présentation
     private generatePresentation(presentation: Presentation): string {
         const slides = presentation.slides.map(slide => this.generateSlide(slide)).join('\n');
         
@@ -77,28 +70,17 @@ ${slides}
 </html>`;
     }
 
-    /**
-     * Génère le HTML d'une slide
-     */
+    // HTML pour 1 slide
     private generateSlide(slide: Slide): string {
-        // Nettoyer le titre (enlever les guillemets)
-        const titre = this.cleanString(slide.titre);
+        // enlever les guillemets du titre
+        const titre = slide.titre.replace(/^["']|["']$/g, '');
         
         return `            <section>
                 <h2>${this.escapeHtml(titre)}</h2>
             </section>`;
     }
 
-    /**
-     * Nettoie une chaîne (enlève les guillemets)
-     */
-    private cleanString(str: string): string {
-        return str.replace(/^["']|["']$/g, '');
-    }
-
-    /**
-     * Échappe les caractères HTML
-     */
+    // Gère les caractères HTML spéciaux 
     private escapeHtml(text: string): string {
         return text
             .replace(/&/g, '&amp;')

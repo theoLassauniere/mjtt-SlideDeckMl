@@ -1,4 +1,3 @@
-// src/cli/main.ts
 import { Command } from 'commander';
 import { extractAstNode } from './util.js';
 import { SlideDeckGenerator } from './generator.js';
