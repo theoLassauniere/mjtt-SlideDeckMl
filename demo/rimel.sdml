@@ -1,4 +1,5 @@
 Presentation RIMEL {
+
     Template
         fontSize = 1 rem
         fontColor = black
@@ -14,6 +15,7 @@ Presentation RIMEL {
             row
                 textContainer
                     fontSize = 1.5 rem
+                    fontColor = blue
                     "<strong>Equipe B : <\strong>Mathis Jullien, Thibault Ripoche, Théo Lassaunière et Julie Seyier"
         column
             row
