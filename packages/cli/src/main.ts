@@ -12,7 +12,7 @@ export const generateAction = async (fileName: string, opts: GenerateOptions): P
     const services = createSlideDeckMlServices(NodeFileSystem).SlideDeckMl;
     const presentation = await extractAstNode<Presentation>(fileName, services);
     const generator = new SlideDeckGenerator();
-    const destination = opts.destination ?? '../../../demo/generated';
+    const destination = opts.destination ?? '../demo/generated';
     
     generator.generateHtml(presentation.$document!, destination);
 };
@@ -31,7 +31,7 @@ export default function(): void {
     program
         .command('generate')
         .argument('<file>', 'Fichier source SlideDeckML (.sdml)')
-        .option('-d, --destination <dir>', 'Dossier de destination', '../../../demo/generated')
+        .option('-d, --destination <dir>', 'Dossier de destination', '../demo/generated')
         .description('Génère une présentation HTML/Reveal.js')
         .action(generateAction);
 
