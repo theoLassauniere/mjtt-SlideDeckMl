@@ -1,12 +1,12 @@
 import { LangiumDocument } from 'langium';
 import * as fs from 'fs';
 import * as path from 'path';
-import { Presentation, Slide } from '../../language/out/generated/ast.js';
+import { CodeContainer, Presentation, Slide } from '../../language/out/generated/ast.js';
 
 
 export class SlideDeckGenerator {
     
-    // Entrypoint : génère le JTML à partir du doc langium
+    // Entrypoint : génère le HTML à partir du doc langium
     generateHtml(document: LangiumDocument, destination: string): void {
         const presentation = document.parseResult.value as Presentation;
         
@@ -44,6 +44,9 @@ export class SlideDeckGenerator {
     
     <style>
         /* Styles personnalisés */
+        div {
+            background-color: rgb(61, 61, 61);
+        }
         .reveal h1, .reveal h2 {
             text-transform: none;
         }
@@ -77,6 +80,7 @@ ${slides}
         
         return `            <section>
                 <h2>${this.escapeHtml(titre)}</h2>
+                ${slide.content.map(content => this.generateCodeContainer(content))}
             </section>`;
     }
 
@@ -88,5 +92,18 @@ ${slides}
             .replace(/>/g, '&gt;')
             .replace(/"/g, '&quot;')
             .replace(/'/g, '&#039;');
+    }
+
+    // HTML pour un code container
+    private generateCodeContainer(codeContainer: CodeContainer) {
+        const codeLength = codeContainer.code.length;
+        const cleaned = codeContainer.code.substring(3,codeLength-3).trim();
+        return `
+        <section>
+            <pre><code data-trim data-noescape>
+${cleaned}
+            </code></pre>
+        </section>
+        `
     }
 }
