@@ -1,0 +1,20 @@
+Presentation TestTemplate {
+
+    Template
+        logos = [
+            logo
+                path = "assets/logo_company.png"
+                positions = [TOP, LEFT],
+            logo
+                path = "assets/logo_school.svg"
+                positions = [BOTTOM, RIGHT]
+        ]
+        companyName = "Langium Corporation"
+        fontName = "Roboto"
+        fontSize = "1rem"
+        fontColor = "#222222"
+        backgroundColor = "white"
+
+    Slide {
+    }
+}
