@@ -3,10 +3,10 @@ Presentation TestTemplate {
     Template
         logos = [
             logo
-                path = "assets/logo_company.png"
+                path = "../assets/logo_company.png"
                 positions = [TOP, LEFT],
             logo
-                path = "assets/logo_school.svg"
+                path = "../assets/logo_school.svg"
                 positions = [BOTTOM, RIGHT]
         ]
         companyName = "Langium Corporation"

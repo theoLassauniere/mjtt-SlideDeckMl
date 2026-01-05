@@ -3,7 +3,6 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { Presentation, Slide } from '../../language/out/generated/ast.js';
 
-
 export class SlideDeckGenerator {
     
     // Entrypoint : génère le JTML à partir du doc langium
@@ -29,7 +28,9 @@ export class SlideDeckGenerator {
     // Génération de la présentation
     private generatePresentation(presentation: Presentation): string {
         const template = presentation.template;
-        const slides = presentation.slides.map(s => this.generateSlide(s)).join('\n');
+        const slides = presentation.slides
+            .map((s: Slide) => this.generateSlide(s))
+            .join('\n');
         const logos = this.generateLogos(template);
         const templateStyle = this.generateTemplateStyle(template);
         
@@ -82,15 +83,6 @@ export class SlideDeckGenerator {
         `;
     }
 
-    private escapeHtml(text: string): string {
-        return text
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#039;');
-    }
-
     private generateTemplateStyle(template: any): string {
         return `
             .reveal {
@@ -105,7 +97,6 @@ export class SlideDeckGenerator {
 
             .logo {
                 position: absolute;
-                max-width: 120px;
                 z-index: 10;
             }
         `;
@@ -121,6 +112,7 @@ export class SlideDeckGenerator {
         if (positions.includes('CENTER')) {
             style += 'top: 50%; left: 50%; transform: translate(-50%, -50%);';
         }
+        style += 'height: 100px;';
 
         return style;
     }
