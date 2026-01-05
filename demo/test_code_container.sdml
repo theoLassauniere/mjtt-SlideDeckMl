@@ -1,4 +1,4 @@
-Presentation PremierTest {
+Presentation CodeEditorTest {
     Slide Slide2 {
         titre = "Ceci est une diapositive de code"
         codeContainer

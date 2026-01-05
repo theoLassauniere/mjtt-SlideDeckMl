@@ -61,6 +61,14 @@ ${slides}
 
     <!-- Reveal.js JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.js"></script>
+    <!-- Code Editor Theming -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/styles/default.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/highlight.min.js"></script>
+
+    <!-- and it's easy to individually load additional languages -->
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/languages/go.min.js"></script>
+
+    <script>hljs.highlightAll();</script>
     <script>
         Reveal.initialize({
             hash: true,
@@ -100,7 +108,7 @@ ${slides}
         const cleaned = codeContainer.code.substring(3,codeLength-3).trim();
         return `
         <section>
-            <pre><code data-trim data-noescape>
+            <pre><code class="langage-${codeContainer.language.toLowerCase()}" data-trim data-noescape data-line-numbers>
 ${cleaned}
             </code></pre>
         </section>
