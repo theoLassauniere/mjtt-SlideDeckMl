@@ -1,0 +1,8 @@
+Presentation PremierTest {
+    Slide Slide1 {
+        titre = "Bienvenue dans SlideDeckML"
+    }
+    Slide Slide2 {
+        titre = "Ceci est une deuxième diapositive"
+    }
+}
