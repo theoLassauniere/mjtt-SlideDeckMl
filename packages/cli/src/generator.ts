@@ -76,12 +76,18 @@ export class SlideDeckGenerator {
         ? ` data-background-color="${slide.backgroundColor}"`
         : '';
 
+        const titleHtml = slide.title
+        ? `<h2 class="slide-title">${this.sanitizeTextContainerHtml(slide.title)}</h2>
+        <hr class="slide-separator">`
+        : '';
+
         const containersHtml = slide.containers
         ?.map(c => this.generateContainer(c))
         .join('\n') ?? '';
         
         return `
             <section${bg}>
+                ${titleHtml}
                 ${containersHtml}
             </section>
         `;
@@ -175,9 +181,27 @@ export class SlideDeckGenerator {
             }
 
             .reveal .media-container {
-                margin: 15%;
+                margin: 0 15%;
                 display: block;
                 width: 70%;
+            }
+
+            .reveal .slides section .slide-title {
+                font-family: ${template.fontName};
+                color: ${template.fontColor};
+                position: relative;
+                text-align: center;
+                margin-top: 0;
+                margin-bottom: 2rem;
+                font-size: 2.2em;
+                font-weight: 600;
+            }
+
+            .slide-separator {
+                width: 60%;
+                margin: 1rem auto 2rem auto;
+                border: none;
+                border-top: 2px solid currentColor;
             }
         `;
     }
