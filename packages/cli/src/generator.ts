@@ -1,7 +1,7 @@
 import { LangiumDocument } from 'langium';
 import * as fs from 'fs';
 import * as path from 'path';
-import { Presentation, Slide } from '../../language/out/generated/ast.js';
+import { Presentation, Slide, TextContainer, Container } from '../../language/out/generated/ast.js';
 
 export class SlideDeckGenerator {
     
@@ -75,12 +75,56 @@ export class SlideDeckGenerator {
         const bg = slide.backgroundColor
         ? ` data-background-color="${slide.backgroundColor}"`
         : '';
+
+        const containersHtml = slide.containers
+        ?.map(c => this.generateContainer(c))
+        .join('\n') ?? '';
         
         return `
             <section${bg}>
-                <!-- contenu du slide -->
+                ${containersHtml}
             </section>
         `;
+    }
+
+    private generateContainer(container: Container): string {
+        switch (container.$type) {
+            case 'TextContainer':
+                return this.generateTextContainer(container as TextContainer);
+            default:
+                return '';
+        }
+    }
+
+    private generateTextContainer(container: TextContainer): string {
+        const styleParts: string[] = [];
+
+        if (container.fontSize) {
+            styleParts.push(`font-size: ${container.fontSize};`);
+        }
+
+        if (container.fontColor) {
+            styleParts.push(`color: ${container.fontColor};`);
+        }
+
+        const style = styleParts.length > 0
+            ? ` style="${styleParts.join(' ')}"`
+            : '';
+
+        const text = this.sanitizeTextContainerHtml(container.text);
+
+        return `<div class="text-container"${style}>${text}</div>`;
+    }
+
+    private sanitizeTextContainerHtml(text: string): string {
+        if (!text) return '';
+        text = text.replace(/&/g, '&amp;');
+        const allowedTags = ['strong', 'em', 'b', 'i', 'u', 'br'];
+
+        return text.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, (match, tagName) => {
+            tagName = tagName.toLowerCase();
+            return allowedTags.includes(tagName) ? match : match.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        });
     }
 
     private generateTemplateStyle(template: any): string {
@@ -99,6 +143,10 @@ export class SlideDeckGenerator {
                 position: absolute;
                 z-index: 10;
             }
+
+            .reveal .text-container {
+                margin: 1rem 0;
+            }
         `;
     }
 
@@ -107,8 +155,8 @@ export class SlideDeckGenerator {
 
         if (positions.includes('TOP')) style += 'top: 20px;';
         if (positions.includes('BOTTOM')) style += 'bottom: 20px;';
-        if (positions.includes('LEFT')) style += 'left: 20px;';
-        if (positions.includes('RIGHT')) style += 'right: 20px;';
+        if (positions.includes('LEFT')) style += 'left: 18%;';
+        if (positions.includes('RIGHT')) style += 'right: 18%;';
         if (positions.includes('CENTER')) {
             style += 'top: 50%; left: 50%; transform: translate(-50%, -50%);';
         }
