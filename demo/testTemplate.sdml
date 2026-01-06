@@ -33,4 +33,12 @@ Presentation TestTemplate {
             <br/>
             Nam eleifend erat a facilisis faucibus. In vulputate eleifend sem, quis aliquam nulla. Sed malesuada, arcu in suscipit tempor, neque turpis blandit elit, ac vulputate magna metus pellentesque enim. Donec at metus purus. Praesent tempor, quam ut sagittis finibus, lorem velit tempus justo, eu sollicitudin neque ipsum eu justo. Sed ultricies vitae augue dignissim dapibus. Maecenas eu iaculis sapien, eget laoreet diam. Nullam laoreet enim lacus, sit amet accumsan ante volutpat ac. Curabitur venenatis magna sed massa accumsan elementum. Suspendisse eget sem bibendum, tincidunt purus non, elementum nisi. Vivamus libero augue, iaculis sit amet justo at, consectetur vulputate massa. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Proin tempus sodales turpis vel tincidunt. Nunc pretium commodo blandit. Aliquam congue sapien et leo dictum facilisis. Aliquam blandit nibh mauris, vitae suscipit urna semper non."
     }
+    Slide {
+        media
+            mediaLink = "../assets/fox.mp4"
+    }
+    Slide {
+        media
+            mediaLink = "../assets/loup.jpg"
+    }
 }
