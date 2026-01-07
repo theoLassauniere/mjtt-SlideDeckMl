@@ -22,6 +22,7 @@ Logo:
 
 Slide:
     'Slide' '{'
+        ('title' '=' title=STRING)?
         ('backgroundColor' '=' backgroundColor=Color)?
         containers+=Container*
     '}';
