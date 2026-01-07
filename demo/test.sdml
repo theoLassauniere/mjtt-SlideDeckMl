@@ -1,8 +1,11 @@
 Presentation PremierTest {
-    Slide Slide1 {
-        titre = "Bienvenue dans SlideDeckML"
-    }
-    Slide Slide2 {
-        titre = "Ceci est une deuxième diapositive"
+
+    Template
+        fontName = "Roboto"
+        fontSize = "1rem"
+        fontColor = "#222222"
+        backgroundColor = "white"
+
+    Slide {
     }
 }

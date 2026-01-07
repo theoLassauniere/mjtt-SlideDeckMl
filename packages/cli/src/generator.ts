@@ -3,7 +3,6 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { Presentation, Slide } from '../../language/out/generated/ast.js';
 
-
 export class SlideDeckGenerator {
     
     // Entrypoint : génère le JTML à partir du doc langium
@@ -28,13 +27,17 @@ export class SlideDeckGenerator {
 
     // Génération de la présentation
     private generatePresentation(presentation: Presentation): string {
-        const slides = presentation.slides.map(slide => this.generateSlide(slide)).join('\n');
+        const template = presentation.template;
+        const slides = presentation.slides
+            .map((s: Slide) => this.generateSlide(s))
+            .join('\n');
+        const logos = this.generateLogos(template);
+        const templateStyle = this.generateTemplateStyle(template);
         
         return `<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${presentation.name}</title>
     
     <!-- Reveal.js CSS -->
@@ -43,16 +46,14 @@ export class SlideDeckGenerator {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/theme/black.css">
     
     <style>
-        /* Styles personnalisés */
-        .reveal h1, .reveal h2 {
-            text-transform: none;
-        }
+        ${templateStyle}
     </style>
 </head>
 <body>
     <div class="reveal">
+        ${logos}
         <div class="slides">
-${slides}
+            ${slides}
         </div>
     </div>
 
@@ -70,23 +71,61 @@ ${slides}
 </html>`;
     }
 
-    // HTML pour 1 slide
     private generateSlide(slide: Slide): string {
-        // enlever les guillemets du titre
-        const titre = slide.titre.replace(/^["']|["']$/g, '');
+        const bg = slide.backgroundColor
+        ? ` data-background-color="${slide.backgroundColor}"`
+        : '';
         
-        return `            <section>
-                <h2>${this.escapeHtml(titre)}</h2>
-            </section>`;
+        return `
+            <section${bg}>
+                <!-- contenu du slide -->
+            </section>
+        `;
     }
 
-    // Gère les caractères HTML spéciaux 
-    private escapeHtml(text: string): string {
-        return text
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#039;');
+    private generateTemplateStyle(template: any): string {
+        return `
+            .reveal {
+                font-family: ${template.fontName};
+                font-size: ${template.fontSize};
+                color: ${template.fontColor};
+            }
+
+            .reveal .slides {
+                background-color: ${template.backgroundColor};
+            }
+
+            .logo {
+                position: absolute;
+                z-index: 10;
+            }
+        `;
+    }
+
+    private generateLogoStyle(positions: string[]): string {
+        let style = '';
+
+        if (positions.includes('TOP')) style += 'top: 20px;';
+        if (positions.includes('BOTTOM')) style += 'bottom: 20px;';
+        if (positions.includes('LEFT')) style += 'left: 20px;';
+        if (positions.includes('RIGHT')) style += 'right: 20px;';
+        if (positions.includes('CENTER')) {
+            style += 'top: 50%; left: 50%; transform: translate(-50%, -50%);';
+        }
+        style += 'height: 100px;';
+
+        return style;
+    }
+
+    private generateLogos(template: any): string {
+        if (!template.logos) return '';
+
+        return template.logos.map((logo: any) => {
+            const style = logo.positions
+                ? this.generateLogoStyle(logo.positions)
+                : '';
+
+            return `<img src="${logo.path}" class="logo" style="${style}">`;
+        }).join('\n');
     }
 }
