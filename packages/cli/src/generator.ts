@@ -76,16 +76,6 @@ export class SlideDeckGenerator {
     }
 
     private generateSlide(slide: Slide): string {
-        // enlever les guillemets du titre
-        const titre = slide.titre.replace(/^["']|["']$/g, '');
-        
-        return `            <section>
-                <h2>${this.escapeHtml(titre)}</h2>
-                ${slide.content.map(content => this.generateCodeContainer(content))}
-            </section>`;
-    }
-
-    private generateSlide2(slide: Slide): string {
         const bg = slide.backgroundColor
             ? ` data-background-color="${slide.backgroundColor}"`
             : '';
@@ -113,6 +103,8 @@ export class SlideDeckGenerator {
                 return this.generateTextContainer(container as TextContainer);
             case 'MediaContainer':
                 return this.generateMediaContainer(container as MediaContainer);
+            case 'CodeContainer' :
+                return this.generateCodeContainer(container as CodeContainer);
             default:
                 return '';
         }
@@ -249,8 +241,10 @@ export class SlideDeckGenerator {
 
     // HTML pour un code container
     private generateCodeContainer(codeContainer: CodeContainer) {
+        console.log("Code : ", codeContainer.code)
         const codeLength = codeContainer.code.length;
-        const cleaned = codeContainer.code.substring(3,codeLength-3).trim();
+        const cleaned = codeContainer.code.substring(3,codeLength-4).trim();
+        console.log("Cleaned Code : ", cleaned)
         return `
         <section>
             <pre><code class="langage-${codeContainer.language.toLowerCase()}" data-trim data-line-numbers>

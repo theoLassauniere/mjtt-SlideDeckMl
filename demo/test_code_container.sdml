@@ -1,6 +1,20 @@
 Presentation CodeEditorTest {
-    Slide Slide2 {
-        titre = "Ceci est une diapositive de code"
+    Template
+        logos = [
+            logo
+                path = "../assets/logo_company.png"
+                positions = [TOP, LEFT],
+            logo
+                path = "../assets/logo_school.svg"
+                positions = [TOP, RIGHT]
+        ]
+        companyName = "Langium Corporation"
+        fontName = "Roboto"
+        fontSize = "1rem"
+        fontColor = "#222222"
+        backgroundColor = "white"
+    Slide {
+        title = "Ceci est une diapositive de code"
         codeContainer
             language = Python
             ```
@@ -13,6 +27,17 @@ for i in range(n):
     else:
         print(x, "est négatif ou nul")
 print("Fin")
+            ```
+    }
+    Slide {
+        title = "Ceci est une seconde diapositive de code"
+        codeContainer
+            language = Javascript
+            ```
+// Basic Javascript code
+let n = 6;
+n += 2; 
+console.log("Final n value : ", n);
             ```
     }
 }

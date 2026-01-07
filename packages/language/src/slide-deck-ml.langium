@@ -28,7 +28,7 @@ Slide:
     '}';
 
 Container:
-    TextContainer | MediaContainer
+    TextContainer | MediaContainer | CodeContainer
 ;
 
 TextContainer:
@@ -62,8 +62,8 @@ CENTER returns string: 'CENTER';
 hidden terminal WS: /\s+/;
 terminal ID: /[_a-zA-Z][\w_]*/;
 terminal INT returns number: /[0-9]+/;
+terminal CODE_BLOCK: /```[\s\S]*?```/;
 terminal STRING: /"(\\.|[^"\\])*"|'(\\.|[^'\\])*'/; // Permet de \ des "" pour un texte
-terminal CODE_BLOCK: /```(\\.|[^'\\]|'(?!''))*```/;
 terminal HEX_COLOR: /#[0-9a-fA-F]{6}/;
 hidden terminal ML_COMMENT: /\/\*[\s\S]*?\*\//;
 hidden terminal SL_COMMENT: /\/\/[^\n\r]*/;

@@ -2,7 +2,15 @@
 <module type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
-    <content url="file://$MODULE_DIR$" />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/demo/generated" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/cli/out" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/extension/out" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/extension/syntaxes" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/language/out" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/language/src/generated" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/language/syntaxes" />
+    </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
