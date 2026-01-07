@@ -27,7 +27,7 @@ Slide:
     '}';
 
 Container:
-    TextContainer
+    TextContainer | MediaContainer
 ;
 
 TextContainer:
@@ -35,6 +35,10 @@ TextContainer:
         'text' '=' text=STRING
         ('fontSize' '=' fontSize=STRING)?
         ('fontColor' '=' fontColor=Color)?;
+
+MediaContainer:
+    'media'
+        'mediaLink' '=' mediaLink=STRING;
 
 // Types
 

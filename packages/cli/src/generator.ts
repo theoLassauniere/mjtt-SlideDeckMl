@@ -1,7 +1,7 @@
 import { LangiumDocument } from 'langium';
 import * as fs from 'fs';
 import * as path from 'path';
-import { Presentation, Slide, TextContainer, Container } from '../../language/out/generated/ast.js';
+import { Presentation, Slide, TextContainer, Container, MediaContainer } from '../../language/out/generated/ast.js';
 
 export class SlideDeckGenerator {
     
@@ -91,6 +91,8 @@ export class SlideDeckGenerator {
         switch (container.$type) {
             case 'TextContainer':
                 return this.generateTextContainer(container as TextContainer);
+            case 'MediaContainer':
+                return this.generateMediaContainer(container as MediaContainer);
             default:
                 return '';
         }
@@ -127,6 +129,30 @@ export class SlideDeckGenerator {
         });
     }
 
+    private generateMediaContainer(container: MediaContainer): string {
+        const ext = container.mediaLink.split('.').pop()?.toLowerCase();
+
+        if (!ext) return '';
+
+        const imageExtensions = ['png', 'jpg', 'jpeg', 'svg'];
+        const videoExtensions = ['mp4', 'webm', 'ogg'];
+
+        if (imageExtensions.includes(ext)) {
+            return `<img src="${container.mediaLink}" class="media-container" style="max-width: 100%; height: auto;">`;
+        }
+
+        if (videoExtensions.includes(ext)) {
+            return `
+                <video class="media-container" controls style="max-width: 100%; height: auto;">
+                    <source src="${container.mediaLink}" type="video/${ext === 'mp4' ? 'mp4' : ext}">
+                    Votre navigateur ne supporte pas la lecture de la vidéo.
+                </video>
+            `;
+        }
+
+        return '';
+    }
+
     private generateTemplateStyle(template: any): string {
         return `
             .reveal {
@@ -146,6 +172,12 @@ export class SlideDeckGenerator {
 
             .reveal .text-container {
                 margin: 1rem 0;
+            }
+
+            .reveal .media-container {
+                margin: 15%;
+                display: block;
+                width: 70%;
             }
         `;
     }

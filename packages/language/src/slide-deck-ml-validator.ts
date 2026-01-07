@@ -3,10 +3,12 @@ import type {
     SlideDeckMlAstType,
     Presentation,
     Template,
-    Logo
+    Logo,
+    MediaContainer
 } from './generated/ast.js';
 import type { SlideDeckMlServices } from './slide-deck-ml-module.js';
 import * as path from 'path';
+import * as fs from 'fs';
 
 /**
  * Register custom validation checks.
@@ -136,6 +138,21 @@ export class SlideDeckMlValidator {
                 'Logo path must not be empty.',
                 { node: logo, property: 'path' }
             );
+        }
+    }
+
+    checkMediaContainer(media: MediaContainer, accept: ValidationAcceptor, documentPath: string) {
+        const ext = path.extname(media.mediaLink).toLowerCase();
+        const imageExtensions = ['.png', '.jpg', '.jpeg', '.svg'];
+        const videoExtensions = ['.mp4', '.webm', '.ogg'];
+
+        if (![...imageExtensions, ...videoExtensions].includes(ext)) {
+            accept('error', `Extension de fichier invalide pour mediaLink: ${media.mediaLink}`, { node: media, property: 'mediaLink' });
+        }
+
+        const absolutePath = path.resolve(path.dirname(documentPath), media.mediaLink);
+        if (!fs.existsSync(absolutePath)) {
+            accept('warning', `Le fichier media n'existe pas : ${media.mediaLink}`, { node: media, property: 'mediaLink' });
         }
     }
 }
