@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="096904d4-dc35-48b4-9ffc-fd643a2ba53b" name="Changes" comment="feat: basic code editor generation" />
+    <list default="true" id="096904d4-dc35-48b4-9ffc-fd643a2ba53b" name="Changes" comment="wip: basic code theming according to language">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/cli/bin/cli.js" beforeDir="false" afterPath="$PROJECT_DIR$/packages/cli/bin/cli.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -41,21 +44,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "7-basic-scenario-code-editor",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/lassa/Desktop/Cours/SI5/DSL/mjtt-SlideDeckMl",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "C:\\Users\\lassa\\Desktop\\Cours\\SI5\\DSL\\mjtt-SlideDeckMl\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;7-basic-scenario-code-editor&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/lassa/Desktop/Cours/SI5/DSL/mjtt-SlideDeckMl&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\lassa\\Desktop\\Cours\\SI5\\DSL\\mjtt-SlideDeckMl\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\lassa\Desktop\Cours\SI5\DSL\mjtt-SlideDeckMl" />
@@ -86,6 +89,8 @@
       <workItem from="1767304460590" duration="161000" />
       <workItem from="1767538567515" duration="1226000" />
       <workItem from="1767612686592" duration="90000" />
+      <workItem from="1767618714300" duration="196000" />
+      <workItem from="1767685725887" duration="4000" />
     </task>
     <task id="LOCAL-00001" summary="chore: init commit">
       <option name="closed" value="true" />
@@ -111,7 +116,15 @@
       <option name="project" value="LOCAL" />
       <updated>1767612767060</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="wip: basic code theming according to language">
+      <option name="closed" value="true" />
+      <created>1767618894725</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1767618894725</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -132,6 +145,7 @@
     <MESSAGE value="chore: init commit" />
     <MESSAGE value="feat: solid base project (no code generation)" />
     <MESSAGE value="feat: basic code editor generation" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: basic code editor generation" />
+    <MESSAGE value="wip: basic code theming according to language" />
+    <option name="LAST_COMMIT_MESSAGE" value="wip: basic code theming according to language" />
   </component>
 </project>
