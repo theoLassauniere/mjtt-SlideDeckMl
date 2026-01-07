@@ -23,7 +23,18 @@ Logo:
 Slide:
     'Slide' '{'
         ('backgroundColor' '=' backgroundColor=Color)?
+        containers+=Container*
     '}';
+
+Container:
+    TextContainer
+;
+
+TextContainer:
+    'text'
+        'text' '=' text=STRING
+        ('fontSize' '=' fontSize=STRING)?
+        ('fontColor' '=' fontColor=Color)?;
 
 // Types
 
@@ -41,7 +52,7 @@ CENTER returns string: 'CENTER';
 hidden terminal WS: /\s+/;
 terminal ID: /[_a-zA-Z][\w_]*/;
 terminal INT returns number: /[0-9]+/;
-terminal STRING: /"(\\.|[^"\\])*"|'(\\.|[^'\\])*'/;
+terminal STRING: /"(\\.|[^"\\])*"|'(\\.|[^'\\])*'/; // Permet de \ des "" pour un texte
 terminal HEX_COLOR: /#[0-9a-fA-F]{6}/;
 hidden terminal ML_COMMENT: /\/\*[\s\S]*?\*\//;
 hidden terminal SL_COMMENT: /\/\/[^\n\r]*/;

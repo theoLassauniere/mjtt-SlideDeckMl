@@ -16,5 +16,21 @@ Presentation TestTemplate {
         backgroundColor = "white"
 
     Slide {
+        text
+            text = "Présentation \" Template \" "
+
+        text
+            text = "Changement style"
+            fontSize = "3rem"
+            fontColor = "#870909ff"
+    }
+    Slide {
+        backgroundColor = "purple"
+        text
+            text = "<strong>Lorem ipsum dolor sit amet,</strong> consectetur adipiscing elit. Suspendisse semper, felis eu rutrum finibus, nulla urna eleifend lacus, ut dapibus nisi quam sed metus. Vivamus eget ultrices nunc, ac consectetur ex. Proin viverra, orci posuere rhoncus faucibus, elit dolor convallis tellus, vitae bibendum arcu mi pharetra ligula. Duis eget velit ut purus placerat fringilla. Ut nibh ipsum, vehicula quis scelerisque ut, fermentum ac nunc. Nam placerat varius libero, sit amet malesuada eros consequat nec. Nunc feugiat tristique aliquet. Praesent ut odio vestibulum, vulputate nunc non, vestibulum ipsum. Proin id mauris ut ipsum vehicula efficitur. In suscipit semper quam sit amet fermentum. Quisque eget mauris elementum, iaculis metus sodales, posuere leo.
+
+            Curabitur leo erat, <em>tempus a sodales ut,</em> volutpat nec ligula. Cras luctus pharetra risus vulputate porta. Donec dignissim nibh metus, id ornare sem ornare id. Nullam eu enim eu lorem luctus accumsan. Nulla at sollicitudin dolor. Sed id molestie sapien, a ultricies mi. Suspendisse molestie tincidunt suscipit. Proin mattis, elit vitae blandit molestie, velit libero aliquet dui, ac rutrum turpis leo quis leo. Mauris at fermentum felis.
+            <br/>
+            Nam eleifend erat a facilisis faucibus. In vulputate eleifend sem, quis aliquam nulla. Sed malesuada, arcu in suscipit tempor, neque turpis blandit elit, ac vulputate magna metus pellentesque enim. Donec at metus purus. Praesent tempor, quam ut sagittis finibus, lorem velit tempus justo, eu sollicitudin neque ipsum eu justo. Sed ultricies vitae augue dignissim dapibus. Maecenas eu iaculis sapien, eget laoreet diam. Nullam laoreet enim lacus, sit amet accumsan ante volutpat ac. Curabitur venenatis magna sed massa accumsan elementum. Suspendisse eget sem bibendum, tincidunt purus non, elementum nisi. Vivamus libero augue, iaculis sit amet justo at, consectetur vulputate massa. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Proin tempus sodales turpis vel tincidunt. Nunc pretium commodo blandit. Aliquam congue sapien et leo dictum facilisis. Aliquam blandit nibh mauris, vitae suscipit urna semper non."
     }
 }
