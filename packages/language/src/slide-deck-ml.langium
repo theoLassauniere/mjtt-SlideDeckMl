@@ -13,7 +13,7 @@ Template:
         ('fontName' '=' fontName=STRING)
         ('fontSize' '=' fontSize=STRING)
         ('fontColor' '=' fontColor=Color)
-        ('backgroundColor' '=' backgroundColor=Color);
+        ('backgroundColor' '=' backgroundColor=Color)?;
 
 Logo:
     'logo'
