@@ -1,11 +1,12 @@
 import { LangiumDocument } from 'langium';
 import * as fs from 'fs';
 import * as path from 'path';
-import { Presentation, Slide, TextContainer, Container, MediaContainer } from '../../language/out/generated/ast.js';
+import { Presentation, Slide, CodeContainer, TextContainer, Container, MediaContainer } from '../../language/out/generated/ast.js';
+
 
 export class SlideDeckGenerator {
     
-    // Entrypoint : génère le JTML à partir du doc langium
+    // Entrypoint : génère le HTML à partir du doc langium
     generateHtml(document: LangiumDocument, destination: string): void {
         const presentation = document.parseResult.value as Presentation;
         
@@ -42,8 +43,9 @@ export class SlideDeckGenerator {
     
     <!-- Reveal.js CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reset.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/theme/black.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/black.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/monokai.min.css">
     
     <style>
         ${templateStyle}
@@ -58,13 +60,15 @@ export class SlideDeckGenerator {
     </div>
 
     <!-- Reveal.js JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/highlight.min.js"></script>
     <script>
         Reveal.initialize({
             hash: true,
             transition: 'slide',
             transitionSpeed: 'default',
-            backgroundTransition: 'fade'
+            backgroundTransition: 'fade',
+            plugins: [ RevealHighlight ]
         });
     </script>
 </body>
@@ -73,18 +77,18 @@ export class SlideDeckGenerator {
 
     private generateSlide(slide: Slide): string {
         const bg = slide.backgroundColor
-        ? ` data-background-color="${slide.backgroundColor}"`
-        : '';
+            ? ` data-background-color="${slide.backgroundColor}"`
+            : '';
 
         const titleHtml = slide.title
-        ? `<h2 class="slide-title">${this.sanitizeTextContainerHtml(slide.title)}</h2>
+            ? `<h2 class="slide-title">${this.sanitizeTextContainerHtml(slide.title)}</h2>
         <hr class="slide-separator">`
-        : '';
+            : '';
 
         const containersHtml = slide.containers
-        ?.map(c => this.generateContainer(c))
-        .join('\n') ?? '';
-        
+            ?.map(c => this.generateContainer(c))
+            .join('\n') ?? '';
+
         return `
             <section${bg}>
                 ${titleHtml}
@@ -99,6 +103,8 @@ export class SlideDeckGenerator {
                 return this.generateTextContainer(container as TextContainer);
             case 'MediaContainer':
                 return this.generateMediaContainer(container as MediaContainer);
+            case 'CodeContainer' :
+                return this.generateCodeContainer(container as CodeContainer);
             default:
                 return '';
         }
@@ -231,5 +237,20 @@ export class SlideDeckGenerator {
 
             return `<img src="${logo.path}" class="logo" style="${style}">`;
         }).join('\n');
+    }
+
+    // HTML pour un code container
+    private generateCodeContainer(codeContainer: CodeContainer) {
+        console.log("Code : ", codeContainer.code)
+        const codeLength = codeContainer.code.length;
+        const cleaned = codeContainer.code.substring(3,codeLength-4).trim();
+        console.log("Cleaned Code : ", cleaned)
+        return `
+        <section>
+            <pre><code class="langage-${codeContainer.language.toLowerCase()}" data-trim data-line-numbers>
+${cleaned}
+            </code></pre>
+        </section>
+        `
     }
 }

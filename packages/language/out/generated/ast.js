@@ -7,30 +7,141 @@ import * as langium from 'langium';
 export const SlideDeckMlTerminals = {
     WS: /\s+/,
     ID: /[_a-zA-Z][\w_]*/,
+    CODE_BLOCK: /```[\s\S]*?```/,
     STRING: /"(\\.|[^"\\])*"|'(\\.|[^'\\])*'/,
+    HEX_COLOR: /#[0-9a-fA-F]{6}/,
     ML_COMMENT: /\/\*[\s\S]*?\*\//,
     SL_COMMENT: /\/\/[^\n\r]*/,
 };
+export function isBOTTOM(item) {
+    return item === 'BOTTOM';
+}
+export function isCENTER(item) {
+    return item === 'CENTER';
+}
+export const CodeContainer = {
+    $type: 'CodeContainer',
+    code: 'code',
+    language: 'language'
+};
+export function isCodeContainer(item) {
+    return reflection.isInstance(item, CodeContainer.$type);
+}
+export function isColor(item) {
+    return (typeof item === 'string' && (/"(\\.|[^"\\])*"|'(\\.|[^'\\])*'/.test(item) || /#[0-9a-fA-F]{6}/.test(item)));
+}
+export const Container = {
+    $type: 'Container'
+};
+export function isContainer(item) {
+    return reflection.isInstance(item, Container.$type);
+}
+export function isLEFT(item) {
+    return item === 'LEFT';
+}
+export const Logo = {
+    $type: 'Logo',
+    path: 'path',
+    positions: 'positions'
+};
+export function isLogo(item) {
+    return reflection.isInstance(item, Logo.$type);
+}
+export const MediaContainer = {
+    $type: 'MediaContainer',
+    mediaLink: 'mediaLink'
+};
+export function isMediaContainer(item) {
+    return reflection.isInstance(item, MediaContainer.$type);
+}
 export const Presentation = {
     $type: 'Presentation',
     name: 'name',
-    slides: 'slides'
+    slides: 'slides',
+    template: 'template'
 };
 export function isPresentation(item) {
     return reflection.isInstance(item, Presentation.$type);
 }
+export function isRIGHT(item) {
+    return item === 'RIGHT';
+}
 export const Slide = {
     $type: 'Slide',
-    name: 'name',
-    titre: 'titre'
+    backgroundColor: 'backgroundColor',
+    containers: 'containers',
+    title: 'title'
 };
 export function isSlide(item) {
     return reflection.isInstance(item, Slide.$type);
+}
+export const Template = {
+    $type: 'Template',
+    backgroundColor: 'backgroundColor',
+    companyName: 'companyName',
+    fontColor: 'fontColor',
+    fontName: 'fontName',
+    fontSize: 'fontSize',
+    logos: 'logos'
+};
+export function isTemplate(item) {
+    return reflection.isInstance(item, Template.$type);
+}
+export const TextContainer = {
+    $type: 'TextContainer',
+    fontColor: 'fontColor',
+    fontSize: 'fontSize',
+    text: 'text'
+};
+export function isTextContainer(item) {
+    return reflection.isInstance(item, TextContainer.$type);
+}
+export function isTOP(item) {
+    return item === 'TOP';
 }
 export class SlideDeckMlAstReflection extends langium.AbstractAstReflection {
     constructor() {
         super(...arguments);
         this.types = {
+            CodeContainer: {
+                name: CodeContainer.$type,
+                properties: {
+                    code: {
+                        name: CodeContainer.code
+                    },
+                    language: {
+                        name: CodeContainer.language
+                    }
+                },
+                superTypes: [Container.$type]
+            },
+            Container: {
+                name: Container.$type,
+                properties: {},
+                superTypes: []
+            },
+            Logo: {
+                name: Logo.$type,
+                properties: {
+                    path: {
+                        name: Logo.path
+                    },
+                    positions: {
+                        name: Logo.positions,
+                        defaultValue: []
+                    }
+                },
+                superTypes: []
+            },
+            MediaContainer: {
+                name: MediaContainer.$type,
+                properties: {
+                    mediaLink: {
+                        name: MediaContainer.mediaLink
+                    }
+                },
+                superTypes: [Container.$type]
+            },
             Presentation: {
                 name: Presentation.$type,
                 properties: {
@@ -40,6 +151,9 @@ export class SlideDeckMlAstReflection extends langium.AbstractAstReflection {
                     slides: {
                         name: Presentation.slides,
                         defaultValue: []
+                    },
+                    template: {
+                        name: Presentation.template
                     }
                 },
                 superTypes: []
@@ -47,14 +161,58 @@ export class SlideDeckMlAstReflection extends langium.AbstractAstReflection {
             Slide: {
                 name: Slide.$type,
                 properties: {
-                    name: {
-                        name: Slide.name
+                    backgroundColor: {
+                        name: Slide.backgroundColor
                     },
-                    titre: {
-                        name: Slide.titre
+                    containers: {
+                        name: Slide.containers,
+                        defaultValue: []
+                    },
+                    title: {
+                        name: Slide.title
                     }
                 },
                 superTypes: []
+            },
+            Template: {
+                name: Template.$type,
+                properties: {
+                    backgroundColor: {
+                        name: Template.backgroundColor
+                    },
+                    companyName: {
+                        name: Template.companyName
+                    },
+                    fontColor: {
+                        name: Template.fontColor
+                    },
+                    fontName: {
+                        name: Template.fontName
+                    },
+                    fontSize: {
+                        name: Template.fontSize
+                    },
+                    logos: {
+                        name: Template.logos,
+                        defaultValue: []
+                    }
+                },
+                superTypes: []
+            },
+            TextContainer: {
+                name: TextContainer.$type,
+                properties: {
+                    fontColor: {
+                        name: TextContainer.fontColor
+                    },
+                    fontSize: {
+                        name: TextContainer.fontSize
+                    },
+                    text: {
+                        name: TextContainer.text
+                    }
+                },
+                superTypes: [Container.$type]
             }
         };
     }
