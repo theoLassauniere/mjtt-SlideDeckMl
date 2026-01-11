@@ -7,6 +7,7 @@ import * as langium from 'langium';
 export const SlideDeckMlTerminals = {
     WS: /\s+/,
     ID: /[_a-zA-Z][\w_]*/,
+    INT: /[0-9]+/,
     CODE_BLOCK: /```[\s\S]*?```/,
     STRING: /"(\\.|[^"\\])*"|'(\\.|[^'\\])*'/,
     HEX_COLOR: /#[0-9a-fA-F]{6}/,
@@ -35,6 +36,26 @@ export const Container = {
 };
 export function isContainer(item) {
     return reflection.isInstance(item, Container.$type);
+}
+export const Grid = {
+    $type: 'Grid',
+    cells: 'cells',
+    columns: 'columns',
+    rows: 'rows'
+};
+export function isGrid(item) {
+    return reflection.isInstance(item, Grid.$type);
+}
+export const GridCell = {
+    $type: 'GridCell',
+    columns_end: 'columns_end',
+    columns_start: 'columns_start',
+    container: 'container',
+    rows_end: 'rows_end',
+    rows_start: 'rows_start'
+};
+export function isGridCell(item) {
+    return reflection.isInstance(item, GridCell.$type);
 }
 export function isLEFT(item) {
     return item === 'LEFT';
@@ -69,7 +90,8 @@ export function isRIGHT(item) {
 export const Slide = {
     $type: 'Slide',
     backgroundColor: 'backgroundColor',
-    containers: 'containers',
+    container: 'container',
+    grid: 'grid',
     title: 'title'
 };
 export function isSlide(item) {
@@ -120,6 +142,43 @@ export class SlideDeckMlAstReflection extends langium.AbstractAstReflection {
                 properties: {},
                 superTypes: []
             },
+            Grid: {
+                name: Grid.$type,
+                properties: {
+                    cells: {
+                        name: Grid.cells,
+                        defaultValue: []
+                    },
+                    columns: {
+                        name: Grid.columns
+                    },
+                    rows: {
+                        name: Grid.rows
+                    }
+                },
+                superTypes: []
+            },
+            GridCell: {
+                name: GridCell.$type,
+                properties: {
+                    columns_end: {
+                        name: GridCell.columns_end
+                    },
+                    columns_start: {
+                        name: GridCell.columns_start
+                    },
+                    container: {
+                        name: GridCell.container
+                    },
+                    rows_end: {
+                        name: GridCell.rows_end
+                    },
+                    rows_start: {
+                        name: GridCell.rows_start
+                    }
+                },
+                superTypes: []
+            },
             Logo: {
                 name: Logo.$type,
                 properties: {
@@ -164,9 +223,11 @@ export class SlideDeckMlAstReflection extends langium.AbstractAstReflection {
                     backgroundColor: {
                         name: Slide.backgroundColor
                     },
-                    containers: {
-                        name: Slide.containers,
-                        defaultValue: []
+                    container: {
+                        name: Slide.container
+                    },
+                    grid: {
+                        name: Slide.grid
                     },
                     title: {
                         name: Slide.title

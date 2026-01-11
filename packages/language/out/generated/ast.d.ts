@@ -6,6 +6,7 @@ import * as langium from 'langium';
 export declare const SlideDeckMlTerminals: {
     WS: RegExp;
     ID: RegExp;
+    INT: RegExp;
     CODE_BLOCK: RegExp;
     STRING: RegExp;
     HEX_COLOR: RegExp;
@@ -13,14 +14,14 @@ export declare const SlideDeckMlTerminals: {
     SL_COMMENT: RegExp;
 };
 export type SlideDeckMlTerminalNames = keyof typeof SlideDeckMlTerminals;
-export type SlideDeckMlKeywordNames = "," | "=" | "BOTTOM" | "CENTER" | "LEFT" | "Presentation" | "RIGHT" | "Slide" | "TOP" | "Template" | "[" | "]" | "backgroundColor" | "codeContainer" | "companyName" | "fontColor" | "fontName" | "fontSize" | "language" | "logo" | "logos" | "media" | "mediaLink" | "path" | "positions" | "text" | "title" | "{" | "}";
+export type SlideDeckMlKeywordNames = "," | "-" | ":" | "=" | "BOTTOM" | "CENTER" | "LEFT" | "Presentation" | "RIGHT" | "Slide" | "TOP" | "Template" | "[" | "]" | "backgroundColor" | "codeContainer" | "companyName" | "fontColor" | "fontName" | "fontSize" | "grille" | "language" | "logo" | "logos" | "media" | "mediaLink" | "path" | "positions" | "text" | "title" | "{" | "}";
 export type SlideDeckMlTokenNames = SlideDeckMlTerminalNames | SlideDeckMlKeywordNames;
 export type BOTTOM = 'BOTTOM';
 export declare function isBOTTOM(item: unknown): item is BOTTOM;
 export type CENTER = 'CENTER';
 export declare function isCENTER(item: unknown): item is CENTER;
 export interface CodeContainer extends langium.AstNode {
-    readonly $container: Slide;
+    readonly $container: GridCell | Slide;
     readonly $type: 'CodeContainer';
     code: string;
     language: string;
@@ -38,6 +39,38 @@ export declare const Container: {
     readonly $type: "Container";
 };
 export declare function isContainer(item: unknown): item is Container;
+export interface Grid extends langium.AstNode {
+    readonly $container: Slide;
+    readonly $type: 'Grid';
+    cells: Array<GridCell>;
+    columns: number;
+    rows: number;
+}
+export declare const Grid: {
+    readonly $type: "Grid";
+    readonly cells: "cells";
+    readonly columns: "columns";
+    readonly rows: "rows";
+};
+export declare function isGrid(item: unknown): item is Grid;
+export interface GridCell extends langium.AstNode {
+    readonly $container: Grid;
+    readonly $type: 'GridCell';
+    columns_end?: number;
+    columns_start: number;
+    container: Container;
+    rows_end?: number;
+    rows_start: number;
+}
+export declare const GridCell: {
+    readonly $type: "GridCell";
+    readonly columns_end: "columns_end";
+    readonly columns_start: "columns_start";
+    readonly container: "container";
+    readonly rows_end: "rows_end";
+    readonly rows_start: "rows_start";
+};
+export declare function isGridCell(item: unknown): item is GridCell;
 export type LEFT = 'LEFT';
 export declare function isLEFT(item: unknown): item is LEFT;
 export interface Logo extends langium.AstNode {
@@ -53,7 +86,7 @@ export declare const Logo: {
 };
 export declare function isLogo(item: unknown): item is Logo;
 export interface MediaContainer extends langium.AstNode {
-    readonly $container: Slide;
+    readonly $container: GridCell | Slide;
     readonly $type: 'MediaContainer';
     mediaLink: string;
 }
@@ -82,13 +115,15 @@ export interface Slide extends langium.AstNode {
     readonly $container: Presentation;
     readonly $type: 'Slide';
     backgroundColor?: Color;
-    containers: Array<Container>;
+    container?: Container;
+    grid?: Grid;
     title?: string;
 }
 export declare const Slide: {
     readonly $type: "Slide";
     readonly backgroundColor: "backgroundColor";
-    readonly containers: "containers";
+    readonly container: "container";
+    readonly grid: "grid";
     readonly title: "title";
 };
 export declare function isSlide(item: unknown): item is Slide;
@@ -113,7 +148,7 @@ export declare const Template: {
 };
 export declare function isTemplate(item: unknown): item is Template;
 export interface TextContainer extends langium.AstNode {
-    readonly $container: Slide;
+    readonly $container: GridCell | Slide;
     readonly $type: 'TextContainer';
     fontColor?: Color;
     fontSize?: string;
@@ -131,6 +166,8 @@ export declare function isTOP(item: unknown): item is TOP;
 export type SlideDeckMlAstType = {
     CodeContainer: CodeContainer;
     Container: Container;
+    Grid: Grid;
+    GridCell: GridCell;
     Logo: Logo;
     MediaContainer: MediaContainer;
     Presentation: Presentation;
@@ -155,6 +192,43 @@ export declare class SlideDeckMlAstReflection extends langium.AbstractAstReflect
         readonly Container: {
             readonly name: "Container";
             readonly properties: {};
+            readonly superTypes: [];
+        };
+        readonly Grid: {
+            readonly name: "Grid";
+            readonly properties: {
+                readonly cells: {
+                    readonly name: "cells";
+                    readonly defaultValue: [];
+                };
+                readonly columns: {
+                    readonly name: "columns";
+                };
+                readonly rows: {
+                    readonly name: "rows";
+                };
+            };
+            readonly superTypes: [];
+        };
+        readonly GridCell: {
+            readonly name: "GridCell";
+            readonly properties: {
+                readonly columns_end: {
+                    readonly name: "columns_end";
+                };
+                readonly columns_start: {
+                    readonly name: "columns_start";
+                };
+                readonly container: {
+                    readonly name: "container";
+                };
+                readonly rows_end: {
+                    readonly name: "rows_end";
+                };
+                readonly rows_start: {
+                    readonly name: "rows_start";
+                };
+            };
             readonly superTypes: [];
         };
         readonly Logo: {
@@ -201,9 +275,11 @@ export declare class SlideDeckMlAstReflection extends langium.AbstractAstReflect
                 readonly backgroundColor: {
                     readonly name: "backgroundColor";
                 };
-                readonly containers: {
-                    readonly name: "containers";
-                    readonly defaultValue: [];
+                readonly container: {
+                    readonly name: "container";
+                };
+                readonly grid: {
+                    readonly name: "grid";
                 };
                 readonly title: {
                     readonly name: "title";

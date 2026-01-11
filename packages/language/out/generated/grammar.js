@@ -27,7 +27,7 @@ export const SlideDeckMlGrammar = () => loadedSlideDeckMlGrammar ?? (loadedSlide
             "terminal": {
               "$type": "RuleCall",
               "rule": {
-                "$ref": "#/rules@16"
+                "$ref": "#/rules@18"
               },
               "arguments": []
             }
@@ -154,7 +154,7 @@ export const SlideDeckMlGrammar = () => loadedSlideDeckMlGrammar ?? (loadedSlide
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@19"
+                    "$ref": "#/rules@21"
                   },
                   "arguments": []
                 }
@@ -180,7 +180,7 @@ export const SlideDeckMlGrammar = () => loadedSlideDeckMlGrammar ?? (loadedSlide
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@19"
+                    "$ref": "#/rules@21"
                   },
                   "arguments": []
                 }
@@ -205,7 +205,7 @@ export const SlideDeckMlGrammar = () => loadedSlideDeckMlGrammar ?? (loadedSlide
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@19"
+                    "$ref": "#/rules@21"
                   },
                   "arguments": []
                 }
@@ -230,7 +230,7 @@ export const SlideDeckMlGrammar = () => loadedSlideDeckMlGrammar ?? (loadedSlide
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@8"
+                    "$ref": "#/rules@10"
                   },
                   "arguments": []
                 }
@@ -255,7 +255,7 @@ export const SlideDeckMlGrammar = () => loadedSlideDeckMlGrammar ?? (loadedSlide
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@8"
+                    "$ref": "#/rules@10"
                   },
                   "arguments": []
                 }
@@ -294,7 +294,7 @@ export const SlideDeckMlGrammar = () => loadedSlideDeckMlGrammar ?? (loadedSlide
             "terminal": {
               "$type": "RuleCall",
               "rule": {
-                "$ref": "#/rules@19"
+                "$ref": "#/rules@21"
               },
               "arguments": []
             }
@@ -321,7 +321,7 @@ export const SlideDeckMlGrammar = () => loadedSlideDeckMlGrammar ?? (loadedSlide
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@9"
+                    "$ref": "#/rules@11"
                   },
                   "arguments": []
                 }
@@ -340,7 +340,7 @@ export const SlideDeckMlGrammar = () => loadedSlideDeckMlGrammar ?? (loadedSlide
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@9"
+                        "$ref": "#/rules@11"
                       },
                       "arguments": []
                     }
@@ -393,7 +393,7 @@ export const SlideDeckMlGrammar = () => loadedSlideDeckMlGrammar ?? (loadedSlide
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@19"
+                    "$ref": "#/rules@21"
                   },
                   "arguments": []
                 }
@@ -419,7 +419,7 @@ export const SlideDeckMlGrammar = () => loadedSlideDeckMlGrammar ?? (loadedSlide
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@8"
+                    "$ref": "#/rules@10"
                   },
                   "arguments": []
                 }
@@ -429,8 +429,21 @@ export const SlideDeckMlGrammar = () => loadedSlideDeckMlGrammar ?? (loadedSlide
           },
           {
             "$type": "Assignment",
-            "feature": "containers",
-            "operator": "+=",
+            "feature": "container",
+            "operator": "=",
+            "terminal": {
+              "$type": "RuleCall",
+              "rule": {
+                "$ref": "#/rules@6"
+              },
+              "arguments": []
+            },
+            "cardinality": "?"
+          },
+          {
+            "$type": "Assignment",
+            "feature": "grid",
+            "operator": "=",
             "terminal": {
               "$type": "RuleCall",
               "rule": {
@@ -438,11 +451,164 @@ export const SlideDeckMlGrammar = () => loadedSlideDeckMlGrammar ?? (loadedSlide
               },
               "arguments": []
             },
-            "cardinality": "*"
+            "cardinality": "?"
           },
           {
             "$type": "Keyword",
             "value": "}"
+          }
+        ]
+      },
+      "entry": false,
+      "fragment": false,
+      "parameters": []
+    },
+    {
+      "$type": "ParserRule",
+      "name": "Grid",
+      "definition": {
+        "$type": "Group",
+        "elements": [
+          {
+            "$type": "Keyword",
+            "value": "grille"
+          },
+          {
+            "$type": "Assignment",
+            "feature": "rows",
+            "operator": "=",
+            "terminal": {
+              "$type": "RuleCall",
+              "rule": {
+                "$ref": "#/rules@19"
+              },
+              "arguments": []
+            }
+          },
+          {
+            "$type": "Keyword",
+            "value": ":"
+          },
+          {
+            "$type": "Assignment",
+            "feature": "columns",
+            "operator": "=",
+            "terminal": {
+              "$type": "RuleCall",
+              "rule": {
+                "$ref": "#/rules@19"
+              },
+              "arguments": []
+            }
+          },
+          {
+            "$type": "Assignment",
+            "feature": "cells",
+            "operator": "+=",
+            "terminal": {
+              "$type": "RuleCall",
+              "rule": {
+                "$ref": "#/rules@5"
+              },
+              "arguments": []
+            },
+            "cardinality": "+"
+          }
+        ]
+      },
+      "entry": false,
+      "fragment": false,
+      "parameters": []
+    },
+    {
+      "$type": "ParserRule",
+      "name": "GridCell",
+      "definition": {
+        "$type": "Group",
+        "elements": [
+          {
+            "$type": "Assignment",
+            "feature": "rows_start",
+            "operator": "=",
+            "terminal": {
+              "$type": "RuleCall",
+              "rule": {
+                "$ref": "#/rules@19"
+              },
+              "arguments": []
+            }
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": "-"
+              },
+              {
+                "$type": "Assignment",
+                "feature": "rows_end",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@19"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Keyword",
+            "value": ":"
+          },
+          {
+            "$type": "Assignment",
+            "feature": "columns_start",
+            "operator": "=",
+            "terminal": {
+              "$type": "RuleCall",
+              "rule": {
+                "$ref": "#/rules@19"
+              },
+              "arguments": []
+            }
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": "-"
+              },
+              {
+                "$type": "Assignment",
+                "feature": "columns_end",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@19"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Assignment",
+            "feature": "container",
+            "operator": "=",
+            "terminal": {
+              "$type": "RuleCall",
+              "rule": {
+                "$ref": "#/rules@6"
+              },
+              "arguments": []
+            }
           }
         ]
       },
@@ -459,21 +625,21 @@ export const SlideDeckMlGrammar = () => loadedSlideDeckMlGrammar ?? (loadedSlide
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@5"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@6"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
               "$ref": "#/rules@7"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@8"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@9"
             },
             "arguments": []
           }
@@ -508,7 +674,7 @@ export const SlideDeckMlGrammar = () => loadedSlideDeckMlGrammar ?? (loadedSlide
             "terminal": {
               "$type": "RuleCall",
               "rule": {
-                "$ref": "#/rules@19"
+                "$ref": "#/rules@21"
               },
               "arguments": []
             }
@@ -531,7 +697,7 @@ export const SlideDeckMlGrammar = () => loadedSlideDeckMlGrammar ?? (loadedSlide
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@19"
+                    "$ref": "#/rules@21"
                   },
                   "arguments": []
                 }
@@ -557,7 +723,7 @@ export const SlideDeckMlGrammar = () => loadedSlideDeckMlGrammar ?? (loadedSlide
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@8"
+                    "$ref": "#/rules@10"
                   },
                   "arguments": []
                 }
@@ -596,7 +762,7 @@ export const SlideDeckMlGrammar = () => loadedSlideDeckMlGrammar ?? (loadedSlide
             "terminal": {
               "$type": "RuleCall",
               "rule": {
-                "$ref": "#/rules@19"
+                "$ref": "#/rules@21"
               },
               "arguments": []
             }
@@ -632,7 +798,7 @@ export const SlideDeckMlGrammar = () => loadedSlideDeckMlGrammar ?? (loadedSlide
             "terminal": {
               "$type": "RuleCall",
               "rule": {
-                "$ref": "#/rules@16"
+                "$ref": "#/rules@18"
               },
               "arguments": []
             }
@@ -644,7 +810,7 @@ export const SlideDeckMlGrammar = () => loadedSlideDeckMlGrammar ?? (loadedSlide
             "terminal": {
               "$type": "RuleCall",
               "rule": {
-                "$ref": "#/rules@18"
+                "$ref": "#/rules@20"
               },
               "arguments": []
             }
@@ -665,14 +831,14 @@ export const SlideDeckMlGrammar = () => loadedSlideDeckMlGrammar ?? (loadedSlide
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@19"
+              "$ref": "#/rules@21"
             },
             "arguments": []
           },
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@20"
+              "$ref": "#/rules@22"
             },
             "arguments": []
           }
@@ -694,20 +860,6 @@ export const SlideDeckMlGrammar = () => loadedSlideDeckMlGrammar ?? (loadedSlide
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@10"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@11"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
               "$ref": "#/rules@12"
             },
             "arguments": []
@@ -723,6 +875,20 @@ export const SlideDeckMlGrammar = () => loadedSlideDeckMlGrammar ?? (loadedSlide
             "$type": "RuleCall",
             "rule": {
               "$ref": "#/rules@14"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@15"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@16"
             },
             "arguments": []
           }
