@@ -66,6 +66,7 @@ export class SlideDeckGenerator {
     <script>
         Reveal.initialize({
             hash: true,
+            center: false,
             transition: 'slide',
             transitionSpeed: 'default',
             backgroundTransition: 'fade',
@@ -92,11 +93,12 @@ export class SlideDeckGenerator {
         } else if (slide.content.container) {
             content = this.generateContainer(slide.content.container);
         }
-
         return `
-                <section${bg}>
+                <section${bg} class="sdml-slide">
                     ${titleHtml}
-                    ${content}
+                    <div class="slide-content">
+                        ${content}
+                    </div>
                 </section>
             `;
     }
@@ -206,6 +208,29 @@ export class SlideDeckGenerator {
                 font-size: 2.2em;
                 font-weight: 600;
             }
+            
+            /* Important: permet aux enfants de faire height:100% */
+            .reveal .slides section.sdml-slide {
+                width: 100%;
+                height: 100%;
+            }
+
+            .reveal .slides section.sdml-slide .slide-content {
+                width: 100%;
+                height: 100%;
+                /* si tu veux que le contenu commence en haut */
+                display: flex;
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            /* optionnel: si tu as un titre, il ne doit pas manger la height du contenu */
+            .reveal .slides section.sdml-slide .slide-content > .grid-container {
+                flex: 1 1 auto;
+                min-height: 0; /* important pour overflow dans flex */
+            }
+
+
 
             .slide-separator {
                 width: 60%;
@@ -247,13 +272,11 @@ export class SlideDeckGenerator {
         return `
             .grid-container {
                 width: 100%;
-                height: 100%;
-                padding: 1rem;
+                height: 100%; 
             }
 
             .grid-cell {
                 border: 1px solid red;
-                padding: 1rem;
             }
         `;
     }
@@ -297,11 +320,9 @@ export class SlideDeckGenerator {
         const cleaned = codeContainer.code.substring(3,codeLength-4).trim();
         console.log("Cleaned Code : ", cleaned)
         return `
-        <section>
             <pre><code class="langage-${codeContainer.language.toLowerCase()}" data-trim data-line-numbers>
 ${cleaned}
             </code></pre>
-        </section>
         `
     }
 }
