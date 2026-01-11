@@ -1,8 +1,7 @@
 import { LangiumDocument } from 'langium';
 import * as fs from 'fs';
 import * as path from 'path';
-import { Presentation, Slide, CodeContainer, TextContainer, Container, MediaContainer } from '../../language/out/generated/ast.js';
-
+import { Presentation, Slide, CodeContainer, TextContainer, Container, MediaContainer, Grid, GridCell } from '../../language/out/generated/ast.js';
 
 export class SlideDeckGenerator {
     
@@ -34,6 +33,7 @@ export class SlideDeckGenerator {
             .join('\n');
         const logos = this.generateLogos(template);
         const templateStyle = this.generateTemplateStyle(template);
+        const gridStyle = this.generateGridStyle();
         
         return `<!DOCTYPE html>
 <html lang="fr">
@@ -49,6 +49,7 @@ export class SlideDeckGenerator {
     
     <style>
         ${templateStyle}
+        ${gridStyle}
     </style>
 </head>
 <body>
@@ -84,17 +85,20 @@ export class SlideDeckGenerator {
             ? `<h2 class="slide-title">${this.sanitizeTextContainerHtml(slide.title)}</h2>
         <hr class="slide-separator">`
             : '';
-
-        const containersHtml = slide.containers
-            ?.map(c => this.generateContainer(c))
-            .join('\n') ?? '';
+        
+        let content = '';
+        if (slide.grid) {
+            content = this.generateGrid(slide.grid);
+        } else if (slide.container) {
+            content = this.generateContainer(slide.container);
+        }
 
         return `
-            <section${bg}>
-                ${titleHtml}
-                ${containersHtml}
-            </section>
-        `;
+                <section${bg}>
+                    ${titleHtml}
+                    ${content}
+                </section>
+            `;
     }
 
     private generateContainer(container: Container): string {
@@ -237,6 +241,54 @@ export class SlideDeckGenerator {
 
             return `<img src="${logo.path}" class="logo" style="${style}">`;
         }).join('\n');
+    }
+
+    private generateGridStyle(): string {
+        return `
+            .grid-container {
+                width: 100%;
+                height: 100%;
+                padding: 1rem;
+            }
+
+            .grid-cell {
+                border: 1px solid red;
+                padding: 1rem;
+            }
+        `;
+    }
+
+    private generateGrid(grid: Grid): string {
+        const gridStyle = `
+            display: grid;
+            grid-template-rows: repeat(${grid.rows}, 1fr);
+            grid-template-columns: repeat(${grid.columns}, 1fr);
+            gap: 10px;
+        `;
+        
+        const cellsHtml = grid.cells
+            .map(cell => this.generateGridCell(cell))
+            .join('\n');
+        
+        return `<div class="grid-container" style="${gridStyle}">${cellsHtml}</div>`;
+    }
+
+    private generateGridCell(cell: GridCell): string {
+        const rowStart = cell.rows_start;
+        const rowEnd = cell.rows_end ? cell.rows_end + 1 : rowStart + 1;
+        const colStart = cell.columns_start;
+        const colEnd = cell.columns_end ? cell.columns_end + 1 : colStart + 1;
+        
+        const cellStyle = `
+            grid-row: ${rowStart} / ${rowEnd};
+            grid-column: ${colStart} / ${colEnd};
+        `;
+        
+        const contentHtml = cell.container 
+            ? this.generateContainer(cell.container)
+            : '';
+        
+        return `<div class="grid-cell" style="${cellStyle}">${contentHtml}</div>`;
     }
 
     // HTML pour un code container

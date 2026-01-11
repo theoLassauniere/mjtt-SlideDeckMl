@@ -24,8 +24,17 @@ Slide:
     'Slide' '{'
         ('title' '=' title=STRING)?
         ('backgroundColor' '=' backgroundColor=Color)?
-        containers+=Container*
+        (container=Container)?
+        (grid=Grid)?
     '}';
+
+Grid:
+    'grille' rows=INT ':' columns=INT
+        cells+=GridCell+;
+
+GridCell:
+    rows_start=INT('-' rows_end=INT)? ':' columns_start=INT('-' columns_end=INT)?
+        container=Container;
 
 Container:
     TextContainer | MediaContainer | CodeContainer
