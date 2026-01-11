@@ -24,16 +24,19 @@ Slide:
     'Slide' '{'
         ('title' '=' title=STRING)?
         ('backgroundColor' '=' backgroundColor=Color)?
-        (container=Container)?
-        (grid=Grid)?
+        content=SlideContent
     '}';
 
-Grid:
-    'grille' rows=INT ':' columns=INT
-        cells+=GridCell+;
+SlideContent:
+      container=Container |
+      grid=Grid;
 
-GridCell:
-    rows_start=INT('-' rows_end=INT)? ':' columns_start=INT('-' columns_end=INT)?
+Grid:
+    'grid' rows=INT ':' columns=INT
+        cells+=Cell+;
+// Manque le fait qu'une cell peut contenir une grid
+Cell:
+    rowIndexStart=INT('-' rowIndexEnd=INT)? ':' columnIndexStart=INT('-' columnIndexEnd=INT)?
         container=Container;
 
 Container:
