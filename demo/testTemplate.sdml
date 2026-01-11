@@ -17,13 +17,18 @@ Presentation TestTemplate {
 
     Slide {
         title = "Bienvenue"
-        text
-            text = "Présentation \" Template \" "
-
-        text
-            text = "Changement style"
-            fontSize = "3rem"
-            fontColor = "#870909ff"
+        grid 1:2 {
+            1:1 {
+                text
+                    text = "Présentation \" Template \" "
+            }
+            1:2 {
+                text
+                    text = "Changement style"
+                    fontSize = "3rem"
+                    fontColor = "#870909ff"
+            }
+        }
     }
     Slide {
         title = "Lorem lorem lorem"
@@ -42,9 +47,15 @@ Presentation TestTemplate {
     }
     Slide {
         title = "UN LOUP"
-        media
-            mediaLink = "../assets/loup.jpg"
-        text
-            text = "Canis lupus, le Loup, plus spécifiquement désigné sous le nom de Loup gris, plus rarement sous ceux de Loup commun ou Loup vulgaire, est une espèce de mammifère carnivore de la famille des canidés."
+        grid 1:2 {
+            1:1 {
+                media
+                    mediaLink = "../assets/loup.jpg"
+            }
+            1:2 {
+                text
+                    text = "Canis lupus, le Loup, plus spécifiquement désigné sous le nom de Loup gris, plus rarement sous ceux de Loup commun ou Loup vulgaire, est une espèce de mammifère carnivore de la famille des canidés."
+            }
+        }
     }
 }

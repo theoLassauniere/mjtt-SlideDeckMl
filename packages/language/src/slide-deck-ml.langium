@@ -32,12 +32,14 @@ SlideContent:
       grid=Grid;
 
 Grid:
-    'grid' rows=INT ':' columns=INT
-        cells+=Cell+;
-// Manque le fait qu'une cell peut contenir une grid
+    'grid' rows=INT ':' columns=INT '{'
+        cells+=Cell+
+    '}';
+
 Cell:
-    rowIndexStart=INT('-' rowIndexEnd=INT)? ':' columnIndexStart=INT('-' columnIndexEnd=INT)?
-        container=Container;
+    rowIndexStart=INT('-' rowIndexEnd=INT)? ':' columnIndexStart=INT('-' columnIndexEnd=INT)? '{'
+        (containers+=Container* | grid=Grid)
+    '}';
 
 Container:
     TextContainer | MediaContainer | CodeContainer

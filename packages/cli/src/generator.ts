@@ -1,7 +1,7 @@
 import { LangiumDocument } from 'langium';
 import * as fs from 'fs';
 import * as path from 'path';
-import { Presentation, Slide, CodeContainer, TextContainer, Container, MediaContainer, Grid, GridCell } from '../../language/out/generated/ast.js';
+import { Presentation, Slide, CodeContainer, TextContainer, Container, MediaContainer, Grid, Cell } from '../../language/out/generated/ast.js';
 
 export class SlideDeckGenerator {
     
@@ -87,10 +87,10 @@ export class SlideDeckGenerator {
             : '';
         
         let content = '';
-        if (slide.grid) {
-            content = this.generateGrid(slide.grid);
-        } else if (slide.container) {
-            content = this.generateContainer(slide.container);
+        if (slide.content.grid) {
+            content = this.generateGrid(slide.content.grid);
+        } else if (slide.content.container) {
+            content = this.generateContainer(slide.content.container);
         }
 
         return `
@@ -267,26 +267,24 @@ export class SlideDeckGenerator {
         `;
         
         const cellsHtml = grid.cells
-            .map(cell => this.generateGridCell(cell))
+            .map(cell => this.generateCell(cell))
             .join('\n');
         
         return `<div class="grid-container" style="${gridStyle}">${cellsHtml}</div>`;
     }
 
-    private generateGridCell(cell: GridCell): string {
-        const rowStart = cell.rows_start;
-        const rowEnd = cell.rows_end ? cell.rows_end + 1 : rowStart + 1;
-        const colStart = cell.columns_start;
-        const colEnd = cell.columns_end ? cell.columns_end + 1 : colStart + 1;
+    private generateCell(cell: Cell): string {
+        const rowStart = cell.rowIndexStart ?? 1;
+        const rowEnd = cell.rowIndexEnd ? cell.rowIndexEnd + 1 : rowStart + 1;
+        const colStart = cell.columnIndexStart ?? 1;
+        const colEnd = cell.columnIndexEnd ? cell.columnIndexEnd + 1 : colStart + 1;
         
         const cellStyle = `
             grid-row: ${rowStart} / ${rowEnd};
             grid-column: ${colStart} / ${colEnd};
         `;
         
-        const contentHtml = cell.container 
-            ? this.generateContainer(cell.container)
-            : '';
+        const contentHtml = cell.containers.map(c => this.generateContainer(c)).join('\n');
         
         return `<div class="grid-cell" style="${cellStyle}">${contentHtml}</div>`;
     }

@@ -7,5 +7,8 @@ Presentation PremierTest {
         backgroundColor = "white"
 
     Slide {
+        title = "Premier Test"
+        text
+            text = "Ceci est un test de présentation."
     }
 }
