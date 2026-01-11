@@ -17,11 +17,11 @@ Presentation GridSlide {
                 grid 2:2 {
                     1:1 {
                         text
-                            text = "Prout"
+                            text = "Cellule 1:1 dans 1:2"
                     }
                     2:2 {
                         text
-                            text = "Caca"
+                            text = "Cellule 2:2 dans 1:2"
                     }
                 }
             }

@@ -267,7 +267,8 @@ export class SlideDeckGenerator {
         `;
         
         const cellsHtml = grid.cells
-            .map(cell => this.generateCell(cell))
+            .map(cell => 
+                cell.grid ? this.generateGrid(cell.grid) : this.generateCell(cell))
             .join('\n');
         
         return `<div class="grid-container" style="${gridStyle}">${cellsHtml}</div>`;
