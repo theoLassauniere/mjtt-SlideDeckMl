@@ -277,6 +277,10 @@ export class SlideDeckGenerator {
 
             .grid-cell {
                 border: 1px solid red;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
             }
         `;
     }
@@ -286,7 +290,6 @@ export class SlideDeckGenerator {
             display: grid;
             grid-template-rows: repeat(${grid.rows}, 1fr);
             grid-template-columns: repeat(${grid.columns}, 1fr);
-            gap: 10px;
         `;
         
         const cellsHtml = grid.cells
@@ -306,6 +309,7 @@ export class SlideDeckGenerator {
         const cellStyle = `
             grid-row: ${rowStart} / ${rowEnd};
             grid-column: ${colStart} / ${colEnd};
+
         `;
         
         const contentHtml = cell.containers.map(c => this.generateContainer(c)).join('\n');
