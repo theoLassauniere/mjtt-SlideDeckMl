@@ -92,16 +92,25 @@ export class SlideDeckGenerator {
     }
 
     private generateSlide(slide: Slide, slideNumber?: number): string {
-        const bg = slide.backgroundColor
-            ? ` data-background-color="${slide.backgroundColor}"`
-            : '';
+        let bgAttr = '';
+        if (slide.backgroundImage) {
+            bgAttr = ` data-background-image="${slide.backgroundImage}"`;
+        } else if (slide.backgroundColor) {
+            bgAttr = ` data-background-color="${slide.backgroundColor}"`;
+        }
 
         const titleHtml = slide.title
+<<<<<<< HEAD
         ? `<h2 class="slide-title"${slide.titleSize ? ` style="font-size: ${slide.titleSize};"` : ''}>
             ${sanitizeTextContainerHtml(slide.title)}
         </h2>
         <hr class="slide-separator">`
         : '';
+=======
+            ? `<h2 class="slide-title">${sanitizeTextContainerHtml(slide.title)}</h2>
+            <hr class="slide-separator">`
+            : '';
+>>>>>>> 373ebe3 (:bug: Fix de la background color et ajout de la background image)
 
         const slideNumberHtml = slideNumber !== undefined
             ? `<div class="slide-number">${slideNumber}</div>`
@@ -116,7 +125,7 @@ export class SlideDeckGenerator {
             }
         }
         return `
-            <section${bg} class="section-slide">
+            <section${bgAttr} class="section-slide">
                 <div class="sdml-slide">
                     ${slideNumberHtml}
                     ${titleHtml}

@@ -12,7 +12,6 @@ export function generateTemplateStyle(template: any): string {
     }
 
     .reveal .slides {
-        background-color: ${template.backgroundColor};
         height: 100%;
     }
 
