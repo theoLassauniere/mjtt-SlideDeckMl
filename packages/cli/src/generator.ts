@@ -5,6 +5,7 @@ import { Presentation, Slide } from '../../language/out/generated/ast.js';
 import { generateLogos, generateTemplateStyle } from './template/template.js';
 import { generateGrid, generateGridStyle } from './grid/grid.js';
 import { generateContainer, sanitizeTextContainerHtml } from './containers/containers.js';
+import { generateMathStyle } from './math/math.js';
 
 export class SlideDeckGenerator {
     
@@ -37,6 +38,7 @@ export class SlideDeckGenerator {
         const logos = generateLogos(template);
         const templateStyle = generateTemplateStyle(template);
         const gridStyle = generateGridStyle();
+        const mathStyle = generateMathStyle();
         
         return `<!DOCTYPE html>
 <html lang="fr">
@@ -53,6 +55,7 @@ export class SlideDeckGenerator {
     <style>
         ${templateStyle}
         ${gridStyle}
+        ${mathStyle}
     </style>
 </head>
 <body>
@@ -76,6 +79,9 @@ export class SlideDeckGenerator {
             plugins: [ RevealHighlight ]
         });
     </script>
+
+    <!-- MathJax Integration -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=AM_CHTML"></script>
 </body>
 </html>`;
     }
