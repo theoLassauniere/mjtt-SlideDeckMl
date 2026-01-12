@@ -74,17 +74,22 @@ export function generateTemplateStyle(template: any): string {
     `;
 }
 
-export function generateLogoStyle(positions: string[]): string {
-    let style = '';
+export function generateLogoStyle(logo: any): string {
+    let style = 'position:absolute; z-index:10;';
 
-    if (positions.includes('TOP')) style += 'top: 20px;';
-    if (positions.includes('BOTTOM')) style += 'bottom: 20px;';
-    if (positions.includes('LEFT')) style += 'left: 18%;';
-    if (positions.includes('RIGHT')) style += 'right: 18%;';
-    if (positions.includes('CENTER')) {
-        style += 'top: 50%; left: 50%; transform: translate(-50%, -50%);';
+    if (logo.positions?.includes('TOP')) style += 'top: 20px;';
+    if (logo.positions?.includes('BOTTOM')) style += 'bottom: 20px;';
+    if (logo.positions?.includes('LEFT')) style += 'left: 18%;';
+    if (logo.positions?.includes('RIGHT')) style += 'right: 18%;';
+
+    if (logo.positions?.includes('CENTER')) {
+        style += 'top:50%; left:50%; transform:translate(-50%, -50%);';
     }
-    style += 'height: 100px;';
+
+    if (logo.width) {
+        style += `width:${logo.width}px;`;
+        style += `height:${logo.height ?? logo.width}px;`;
+    }
 
     return style;
 }
@@ -94,7 +99,7 @@ export function generateLogos(template: any): string {
 
     return template.logos.map((logo: any) => {
         const style = logo.positions
-            ? generateLogoStyle(logo.positions)
+            ? generateLogoStyle(logo)
             : '';
 
         return `<img src="${logo.path}" class="logo" style="${style}">`;

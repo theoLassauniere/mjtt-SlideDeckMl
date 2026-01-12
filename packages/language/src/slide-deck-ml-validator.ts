@@ -120,6 +120,11 @@ export class SlideDeckMlValidator {
     }
 
     checkLogoPath(logo: Logo, accept: ValidationAcceptor): void {
+        if (!logo.path) {
+            accept('error', 'Le chemin du logo est obligatoire.', { node: logo });
+            return;
+        }
+
         const filePath = logo.path;
         const allowedExtensions = ['.png', '.jpg', '.jpeg', '.svg'];
         const ext = path.extname(filePath).toLowerCase();
