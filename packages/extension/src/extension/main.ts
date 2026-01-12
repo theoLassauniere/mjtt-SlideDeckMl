@@ -2,7 +2,7 @@ import type { LanguageClientOptions, ServerOptions } from 'vscode-languageclient
 import * as vscode from 'vscode';
 import * as path from 'node:path';
 import { LanguageClient, TransportKind } from 'vscode-languageclient/node.js';
-import { ensurePreviewPanel, updatePreviewContent, shouldKeepCurrentPreview, rememberDocument, hasPreviewPanel, isSlideDeckFile } from './preview.js';
+import { ensurePreviewPanel, updatePreviewContent, shouldKeepCurrentPreview, rememberDocument, hasPreviewPanel, isSlideDeckFile, getWebview } from './preview.js';
 import { generateHtmlFromEditor, getErrorHtml } from './html-generator.js';
 
 let client: LanguageClient;
@@ -93,7 +93,7 @@ async function updatePreview(): Promise<void> {
     }
     
     rememberDocument(editor.document);
-    const result = await generateHtmlFromEditor(editor);
+    const result = await generateHtmlFromEditor(editor, getWebview());
     
     if ('error' in result) {
         updatePreviewContent(getErrorHtml(result.error, result.details));

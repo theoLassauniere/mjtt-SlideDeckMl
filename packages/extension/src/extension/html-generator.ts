@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import * as path from 'path';
 import { createSlideDeckMlServices, Presentation } from 'slide-deck-ml-language';
 import { NodeFileSystem } from 'langium/node';
 import { SlideDeckGenerator } from 'slide-deck-ml-cli';
@@ -6,7 +7,7 @@ import { SlideDeckGenerator } from 'slide-deck-ml-cli';
 const services = createSlideDeckMlServices(NodeFileSystem).SlideDeckMl;
 const generator = new SlideDeckGenerator();
 
-export async function generateHtmlFromEditor(editor: vscode.TextEditor): Promise<{ html: string; title: string } | { error: string; details?: string }> {
+export async function generateHtmlFromEditor(editor: vscode.TextEditor, webview?: vscode.Webview): Promise<{ html: string; title: string } | { error: string; details?: string }> {
     const fileContent = editor.document.getText();
     const document = services.shared.workspace.LangiumDocumentFactory.fromString(
         fileContent, 
@@ -21,7 +22,11 @@ export async function generateHtmlFromEditor(editor: vscode.TextEditor): Promise
     }
     
     try {
-        const html = generator.generatePresentation(presentation);
+        let html = generator.generatePresentation(presentation);
+        if (webview) {
+            html = convertLocalPathsToWebviewUris(html, editor.document.uri, webview);
+        }
+        
         return { 
             html, 
             title: `Preview: ${presentation.name}` 
@@ -32,6 +37,25 @@ export async function generateHtmlFromEditor(editor: vscode.TextEditor): Promise
             details: String(error) 
         };
     }
+}
+
+// VSCode webviews cannot directly access local file paths.
+function convertLocalPathsToWebviewUris(html: string, documentUri: vscode.Uri, webview: vscode.Webview): string {
+    const documentDir = path.dirname(documentUri.fsPath);
+    const generatedDir = path.join(documentDir, 'generated');
+    
+    return html.replace(/(?:src|href)="([^"]+)"/g, (match, filePath) => {
+        if (filePath.startsWith('http://') || filePath.startsWith('https://') || filePath.startsWith('data:')) {
+            return match;
+        }
+        
+        const absolutePath = path.isAbsolute(filePath) 
+            ? filePath 
+            : path.resolve(generatedDir, filePath);
+        
+        const webviewUri = webview.asWebviewUri(vscode.Uri.file(absolutePath));
+        return match.replace(filePath, webviewUri.toString());
+    });
 }
 
 export function getErrorHtml(title: string, details?: string): string {

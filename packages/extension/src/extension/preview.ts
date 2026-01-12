@@ -5,13 +5,19 @@ let lastDocument: vscode.TextDocument | undefined;
 
 export function ensurePreviewPanel(): void {
     if (!previewPanel) {
+        const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
+        const localResourceRoots = workspaceFolder 
+            ? [workspaceFolder.uri] 
+            : [];
+        
         previewPanel = vscode.window.createWebviewPanel(
             'slideDeckPreview',
             'SlideDeck Preview',
             vscode.ViewColumn.Two,
             {
                 enableScripts: true,
-                retainContextWhenHidden: true
+                retainContextWhenHidden: true,
+                localResourceRoots
             }
         );
         
@@ -30,6 +36,10 @@ export function updatePreviewContent(html: string, title?: string): void {
         previewPanel.title = title;
     }
     previewPanel.webview.html = html;
+}
+
+export function getWebview(): vscode.Webview | undefined {
+    return previewPanel?.webview;
 }
 
 export function isSlideDeckFile(editor: vscode.TextEditor | undefined): editor is vscode.TextEditor {
