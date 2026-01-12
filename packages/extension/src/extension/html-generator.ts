@@ -1,0 +1,75 @@
+import * as vscode from 'vscode';
+import { createSlideDeckMlServices, Presentation } from 'slide-deck-ml-language';
+import { NodeFileSystem } from 'langium/node';
+import { SlideDeckGenerator } from 'slide-deck-ml-cli';
+
+const services = createSlideDeckMlServices(NodeFileSystem).SlideDeckMl;
+const generator = new SlideDeckGenerator();
+
+export async function generateHtmlFromEditor(editor: vscode.TextEditor): Promise<{ html: string; title: string } | { error: string; details?: string }> {
+    const fileContent = editor.document.getText();
+    const document = services.shared.workspace.LangiumDocumentFactory.fromString(
+        fileContent, 
+        vscode.Uri.file(editor.document.uri.fsPath)
+    );
+    
+    await services.shared.workspace.DocumentBuilder.build([document], { validation: false });
+    
+    const presentation = document.parseResult.value as Presentation;
+    if (!presentation || !presentation.name) {
+        return { error: 'Could not parse the presentation' };
+    }
+    
+    try {
+        const html = generator.generatePresentation(presentation);
+        return { 
+            html, 
+            title: `Preview: ${presentation.name}` 
+        };
+    } catch (error) {
+        return { 
+            error: 'Error generating HTML', 
+            details: String(error) 
+        };
+    }
+}
+
+export function getErrorHtml(title: string, details?: string): string {
+    return `
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <style>
+                body {
+                    font-family: system-ui, -apple-system, sans-serif;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    height: 100vh;
+                    margin: 0;
+                    background: #1e1e1e;
+                    color: #d4d4d4;
+                }
+                .error-container {
+                    text-align: center;
+                    padding: 2rem;
+                }
+                h1 {
+                    color: #f48771;
+                    font-size: 1.5rem;
+                    margin-bottom: 0.5rem;
+                }
+                p {
+                    color: #858585;
+                    font-size: 1rem;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="error-container">
+                <h1>${title}</h1>
+                ${details ? `<p>${details}</p>` : ''}
+            </div>
+        </body>
+        </html>`;
+}
