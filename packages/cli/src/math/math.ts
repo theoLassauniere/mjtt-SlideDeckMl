@@ -16,3 +16,11 @@ export function generateEquationLine(equationLine: EquationLine): string {
                 </div>
     `;
 }
+
+export function generateEquationDescription(description: string): string {
+    return `
+                <p>
+                    ${description}
+                </p>
+    `;
+}
