@@ -31,7 +31,6 @@ export function generateTemplateStyle(template: any): string {
         width: 70%;
     }
 
-    /* Slide = section */
     .reveal .slides section.section-slide {
         width: 100%;
         height: 100% !important;
