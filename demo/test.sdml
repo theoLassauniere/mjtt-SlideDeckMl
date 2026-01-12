@@ -5,7 +5,7 @@ Presentation PremierTest {
         fontSize = "1rem"
         fontColor = "#222222"
         titlesSize = "2rem"
-        backgroundColor = "white"
+        backgroundImage = "../assets/logo_school.svg"
 
     Slide {
         title = "Premier Test"
