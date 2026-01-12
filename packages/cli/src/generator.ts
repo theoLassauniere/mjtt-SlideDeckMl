@@ -1,7 +1,10 @@
 import { LangiumDocument } from 'langium';
 import * as fs from 'fs';
 import * as path from 'path';
-import { Presentation, Slide, CodeContainer, TextContainer, Container, MediaContainer, Grid, Cell } from '../../language/out/generated/ast.js';
+import { Presentation, Slide } from '../../language/out/generated/ast.js';
+import { generateLogos, generateTemplateStyle } from './template/template.js';
+import { generateGrid, generateGridStyle } from './grid/grid.js';
+import { generateContainer, sanitizeTextContainerHtml } from './containers/containers.js';
 
 export class SlideDeckGenerator {
     
@@ -31,9 +34,9 @@ export class SlideDeckGenerator {
         const slides = presentation.slides
             .map((s: Slide) => this.generateSlide(s))
             .join('\n');
-        const logos = this.generateLogos(template);
-        const templateStyle = this.generateTemplateStyle(template);
-        const gridStyle = this.generateGridStyle();
+        const logos = generateLogos(template);
+        const templateStyle = generateTemplateStyle(template);
+        const gridStyle = generateGridStyle();
         
         return `<!DOCTYPE html>
 <html lang="fr">
@@ -83,15 +86,17 @@ export class SlideDeckGenerator {
             : '';
 
         const titleHtml = slide.title
-            ? `<h2 class="slide-title">${this.sanitizeTextContainerHtml(slide.title)}</h2>
+            ? `<h2 class="slide-title">${sanitizeTextContainerHtml(slide.title)}</h2>
         <hr class="slide-separator">`
             : '';
         
         let content = '';
-        if (slide.content.grid) {
-            content = this.generateGrid(slide.content.grid);
-        } else if (slide.content.container) {
-            content = this.generateContainer(slide.content.container);
+        if (slide.content) {
+            if (slide.content.grid) {
+            content = generateGrid(slide.content.grid);
+            } else if (slide.content.containers) {
+                content = slide.content.containers.map(container => generateContainer(container)).join('\n');
+            }
         }
         return `
                 <section${bg}  class="section-slide">
@@ -104,76 +109,7 @@ export class SlideDeckGenerator {
                 </section>
             `;
     }
-
-    private generateContainer(container: Container): string {
-        switch (container.$type) {
-            case 'TextContainer':
-                return this.generateTextContainer(container as TextContainer);
-            case 'MediaContainer':
-                return this.generateMediaContainer(container as MediaContainer);
-            case 'CodeContainer' :
-                return this.generateCodeContainer(container as CodeContainer);
-            default:
-                return '';
-        }
-    }
-
-    private generateTextContainer(container: TextContainer): string {
-        const styleParts: string[] = [];
-
-        if (container.fontSize) {
-            styleParts.push(`font-size: ${container.fontSize};`);
-        }
-
-        if (container.fontColor) {
-            styleParts.push(`color: ${container.fontColor};`);
-        }
-
-        const style = styleParts.length > 0
-            ? ` style="${styleParts.join(' ')}"`
-            : '';
-
-        const text = this.sanitizeTextContainerHtml(container.text);
-
-        return `<div class="text-container"${style}>${text}</div>`;
-    }
-
-    private sanitizeTextContainerHtml(text: string): string {
-        if (!text) return '';
-        text = text.replace(/&/g, '&amp;');
-        const allowedTags = ['strong', 'em', 'b', 'i', 'u', 'br'];
-
-        return text.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, (match, tagName) => {
-            tagName = tagName.toLowerCase();
-            return allowedTags.includes(tagName) ? match : match.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-        });
-    }
-
-    private generateMediaContainer(container: MediaContainer): string {
-        const ext = container.mediaLink.split('.').pop()?.toLowerCase();
-
-        if (!ext) return '';
-
-        const imageExtensions = ['png', 'jpg', 'jpeg', 'svg'];
-        const videoExtensions = ['mp4', 'webm', 'ogg'];
-
-        if (imageExtensions.includes(ext)) {
-            return `<img src="${container.mediaLink}" class="media-container" style="max-width: 100%; height: auto;">`;
-        }
-
-        if (videoExtensions.includes(ext)) {
-            return `
-                <video class="media-container" controls style="max-width: 100%; height: auto;">
-                    <source src="${container.mediaLink}" type="video/${ext === 'mp4' ? 'mp4' : ext}">
-                    Votre navigateur ne supporte pas la lecture de la vidéo.
-                </video>
-            `;
-        }
-
-        return '';
-    }
-
-    private generateTemplateStyle(template: any): string {
+private generateTemplateStyle(template: any): string {
         return `
  html, body {
             height: 100%;
@@ -252,32 +188,6 @@ export class SlideDeckGenerator {
         `;
     }
 
-    private generateLogoStyle(positions: string[]): string {
-        let style = '';
-
-        if (positions.includes('TOP')) style += 'top: 20px;';
-        if (positions.includes('BOTTOM')) style += 'bottom: 20px;';
-        if (positions.includes('LEFT')) style += 'left: 18%;';
-        if (positions.includes('RIGHT')) style += 'right: 18%;';
-        if (positions.includes('CENTER')) {
-            style += 'top: 50%; left: 50%; transform: translate(-50%, -50%);';
-        }
-        style += 'height: 100px;';
-
-        return style;
-    }
-
-    private generateLogos(template: any): string {
-        if (!template.logos) return '';
-
-        return template.logos.map((logo: any) => {
-            const style = logo.positions
-                ? this.generateLogoStyle(logo.positions)
-                : '';
-
-            return `<img src="${logo.path}" class="logo" style="${style}">`;
-        }).join('\n');
-    }
 
     private generateGridStyle(): string {
         return `
@@ -294,50 +204,5 @@ export class SlideDeckGenerator {
                 flex-direction: column;
             }
         `;
-    }
-
-    private generateGrid(grid: Grid): string {
-        const gridStyle = `
-            display: grid;
-            grid-template-rows: repeat(${grid.rows}, 1fr);
-            grid-template-columns: repeat(${grid.columns}, 1fr);
-        `;
-        
-        const cellsHtml = grid.cells
-            .map(cell => 
-                cell.grid ? this.generateGrid(cell.grid) : this.generateCell(cell))
-            .join('\n');
-        
-        return `<div class="grid-container" style="${gridStyle}">${cellsHtml}</div>`;
-    }
-
-    private generateCell(cell: Cell): string {
-        const rowStart = cell.rowIndexStart ?? 1;
-        const rowEnd = cell.rowIndexEnd ? cell.rowIndexEnd + 1 : rowStart + 1;
-        const colStart = cell.columnIndexStart ?? 1;
-        const colEnd = cell.columnIndexEnd ? cell.columnIndexEnd + 1 : colStart + 1;
-        
-        const cellStyle = `
-            grid-row: ${rowStart} / ${rowEnd};
-            grid-column: ${colStart} / ${colEnd};
-
-        `;
-        
-        const contentHtml = cell.containers.map(c => this.generateContainer(c)).join('\n');
-        
-        return `<div class="grid-cell" style="${cellStyle}">${contentHtml}</div>`;
-    }
-
-    // HTML pour un code container
-    private generateCodeContainer(codeContainer: CodeContainer) {
-        console.log("Code : ", codeContainer.code)
-        const codeLength = codeContainer.code.length;
-        const cleaned = codeContainer.code.substring(3,codeLength-4).trim();
-        console.log("Cleaned Code : ", cleaned)
-        return `
-            <pre><code class="langage-${codeContainer.language.toLowerCase()}" data-trim data-line-numbers>
-${cleaned}
-            </code></pre>
-        `
     }
 }

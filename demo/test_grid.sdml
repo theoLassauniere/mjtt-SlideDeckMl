@@ -6,7 +6,7 @@ Presentation GridSlide {
         backgroundColor = "white"
 
     Slide {
-        title="Template"
+        title = "Premier Test"
         grid 2:2 {
             1:1 {
                 text

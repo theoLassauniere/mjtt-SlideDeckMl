@@ -24,12 +24,11 @@ Slide:
     'Slide' '{'
         ('title' '=' title=STRING)?
         ('backgroundColor' '=' backgroundColor=Color)?
-        content=SlideContent
+        (content=SlideContent)?
     '}';
 
 SlideContent:
-      container=Container |
-      grid=Grid;
+    containers+=Container+ | grid=Grid;
 
 Grid:
     'grid' rows=INT ':' columns=INT '{'
