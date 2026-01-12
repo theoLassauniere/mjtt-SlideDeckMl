@@ -17,7 +17,10 @@ export function registerValidationChecks(services: SlideDeckMlServices) {
     const registry = services.validation.ValidationRegistry;
     const validator = services.validation.SlideDeckMlValidator;
     const checks: ValidationChecks<SlideDeckMlAstType> = {
-        Presentation: validator.checkPresentationStartsWithCapital,
+        Presentation: [
+            validator.checkPresentationStartsWithCapital,
+            validator.checkNumberedStart
+        ],
         Template: validator.checkFontSize,
         Logo: [
             validator.checkLogoPositions,
@@ -158,6 +161,23 @@ export class SlideDeckMlValidator {
         const absolutePath = path.resolve(path.dirname(documentPath), media.mediaLink);
         if (!fs.existsSync(absolutePath)) {
             accept('warning', `Le fichier media n'existe pas : ${media.mediaLink}`, { node: media, property: 'mediaLink' });
+        }
+    }
+
+    checkNumberedStart(presentation: Presentation, accept: ValidationAcceptor): void {
+        if (!presentation.numbered) {
+            return;
+        }
+
+        const start = presentation.numbered.start;
+        if (start !== undefined) {
+            if (!Number.isInteger(start) || start < 1) {
+                accept(
+                    'error',
+                    `Le paramètre 'start' de 'numbered' doit être un entier >= 1.`,
+                    { node: presentation, property: 'numbered' }
+                );
+            }
         }
     }
 }

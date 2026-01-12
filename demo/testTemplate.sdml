@@ -1,4 +1,5 @@
 Presentation TestTemplate {
+    numbered start 2
 
     Template
         logos = [

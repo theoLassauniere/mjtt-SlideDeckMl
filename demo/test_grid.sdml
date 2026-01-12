@@ -1,4 +1,6 @@
 Presentation GridSlide {
+    numbered
+
     Template
         fontName = "Roboto"
         fontSize = "1rem"

@@ -71,6 +71,15 @@ export function generateTemplateStyle(template: any): string {
         flex-direction: column;
         align-items: stretch;
     }
+
+    .slide-number {
+        position: absolute;
+        bottom: 1rem;
+        right: 1.5rem;
+        font-size: 0.8em;
+        opacity: 0.8;
+        pointer-events: none;
+    }
     `;
 }
 
