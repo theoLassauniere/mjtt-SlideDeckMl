@@ -2,12 +2,8 @@ Presentation TestTemplate {
 
     Template
         logos = [
-            logo
-                path = "../assets/logo_company.png"
-                positions = [TOP, LEFT],
-            logo
-                path = "../assets/logo_school.svg"
-                positions = [TOP, RIGHT]
+            logo "../assets/logo_company.png" TOP LEFT size 100
+            logo "../assets/logo_school.svg" TOP RIGHT size 120 80
         ]
         companyName = "Langium Corporation"
         fontName = "Roboto"

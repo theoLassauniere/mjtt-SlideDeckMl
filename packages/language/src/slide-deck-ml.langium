@@ -8,7 +8,7 @@ entry Presentation:
 
 Template:
     'Template'
-        ('logos' '=' '[' logos+=Logo (',' logos+=Logo)* ']')?
+        ('logos' '=' '[' logos+=Logo* ']')?
         ('companyName' '=' companyName=STRING)?
         ('fontName' '=' fontName=STRING)
         ('fontSize' '=' fontSize=STRING)
@@ -17,8 +17,9 @@ Template:
 
 Logo:
     'logo'
-        'path' '=' path=STRING
-        ('positions' '=' '[' positions+=Position (',' positions+=Position)* ']')?;
+        path=STRING
+        (positions+=Position)*
+        ('size' width=INT (height=INT)?)?;
 
 Slide:
     'Slide' '{'
