@@ -15,8 +15,7 @@ Presentation CodeEditorTest {
         backgroundColor = "white"
     Slide {
         title = "Ceci est une diapositive de code"
-        codeContainer
-            language = Python
+        code Python
             ```
 n = 3
 print("Je vais vous demander", n, "nombres")
@@ -31,14 +30,14 @@ print("Fin")
     }
     Slide {
         title = "Ceci est une seconde diapositive de code"
-        codeContainer
-            language = Javascript
+        code Javascript
             ```
 // Basic Javascript code
 let n = 6;
 n += 2; 
 console.log("Final n value : ", n);
             ```
+        text "Test"
     }
 }
 
