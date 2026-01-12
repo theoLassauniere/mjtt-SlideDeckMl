@@ -19,12 +19,10 @@ Presentation TestTemplate {
         title = "Bienvenue"
         grid 1:2 {
             1:1 {
-                text
-                    text = "Présentation \" Template \" "
+                text "Présentation \" Template \" "
             }
             1:2 {
-                text
-                    text = "Changement style"
+                text "Changement style"
                     fontSize = "3rem"
                     fontColor = "#870909ff"
             }
@@ -33,8 +31,7 @@ Presentation TestTemplate {
     Slide {
         title = "Lorem lorem lorem"
         backgroundColor = "purple"
-        text
-            text = "<strong>Lorem ipsum dolor sit amet,</strong> consectetur adipiscing elit. Suspendisse semper, felis eu rutrum finibus, nulla urna eleifend lacus, ut dapibus nisi quam sed metus. Vivamus eget ultrices nunc, ac consectetur ex. Proin viverra, orci posuere rhoncus faucibus, elit dolor convallis tellus, vitae bibendum arcu mi pharetra ligula. Duis eget velit ut purus placerat fringilla. Ut nibh ipsum, vehicula quis scelerisque ut, fermentum ac nunc. Nam placerat varius libero, sit amet malesuada eros consequat nec. Nunc feugiat tristique aliquet. Praesent ut odio vestibulum, vulputate nunc non, vestibulum ipsum. Proin id mauris ut ipsum vehicula efficitur. In suscipit semper quam sit amet fermentum. Quisque eget mauris elementum, iaculis metus sodales, posuere leo.
+        text "<strong>Lorem ipsum dolor sit amet,</strong> consectetur adipiscing elit. Suspendisse semper, felis eu rutrum finibus, nulla urna eleifend lacus, ut dapibus nisi quam sed metus. Vivamus eget ultrices nunc, ac consectetur ex. Proin viverra, orci posuere rhoncus faucibus, elit dolor convallis tellus, vitae bibendum arcu mi pharetra ligula. Duis eget velit ut purus placerat fringilla. Ut nibh ipsum, vehicula quis scelerisque ut, fermentum ac nunc. Nam placerat varius libero, sit amet malesuada eros consequat nec. Nunc feugiat tristique aliquet. Praesent ut odio vestibulum, vulputate nunc non, vestibulum ipsum. Proin id mauris ut ipsum vehicula efficitur. In suscipit semper quam sit amet fermentum. Quisque eget mauris elementum, iaculis metus sodales, posuere leo.
 
             Curabitur leo erat, <em>tempus a sodales ut,</em> volutpat nec ligula. Cras luctus pharetra risus vulputate porta. Donec dignissim nibh metus, id ornare sem ornare id. Nullam eu enim eu lorem luctus accumsan. Nulla at sollicitudin dolor. Sed id molestie sapien, a ultricies mi. Suspendisse molestie tincidunt suscipit. Proin mattis, elit vitae blandit molestie, velit libero aliquet dui, ac rutrum turpis leo quis leo. Mauris at fermentum felis.
             <br/>
@@ -42,19 +39,16 @@ Presentation TestTemplate {
     }
     Slide {
         title = "Hehehehe"
-        media
-            mediaLink = "../assets/fox.mp4"
+        media "../assets/fox.mp4"
     }
     Slide {
         title = "UN LOUP"
         grid 1:2 {
             1:1 {
-                media
-                    mediaLink = "../assets/loup.jpg"
+                media "../assets/loup.jpg"
             }
             1:2 {
-                text
-                    text = "Canis lupus, le Loup, plus spécifiquement désigné sous le nom de Loup gris, plus rarement sous ceux de Loup commun ou Loup vulgaire, est une espèce de mammifère carnivore de la famille des canidés."
+                text "Canis lupus, le Loup, plus spécifiquement désigné sous le nom de Loup gris, plus rarement sous ceux de Loup commun ou Loup vulgaire, est une espèce de mammifère carnivore de la famille des canidés."
             }
         }
     }

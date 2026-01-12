@@ -46,17 +46,17 @@ Container:
 
 TextContainer:
     'text'
-        'text' '=' text=STRING
+        text=STRING
         ('fontSize' '=' fontSize=STRING)?
         ('fontColor' '=' fontColor=Color)?;
 
 MediaContainer:
     'media'
-        'mediaLink' '=' mediaLink=STRING;
+        mediaLink=STRING;
 
 CodeContainer:
-    'codeContainer'
-        'language' '=' language=ID
+    'code'
+        language=ID
         code=CODE_BLOCK;
 
 // Types

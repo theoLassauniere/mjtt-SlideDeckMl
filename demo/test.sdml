@@ -8,7 +8,6 @@ Presentation PremierTest {
 
     Slide {
         title = "Premier Test"
-        text
-            text = "Ceci est un test de présentation."
+        text "Ceci est un test de présentation."
     }
 }

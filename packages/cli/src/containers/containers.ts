@@ -69,10 +69,8 @@ export function generateMediaContainer(container: MediaContainer): string {
 }
 
 export function generateCodeContainer(codeContainer: CodeContainer) {
-    console.log("Code : ", codeContainer.code)
     const codeLength = codeContainer.code.length;
     const cleaned = codeContainer.code.substring(3, codeLength - 4).trim();
-    console.log("Cleaned Code : ", cleaned)
     return `
             <pre><code class="langage-${codeContainer.language.toLowerCase()}" data-trim data-line-numbers>
 ${cleaned}

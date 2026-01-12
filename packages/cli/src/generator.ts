@@ -8,7 +8,6 @@ import { generateContainer, sanitizeTextContainerHtml } from './containers/conta
 
 export class SlideDeckGenerator {
     
-    // Entrypoint : génère le HTML à partir du doc langium
     generateHtml(document: LangiumDocument, destination: string): void {
         const presentation = document.parseResult.value as Presentation;
         
@@ -20,15 +19,12 @@ export class SlideDeckGenerator {
         const htmlContent = this.generatePresentation(presentation);
         const outputPath = path.join(destination, `${presentation.name}.html`);
         
-        // Créer le dossier de destination s'il n'existe pas
         fs.mkdirSync(destination, { recursive: true });
         
-        // Écrire le fichier
         fs.writeFileSync(outputPath, htmlContent, 'utf-8');
-        console.log(`✓ Fichier généré : ${outputPath}`);
+        console.log(`Fichier généré : ${outputPath}`);
     }
 
-    // Génération de la présentation
     private generatePresentation(presentation: Presentation): string {
         const template = presentation.template;
         const slides = presentation.slides
