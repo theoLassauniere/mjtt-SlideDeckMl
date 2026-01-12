@@ -41,7 +41,7 @@ Cell:
     '}';
 
 Container:
-    TextContainer | MediaContainer | CodeContainer
+    TextContainer | MediaContainer | CodeContainer | MathContainer
 ;
 
 TextContainer:
@@ -59,6 +59,16 @@ CodeContainer:
         'language' '=' language=ID
         code=CODE_BLOCK;
 
+MathContainer:
+    'mathContainer'
+        'Equation' '{'
+            equationLines+=EquationLine*
+        '}'
+        ('description' '=' description=STRING)?;
+
+EquationLine:
+    line=STRING';';
+
 // Types
 
 Color returns string:
@@ -75,7 +85,7 @@ CENTER returns string: 'CENTER';
 hidden terminal WS: /\s+/;
 terminal ID: /[_a-zA-Z][\w_]*/;
 terminal INT returns number: /[0-9]+/;
-terminal CODE_BLOCK: /```[\s\S]*?```/;
+terminal CODE_BLOCK: /```[\s\S]*?```/; 
 terminal STRING: /"(\\.|[^"\\])*"|'(\\.|[^'\\])*'/; // Permet de \ des "" pour un texte
 terminal HEX_COLOR: /#[0-9a-fA-F]{6}/;
 hidden terminal ML_COMMENT: /\/\*[\s\S]*?\*\//;

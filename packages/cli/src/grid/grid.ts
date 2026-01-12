@@ -3,19 +3,19 @@ import { generateContainer } from '../containers/containers.js';
 
 export function generateGridStyle(): string {
     return `
-            .grid-container {
-                width: 100%;
-                height: 100%; 
-            }
+    .grid-container {
+        width: 100%;
+        height: 100%; 
+    }
 
-            .grid-cell {
-                border: 1px solid red;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                flex-direction: column;
-            }
-        `;
+    .grid-cell {
+        border: 1px solid red;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+    `;
 }
 
 export function generateGrid(grid: Grid): string {

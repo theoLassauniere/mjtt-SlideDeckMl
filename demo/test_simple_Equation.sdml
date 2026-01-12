@@ -1,8 +1,8 @@
-Presentation PremierTest {
+Presentation EquationTest {
 
     Template
-        fontName = "Roboto"
-        fontSize = "3rem"
+        fontName = "Times New Roman"
+        fontSize = "1.7rem"
         fontColor = "#222222"
         backgroundColor = "white"
 
@@ -15,7 +15,11 @@ Presentation PremierTest {
         title = "Ceci est un calcul de racine"
         mathContainer
             Equation {
-                
+                "x = (-b +- sqrt(b^2 - 4ac))/(2a)";
+                "x1 = (-7 + sqrt(49 - (-32)))/(8)";
+                "<=> x1 = (-7 + sqrt(81))/(8)";
+                "<=> x1 = (-7 + 9)/(8)";
+                "<=> x1 = 1/4";
             }
     }
 }

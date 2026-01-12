@@ -1,4 +1,5 @@
-import { CodeContainer, TextContainer, Container, MediaContainer } from '../../../language/out/generated/ast.js';
+import { CodeContainer, TextContainer, Container, MediaContainer, MathContainer } from '../../../language/out/generated/ast.js';
+import { generateEquationLine } from '../math/math.js';
 
 export function generateContainer(container: Container): string {
     switch (container.$type) {
@@ -8,6 +9,8 @@ export function generateContainer(container: Container): string {
             return generateMediaContainer(container as MediaContainer);
         case 'CodeContainer':
             return generateCodeContainer(container as CodeContainer);
+        case 'MathContainer':
+            return generateMathContainer(container as MathContainer);
         default:
             return '';
     }
@@ -69,13 +72,21 @@ export function generateMediaContainer(container: MediaContainer): string {
 }
 
 export function generateCodeContainer(codeContainer: CodeContainer) {
-    console.log("Code : ", codeContainer.code)
     const codeLength = codeContainer.code.length;
     const cleaned = codeContainer.code.substring(3, codeLength - 4).trim();
-    console.log("Cleaned Code : ", cleaned)
     return `
             <pre><code class="langage-${codeContainer.language.toLowerCase()}" data-trim data-line-numbers>
 ${cleaned}
             </code></pre>
-        `
+        `;
+}
+
+export function generateMathContainer(container: MathContainer) {
+    return `
+            <div class="equation-wrapper">
+                ${container.equationLines
+                    .map(equationLine => generateEquationLine(equationLine))
+                    .join('')}
+            </div>    
+    `;
 }
