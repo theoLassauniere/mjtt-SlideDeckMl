@@ -43,6 +43,7 @@ Grid:
 
 Cell:
     rowIndexStart=INT('-' rowIndexEnd=INT)? ':' columnIndexStart=INT('-' columnIndexEnd=INT)? '{'
+        ('position' '=' position=PositionSpec)?
         (containers+=Container* | grid=Grid)
     '}';
 
@@ -67,6 +68,10 @@ CodeContainer:
 
 // Types
 
+PositionSpec:
+    '[' positions+=Position (positions+=Position)* ']'
+;
+
 Color returns string:
     STRING | HEX_COLOR;
 
@@ -77,6 +82,8 @@ RIGHT returns string: 'RIGHT';
 TOP returns string: 'TOP';
 BOTTOM returns string: 'BOTTOM';
 CENTER returns string: 'CENTER';
+
+
 
 hidden terminal WS: /\s+/;
 terminal ID: /[_a-zA-Z][\w_]*/;

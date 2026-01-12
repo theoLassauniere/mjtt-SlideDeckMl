@@ -32,6 +32,45 @@ export function generateGrid(grid: Grid): string {
 
     return `<div class="grid-container" style="${gridStyle}">${cellsHtml}</div>`;
 }
+function positionToFlexCss(cell: Cell): string {
+    // Selon le code généré Langium, "position" peut être optionnel
+    const posList = (cell as any).position?.positions as string[] | undefined;
+    if (!posList || posList.length === 0) return '';
+
+    const pos = new Set(posList);
+
+    // CENTER => centre horizontal + vertical
+    if (pos.has('CENTER')) {
+        return `
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        `;
+    }
+
+    // vertical
+    const justify =
+        pos.has('TOP') ? 'flex-start' :
+        pos.has('BOTTOM') ? 'flex-end' :
+        'center';
+
+    // horizontal
+    const align =
+        pos.has('LEFT') ? 'flex-start' :
+        pos.has('RIGHT') ? 'flex-end' :
+        'center';
+
+    const textAlign =
+        pos.has('LEFT') ? 'left' :
+        pos.has('RIGHT') ? 'right' :
+        'center';
+
+    return `
+        justify-content: ${justify};
+        align-items: ${align};
+        text-align: ${textAlign};
+    `;
+}
 
 export function generateCell(cell: Cell): string {
     const rowStart = cell.rowIndexStart ?? 1;
@@ -42,7 +81,7 @@ export function generateCell(cell: Cell): string {
     const cellStyle = `
             grid-row: ${rowStart} / ${rowEnd};
             grid-column: ${colStart} / ${colEnd};
-
+            ${positionToFlexCss(cell)}
         `;
 
     const contentHtml = cell.containers.map(c => generateContainer(c)).join('\n');
