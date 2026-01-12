@@ -37,6 +37,7 @@
     },
     "dependencies": {
         "slide-deck-ml-language": "0.0.1",
+        "slide-deck-ml-cli": "0.0.1",
         "vscode-languageclient": "~9.0.1",
         "vscode-languageserver": "~9.0.1"
     },
