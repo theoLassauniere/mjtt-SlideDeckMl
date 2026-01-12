@@ -2,9 +2,14 @@ grammar SlideDeckMl
 
 entry Presentation:
     'Presentation' name=ID '{'
+        numbered=Numbering?
         template=Template
         slides+=Slide*
     '}';
+
+Numbering:
+    'numbered'
+    ('start' start=INT)?;
 
 Template:
     'Template'

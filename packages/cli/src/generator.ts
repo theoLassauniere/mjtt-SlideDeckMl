@@ -27,8 +27,23 @@ export class SlideDeckGenerator {
 
     private generatePresentation(presentation: Presentation): string {
         const template = presentation.template;
+        const numbering = presentation.numbered;
+        const start = numbering?.start ?? 1;
         const slides = presentation.slides
-            .map((s: Slide) => this.generateSlide(s))
+            .map((s: Slide, index: number) => {
+                if (!numbering) {
+                    return this.generateSlide(s);
+                }
+
+                const slideIndex = index + 1;
+
+                if (slideIndex < start) {
+                    return this.generateSlide(s);
+                }
+
+                const slideNumber = slideIndex - start + 1;
+                return this.generateSlide(s, slideNumber);
+            })
             .join('\n');
         const logos = generateLogos(template);
         const templateStyle = generateTemplateStyle(template);
@@ -76,7 +91,7 @@ export class SlideDeckGenerator {
 </html>`;
     }
 
-    private generateSlide(slide: Slide): string {
+    private generateSlide(slide: Slide, slideNumber?: number): string {
         const bg = slide.backgroundColor
             ? ` data-background-color="${slide.backgroundColor}"`
             : '';
@@ -84,6 +99,10 @@ export class SlideDeckGenerator {
         const titleHtml = slide.title
             ? `<h2 class="slide-title">${sanitizeTextContainerHtml(slide.title)}</h2>
         <hr class="slide-separator">`
+            : '';
+
+        const slideNumberHtml = slideNumber !== undefined
+            ? `<div class="slide-number">${slideNumber}</div>`
             : '';
         
         let content = '';
@@ -95,14 +114,15 @@ export class SlideDeckGenerator {
             }
         }
         return `
-                <section${bg}  class="section-slide">
+            <section${bg} class="section-slide">
                 <div class="sdml-slide">
+                    ${slideNumberHtml}
                     ${titleHtml}
                     <div class="slide-content">
                         ${content}
                     </div>
                 </div>
-                </section>
+            </section>
             `;
     }
 }
