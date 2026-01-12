@@ -64,24 +64,13 @@ export function generateTemplateStyle(template: any): string {
         flex: 0 0 auto;
     }
 
-    .reveal .slides section.sdml-slide .slide-content {
+    .reveal .slides section.section-slide .slide-content {
         width: 100%;
-        height: 100%;
+        flex: 1 1 auto;
+        min-height: 0;
         display: flex;
         flex-direction: column;
         align-items: stretch;
-    }
-
-    .reveal .slides section.sdml-slide .slide-content > .grid-container {
-        flex: 1 1 auto;
-        min-height: 0;
-    }
-
-    .slide-separator {
-        width: 60%;
-        margin: 0 auto 2rem auto;
-        border: none;
-        border-top: 2px solid currentColor;
     }
     `;
 }
