@@ -24,7 +24,20 @@ Slide:
     'Slide' '{'
         ('title' '=' title=STRING)?
         ('backgroundColor' '=' backgroundColor=Color)?
-        containers+=Container*
+        (content=SlideContent)?
+    '}';
+
+SlideContent:
+    containers+=Container+ | grid=Grid;
+
+Grid:
+    'grid' rows=INT ':' columns=INT '{'
+        cells+=Cell+
+    '}';
+
+Cell:
+    rowIndexStart=INT('-' rowIndexEnd=INT)? ':' columnIndexStart=INT('-' columnIndexEnd=INT)? '{'
+        (containers+=Container* | grid=Grid)
     '}';
 
 Container:

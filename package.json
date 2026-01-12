@@ -10,10 +10,12 @@
         "build": "tsc -b tsconfig.build.json && npm run build --workspaces",
         "build:clean": "npm run clean && npm run build",
         "langium:generate": "npm run --workspace packages/language langium:generate",
-        "langium:watch": "npm run --workspace packages/language langium:watch"
+        "langium:watch": "npm run --workspace packages/language langium:watch",
+        "dev": "concurrently -n LANGIUM,TSC -c yellow,cyan \"npm run langium:watch\" \"npm run watch\""
     },
     "devDependencies": {
         "@types/node": "~20.17.48",
+        "concurrently": "^9.2.1",
         "shx": "~0.4.0",
         "typescript": "~5.8.3"
     },

@@ -4,8 +4,9 @@
 !.vscode/tasks.json
 node_modules/
 dist/
-packages/cli/out/
-packages/extension/out/
+packages/cli/out
+packages/extension/out
+packages/language/out
 **/src/generated
 syntaxes/
 *.tsbuildinfo
