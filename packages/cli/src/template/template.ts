@@ -1,6 +1,6 @@
 export function generateTemplateStyle(template: any): string {
     return `
-html, body {
+    html, body {
         height: 100%;
     }
 
@@ -37,7 +37,6 @@ html, body {
         height: 100% !important;
     }
 
-    /* Contenu interne = div.sdml-slide => flex colonne */
     .reveal .slides section.section-slide > div.sdml-slide {
         width: 100%;
         height: 100%;
@@ -51,28 +50,38 @@ html, body {
         color: ${template.fontColor};
         position: relative;
         text-align: center;
-        margin-top: 0;
-        margin-bottom: 2rem;
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
         font-size: 2.2em;
         font-weight: 600;
     }
 
     .reveal .slides section.section-slide .slide-separator {
         width: 60%;
-        margin: 1rem auto 2rem auto;
+        margin: 0 auto 2rem auto;
         border: none;
         border-top: 2px solid currentColor;
         flex: 0 0 auto;
     }
 
-    /* Le contenu prend l'espace restant après le titre */
-    .reveal .slides section.section-slide .slide-content {
+    .reveal .slides section.sdml-slide .slide-content {
         width: 100%;
-        flex: 1 1 auto;
-        min-height: 0;
+        height: 100%;
         display: flex;
         flex-direction: column;
         align-items: stretch;
+    }
+
+    .reveal .slides section.sdml-slide .slide-content > .grid-container {
+        flex: 1 1 auto;
+        min-height: 0;
+    }
+
+    .slide-separator {
+        width: 60%;
+        margin: 0 auto 2rem auto;
+        border: none;
+        border-top: 2px solid currentColor;
     }
     `;
 }
