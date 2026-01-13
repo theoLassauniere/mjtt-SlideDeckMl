@@ -67,7 +67,13 @@ MathContainer:
         ('description' '=' description=STRING)?;
 
 EquationLine:
-    line=STRING';';
+    content=EquationContent';';
+
+EquationContent:
+    line=STRING | MarkedString;
+
+MarkedString:
+    prefix=STRING? START marked=STRING END suffix=STRING?;
 
 // Types
 
@@ -81,6 +87,9 @@ RIGHT returns string: 'RIGHT';
 TOP returns string: 'TOP';
 BOTTOM returns string: 'BOTTOM';
 CENTER returns string: 'CENTER';
+
+terminal START returns string: '(start)';
+terminal END returns string: '(end)';
 
 hidden terminal WS: /\s+/;
 terminal ID: /[_a-zA-Z][\w_]*/;

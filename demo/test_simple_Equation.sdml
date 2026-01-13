@@ -30,10 +30,11 @@ Presentation EquationBigTest {
                 mathContainer
                     Equation {
                         "x2 = (-7 - sqrt(49 - (-32)))/(8)";
-                        "<=> x2 = (-7 - sqrt(81))/(8)";
+                        "<=> x2 = "(start)"(-7 - sqrt(81))/(8)"(end);
                         "<=> x2 = (-7 - 9)/(8)";
-                        "<=> x2 = -2";
+                        (start)"<=> x2 = 2"(end);
                     }
+                    description = "Des parties seront animées plus tard"
             }
         }
     }

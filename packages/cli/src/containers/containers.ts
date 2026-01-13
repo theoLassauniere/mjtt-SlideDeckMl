@@ -92,6 +92,6 @@ export function generateMathContainer(container: MathContainer) {
                     .map(equationLine => generateEquationLine(equationLine))
                     .join('')}
                 ${description}
-            </div>    
+            </div>
     `;
 }

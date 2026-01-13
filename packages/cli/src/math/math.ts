@@ -5,14 +5,14 @@ export function generateMathStyle(): string {
     .equation-display {
             font-size: 1.8rem;
             margin-bottom: 10px;
-        }
+    }
         `;
 }
 
 export function generateEquationLine(equationLine: EquationLine): string {
     return `
                 <div class="equation-display">
-                    ${'`'}${equationLine.line}${'`'}
+                    ${'`'}${equationLine.content.line}${'`'}
                 </div>
     `;
 }
