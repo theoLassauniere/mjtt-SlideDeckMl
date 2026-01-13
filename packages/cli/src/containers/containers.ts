@@ -1,4 +1,4 @@
-import { CodeContainer, TextContainer, Container, MediaContainer, PlainText, List, TextElement } from '../../../language/out/generated/ast.js';
+import { CodeContainer, TextContainer, Container, MediaContainer } from '../../../language/out/generated/ast.js';
 import { generateTextContainer,generateTextContainerDefaultStyle } from './TextContainer.js';
 import { generateMediaContainer, generateMediaContainerDefaultStyle } from './MediaContainer.js';
 import { generateCodeContainer, generateCodeContainerDefaultStyle } from './CodeContainer.js';
@@ -23,5 +23,6 @@ export function generatecontainersStyle(): string {
     ${generateCodeContainerDefaultStyle()}
 `;
 }
+
 
 

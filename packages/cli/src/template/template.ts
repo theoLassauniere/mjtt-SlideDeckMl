@@ -144,20 +144,16 @@ export function generateLogoStyle(logo: any): string {
 
 
 function getLogoPositionStyle(logo: any): string {
-    // Nouveau modèle: logo.position = { vertical?: 'TOP'|'BOTTOM'|'CENTER', horizontal?: 'LEFT'|'RIGHT'|'CENTER' }
     const alignment = logo.position as { vertical?: string; horizontal?: string } | undefined;
 
     const vertical = alignment?.vertical ?? 'TOP';
     const horizontal = alignment?.horizontal ?? 'LEFT';
 
-    // Base: place via top/left/right/bottom
     let style = '';
 
-    // Vertical
     if (vertical === 'TOP') style += 'top:0;';
     else if (vertical === 'BOTTOM') style += 'bottom:0;';
 
-    // Horizontal
     if (horizontal === 'LEFT') style += 'left:0;';
     else if (horizontal === 'RIGHT') style += 'right:0;';
     return style;
