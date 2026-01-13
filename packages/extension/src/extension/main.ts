@@ -1,13 +1,41 @@
 import type { LanguageClientOptions, ServerOptions } from 'vscode-languageclient/node.js';
-import type * as vscode from 'vscode';
+import * as vscode from 'vscode';
 import * as path from 'node:path';
 import { LanguageClient, TransportKind } from 'vscode-languageclient/node.js';
+import { ensurePreviewPanel, updatePreviewContent, shouldKeepCurrentPreview, rememberDocument, hasPreviewPanel, isSlideDeckFile, getWebview } from './preview.js';
+import { generateHtmlFromEditor, getErrorHtml } from './html-generator.js';
 
 let client: LanguageClient;
 
 // This function is called when the extension is activated.
 export async function activate(context: vscode.ExtensionContext): Promise<void> {
     client = await startLanguageClient(context);
+    
+    ensurePreviewPanel();
+    updatePreview();
+    
+    // When user switches to a different editor tab
+    context.subscriptions.push(
+        vscode.window.onDidChangeActiveTextEditor(async (editor) => {
+            if (isSlideDeckFile(editor)) {
+                // If .sdml file opens in column 2, move it to column 1 (to prevent hidding preview)
+                if (editor.viewColumn === vscode.ViewColumn.Two) {
+                    await vscode.commands.executeCommand('workbench.action.closeActiveEditor');
+                    await vscode.window.showTextDocument(editor.document, vscode.ViewColumn.One);
+                    ensurePreviewPanel();
+                }
+                updatePreview();
+            }
+        })
+    );
+    
+    context.subscriptions.push(
+        vscode.workspace.onDidSaveTextDocument((document) => {
+            if (document.languageId === 'slide-deck-ml') {
+                updatePreview();
+            }
+        })
+    );
 }
 
 // This function is called when the extension is deactivated.
@@ -49,3 +77,28 @@ async function startLanguageClient(context: vscode.ExtensionContext): Promise<La
     await client.start();
     return client;
 }
+
+async function updatePreview(): Promise<void> {
+    if (!hasPreviewPanel()) {
+        return;
+    }
+    
+    const editor = vscode.window.activeTextEditor;
+    if (shouldKeepCurrentPreview(editor)) {
+        return;
+    }
+    if (!isSlideDeckFile(editor)) {
+        updatePreviewContent(getErrorHtml('No SlideDeckML file is currently open'));
+        return;
+    }
+    
+    rememberDocument(editor.document);
+    const result = await generateHtmlFromEditor(editor, getWebview());
+    
+    if ('error' in result) {
+        updatePreviewContent(getErrorHtml(result.error, result.details));
+    } else {
+        updatePreviewContent(result.html, result.title);
+    }
+}
+

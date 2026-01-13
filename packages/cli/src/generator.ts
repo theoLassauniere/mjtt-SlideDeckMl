@@ -25,7 +25,7 @@ export class SlideDeckGenerator {
         console.log(`Fichier généré : ${outputPath}`);
     }
 
-    private generatePresentation(presentation: Presentation): string {
+    public generatePresentation(presentation: Presentation): string {
         const template = presentation.template;
         const numbering = presentation.numbered;
         const start = numbering?.start ?? 1;

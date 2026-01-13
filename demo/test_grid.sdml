@@ -22,6 +22,16 @@ Presentation GridSlide {
                     2:2 {
                         text "Cellule 2:2 dans 1:2"
                     }
+                    2:1 {
+                        grid 1:2 {
+                            1:1 {
+                                text "Cellule 1:1 dans 2:1 dans 1:2"
+                            }
+                            1:2 {
+                                text "Cellule 1:2 dans 2:1 dans 1:2"
+                            }
+                        }
+                    }
                 }
             }
             2:1-2 {
