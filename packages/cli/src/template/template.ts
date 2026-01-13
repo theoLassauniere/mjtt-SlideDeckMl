@@ -51,7 +51,7 @@ export function generateTemplateStyle(template: any): string {
         text-align: center;
         margin-top: 0.5rem;
         margin-bottom: 0.5rem;
-        font-size: 2.2em;
+        font-size: ${template.titlesSize ?? '2.2em'};
         font-weight: 600;
     }
 

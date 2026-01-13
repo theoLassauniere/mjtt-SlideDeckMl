@@ -4,10 +4,12 @@ Presentation PremierTest {
         fontName = "Roboto"
         fontSize = "1rem"
         fontColor = "#222222"
+        titlesSize = "2rem"
         backgroundColor = "white"
 
     Slide {
         title = "Premier Test"
+        titleSize = "4rem"
         text "Ceci est un test de présentation."
     }
 }

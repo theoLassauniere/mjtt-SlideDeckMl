@@ -10,6 +10,7 @@ Presentation TestTemplate {
         fontName = "Roboto"
         fontSize = "1rem"
         fontColor = "#222222"
+        titlesSize = "2rem"
         backgroundColor = "white"
 
     Slide {
