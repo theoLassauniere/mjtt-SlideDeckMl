@@ -117,6 +117,16 @@ export function generateTemplateStyle(template: any): string {
         opacity: 0.8;
         pointer-events: none;
     }
+
+    .text-container ul,
+    .text-container ol {
+        margin-left: 2rem;
+        margin-top: 0.5rem;
+    }
+
+    .text-container li {
+        margin: 0.3rem 0;
+    }
     `;
 }
 

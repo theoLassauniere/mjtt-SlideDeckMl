@@ -28,9 +28,20 @@ export function generateTextContainer(container: TextContainer): string {
         ? ` style="${styleParts.join(' ')}"`
         : '';
 
-    const text = sanitizeTextContainerHtml(container.text);
+    if (container.text) {
+        const text = sanitizeTextContainerHtml(container.text);
+        return `<div class="text-container"${style}>${text}</div>`;
+    }
 
-    return `<div class="text-container"${style}>${text}</div>`;
+    if (container.list) {
+        const tag = container.list.ordered ? 'ol' : 'ul';
+        const itemsHtml = container.list.items
+            .map(item => `<li>${sanitizeTextContainerHtml(item.text)}</li>`)
+            .join('');
+        return `<div class="text-container"${style}><${tag}>${itemsHtml}</${tag}></div>`;
+    }
+
+    return `<div class="text-container"${style}></div>`;
 }
 
 export function sanitizeTextContainerHtml(text: string): string {
