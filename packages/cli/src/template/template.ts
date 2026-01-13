@@ -20,20 +20,9 @@ export function generateTemplateStyle(template: any): string {
         position: absolute;
         z-index: 10;
     }
-
-    .reveal .text-container {
-        margin: 1rem 0;
-    }
-
-    .reveal .media-container {
-        display: block;
-        width: 70%;
-    }
-
-    .reveal .slides section.section-slide {
-        width: 100%;
-        height: 100% !important;
-    }
+    
+    
+    ${generateTemplateStyle}
 
     .reveal .slides section.section-slide > div.sdml-slide {
         width: 100%;

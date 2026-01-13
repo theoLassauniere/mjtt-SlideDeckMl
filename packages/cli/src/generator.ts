@@ -4,7 +4,8 @@ import * as path from 'path';
 import { Presentation, Slide } from '../../language/out/generated/ast.js';
 import { generateLogos, generateTemplateStyle } from './template/template.js';
 import { generateGrid, generateGridStyle } from './grid/grid.js';
-import { generateContainer, sanitizeTextContainerHtml } from './containers/containers.js';
+import { generateContainer } from './containers/containers.js';
+import { sanitizeTextContainerHtml } from './utils/utils.js';
 
 export class SlideDeckGenerator {
     
