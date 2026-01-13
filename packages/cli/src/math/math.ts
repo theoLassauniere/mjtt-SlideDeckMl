@@ -2,9 +2,33 @@ import { EquationLine, MarkedString } from "slide-deck-ml-language";
 
 export function generateMathStyle(): string {
     return `
+    .equation-wrapper {
+        font-size: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
     .equation-display {
-            font-size: 1.8rem;
-            margin-bottom: 10px;
+        margin-bottom: 0.7rem;
+    }
+
+    .animated-equation-display {
+        margin-bottom: 0.7rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.4rem;
+    }
+
+    
+    .animated-equation-display p {
+        margin: 0;
+    }
+
+    #marked {
+        font-weight: bold;
+        color: red;
     }
         `;
 }
@@ -27,8 +51,10 @@ export function generateSimpleEquationLine(equationLine: EquationLine): string {
 
 export function generateEnhancedEquationLine(markedString: MarkedString): string {
     return `
-                <div class="equation-display">
-                    ${'`'}${markedString.marked}${'`'}
+                <div class="animated-equation-display">
+                    ${markedString.prefix ? `<p id="prefix">${'`'}${markedString.prefix}${'`'}</p>` : ''}
+                    ${`<p id="marked">${'`'}${markedString.marked}${'`'}</p>`}
+                    ${markedString.suffix ? `<p id="suffix">${'`'}${markedString.suffix}${'`'}</p>` : ''}
                 </div>
     `;
 }
