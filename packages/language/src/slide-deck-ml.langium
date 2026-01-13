@@ -58,9 +58,24 @@ Container:
 
 TextContainer:
     'text'
-        text=STRING
         ('fontSize' '=' fontSize=STRING)?
-        ('fontColor' '=' fontColor=Color)?;
+        ('fontColor' '=' fontColor=Color)?
+        (
+            text=STRING
+          |
+            list=List
+        )
+    ;
+
+List:
+    (ordered?='ol' | unordered?='ul')
+    '{'
+        items+=ListItem+
+    '}'
+;
+
+ListItem:
+    text=STRING;
 
 MediaContainer:
     'media'
@@ -70,12 +85,6 @@ CodeContainer:
     'code'
         language=ID
         code=CODE_BLOCK;
-
-// Types
-
-PositionSpec:
-    '[' positions+=Position (positions+=Position)* ']'
-;
 
 Color returns string:
     STRING | HEX_COLOR;
