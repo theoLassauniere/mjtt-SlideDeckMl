@@ -30,7 +30,32 @@ export function generateMathStyle(): string {
         font-weight: bold;
         color: red;
     }
+
+    .hidden {
+        display: none;
+    }
+
+    .invisible {
+        visibility: hidden;
+    }
         `;
+}
+
+export function showDocumentEquationControls(): string {
+    return `
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".equation-wrapper").forEach(function (wrapper) {
+            if (wrapper.querySelector(".animated-equation-display")) {
+                wrapper.querySelectorAll(".equation-controls").forEach(function (ctrl) {
+                    ctrl.classList.remove("hidden");
+                });
+            }
+        });
+        });
+    </script>
+
+    `;
 }
 
 export function generateEquationLine(equationLine: EquationLine) {
@@ -64,5 +89,14 @@ export function generateEquationDescription(description: string): string {
                 <p>
                     ${description}
                 </p>
+    `;
+}
+
+export function generateEquationControls(): string {
+    return `
+                <div class="equation-controls hidden">
+                    <button id="prev-step">Précédent</button>
+                    <button id="next-step">Suivant</button>
+                </div>
     `;
 }

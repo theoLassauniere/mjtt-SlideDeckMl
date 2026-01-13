@@ -39,4 +39,13 @@ Presentation EquationBigTest {
             }
         }
     }
+    Slide {
+        title = "Définition de l'énergie mécanique"
+        mathContainer
+            Equation {
+                "E_(\"mécanique\") = color(red)(E_(\"cinétique\")) + color(blue)(E_(\"potentielle\"))";
+                "color(red)(E_(\"cinétique\")) = 1/2 m v^2";
+                "color(blue)(E_(\"potentielle\")) = m g h";
+            }
+    }
 }

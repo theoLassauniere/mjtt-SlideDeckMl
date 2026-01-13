@@ -1,5 +1,5 @@
 import { CodeContainer, TextContainer, Container, MediaContainer, MathContainer } from '../../../language/out/generated/ast.js';
-import { generateEquationDescription, generateEquationLine } from '../math/math.js';
+import { generateEquationControls, generateEquationDescription, generateEquationLine } from '../math/math.js';
 
 export function generateContainer(container: Container): string {
     switch (container.$type) {
@@ -91,7 +91,8 @@ export function generateMathContainer(container: MathContainer) {
                 ${container.equationLines
                     .map(equationLine => generateEquationLine(equationLine))
                     .join('')}
-                ${description}
+                ${generateEquationControls()}
+                ${description ?? ''}
             </div>
     `;
 }
