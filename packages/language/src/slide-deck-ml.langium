@@ -18,6 +18,7 @@ Template:
         ('fontName' '=' fontName=STRING)
         ('fontSize' '=' fontSize=STRING)
         ('fontColor' '=' fontColor=Color)
+        ('titlesSize' '=' titlesSize=STRING)
         ('backgroundColor' '=' backgroundColor=Color)?;
 
 Logo:
@@ -30,6 +31,7 @@ Slide:
     'Slide' '{'
         ('title' '=' title=STRING)?
         ('backgroundColor' '=' backgroundColor=Color)?
+        ('titleSize' '=' titleSize=STRING)?
         (content=SlideContent)?
     '}';
 
