@@ -26,7 +26,6 @@ export function generateTemplateStyle(template: any): string {
     }
 
     .reveal .media-container {
-        margin: 0 15%;
         display: block;
         width: 70%;
     }

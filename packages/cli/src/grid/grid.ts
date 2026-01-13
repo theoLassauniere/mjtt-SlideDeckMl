@@ -39,15 +39,14 @@ function positionToFlexCss(cell: Cell): string {
 
     const pos = new Set(posList);
 
-    // CENTER => centre horizontal + vertical
-    if (pos.has('CENTER')) {
+    // CENTER seul => centre horizontal + vertical
+    if (pos.size === 1 && pos.has('CENTER')) {
         return `
             justify-content: center;
             align-items: center;
             text-align: center;
         `;
     }
-
     // vertical
     const justify =
         pos.has('TOP') ? 'flex-start' :

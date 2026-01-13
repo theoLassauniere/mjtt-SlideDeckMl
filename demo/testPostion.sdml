@@ -35,7 +35,6 @@ Presentation PositionSlide {
     Slide {
         grid 2:2 {
             2:1-2 {
-                position = [TOP LEFT]
                 text "Cellule 2:1-2, qui prend toute la largeur du bas"
             }
         }
