@@ -16,7 +16,7 @@ Presentation TestTemplate {
 
     Slide {
         title = "Bienvenue"
-        backgroundImage = "../assets/logo_company.png"
+        backgroundImage = "../assets/background.jpg"
         grid 1:2 {
             1:1 {
                 text "Présentation \" Template \" "

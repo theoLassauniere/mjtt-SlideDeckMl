@@ -44,18 +44,30 @@ function convertLocalPathsToWebviewUris(html: string, documentUri: vscode.Uri, w
     const documentDir = path.dirname(documentUri.fsPath);
     const generatedDir = path.join(documentDir, 'generated');
     
-    return html.replace(/(?:src|href)="([^"]+)"/g, (match, filePath) => {
-        if (filePath.startsWith('http://') || filePath.startsWith('https://') || filePath.startsWith('data:')) {
-            return match;
-        }
-        
-        const absolutePath = path.isAbsolute(filePath) 
-            ? filePath 
-            : path.resolve(generatedDir, filePath);
-        
-        const webviewUri = webview.asWebviewUri(vscode.Uri.file(absolutePath));
-        return match.replace(filePath, webviewUri.toString());
+    // Convert src and href attributes
+    html = html.replace(/(?:src|href)="([^"]+)"/g, (match, filePath) => {
+        return match.replace(filePath, toWebviewUri(filePath, generatedDir, webview));
     });
+    
+    // Convert url() in CSS styles
+    html = html.replace(/url\(['"]([^'"]+)['"]\)/g, (match, filePath) => {
+        return `url('${toWebviewUri(filePath, generatedDir, webview)}')`;
+    });
+    
+    return html;
+}
+
+// Converts a local file path to a webview URI that can be loaded in the preview
+function toWebviewUri(filePath: string, baseDir: string, webview: vscode.Webview): string {
+    if (filePath.startsWith('http://') || filePath.startsWith('https://') || filePath.startsWith('data:')) {
+        return filePath;
+    }
+    
+    const absolutePath = path.isAbsolute(filePath) 
+        ? filePath 
+        : path.resolve(baseDir, filePath);
+    
+    return webview.asWebviewUri(vscode.Uri.file(absolutePath)).toString();
 }
 
 export function getErrorHtml(title: string, details?: string): string {
