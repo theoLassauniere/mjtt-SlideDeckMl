@@ -1,4 +1,4 @@
-import { EquationLine } from "slide-deck-ml-language";
+import { EquationLine, MarkedString } from "slide-deck-ml-language";
 
 export function generateMathStyle(): string {
     return `
@@ -9,10 +9,26 @@ export function generateMathStyle(): string {
         `;
 }
 
-export function generateEquationLine(equationLine: EquationLine): string {
+export function generateEquationLine(equationLine: EquationLine) {
+    if (typeof equationLine.content.line === "string") {
+        return generateSimpleEquationLine(equationLine);
+    } else {
+        return generateEnhancedEquationLine(equationLine.content.line as MarkedString);
+    }
+}
+
+export function generateSimpleEquationLine(equationLine: EquationLine): string {
     return `
                 <div class="equation-display">
                     ${'`'}${equationLine.content.line}${'`'}
+                </div>
+    `;
+}
+
+export function generateEnhancedEquationLine(markedString: MarkedString): string {
+    return `
+                <div class="equation-display">
+                    ${'`'}${markedString.marked}${'`'}
                 </div>
     `;
 }

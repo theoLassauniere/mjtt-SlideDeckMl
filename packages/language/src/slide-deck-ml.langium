@@ -70,7 +70,7 @@ EquationLine:
     content=EquationContent';';
 
 EquationContent:
-    line=STRING | MarkedString;
+    line=(STRING | MarkedString);
 
 MarkedString:
     prefix=STRING? START marked=STRING END suffix=STRING?;
