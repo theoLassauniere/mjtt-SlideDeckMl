@@ -12,7 +12,7 @@ Numbering:
     ('start' start=INT)?;
 
 Template:
-    'Template'
+    'Template' '{'
         ('logos' '=' '[' logos+=Logo* ']')?
         ('companyName' '=' companyName=STRING)?
         ('fontName' '=' fontName=STRING)
@@ -20,7 +20,8 @@ Template:
         ('fontColor' '=' fontColor=Color)
         ('titlesSize' '=' titlesSize=STRING)
         ('backgroundColor' '=' backgroundColor=Color)?
-        ('backgroundImage' '=' backgroundImage=STRING)?;
+        ('backgroundImage' '=' backgroundImage=STRING)?
+    '}';
 
 Logo:
     'logo'

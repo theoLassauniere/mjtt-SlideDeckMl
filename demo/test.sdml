@@ -1,11 +1,12 @@
 Presentation PremierTest {
 
-    Template
+    Template {
         fontName = "Roboto"
         fontSize = "1rem"
         fontColor = "#222222"
         titlesSize = "2rem"
-        backgroundImage = "../assets/logo_school.svg"
+        backgroundImage = "../assets/logo_company.png"
+    }
 
     Slide {
         title = "Premier Test"
