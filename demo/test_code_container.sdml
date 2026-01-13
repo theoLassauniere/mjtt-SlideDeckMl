@@ -1,5 +1,5 @@
 Presentation CodeEditorTest {
-    Template
+    Template {
         logos = [
             logo "../assets/logo_company.png" TOP LEFT size 100
             logo "../assets/logo_school.svg" TOP RIGHT size 120 80
@@ -10,6 +10,8 @@ Presentation CodeEditorTest {
         fontColor = "#222222"
         titlesSize = "2rem"
         backgroundColor = "white"
+    }
+
     Slide {
         title = "Ceci est une diapositive de code"
         code Python

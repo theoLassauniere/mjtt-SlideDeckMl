@@ -1,7 +1,7 @@
 import { LangiumDocument } from 'langium';
 import * as fs from 'fs';
 import * as path from 'path';
-import { Presentation, Slide } from '../../language/out/generated/ast.js';
+import { Presentation, Slide, Template } from '../../language/out/generated/ast.js';
 import { generateLogos, generateTemplateStyle } from './template/template.js';
 import { generateGrid, generateGridStyle } from './grid/grid.js';
 import { generateContainer, sanitizeTextContainerHtml } from './containers/containers.js';
@@ -32,17 +32,17 @@ export class SlideDeckGenerator {
         const slides = presentation.slides
             .map((s: Slide, index: number) => {
                 if (!numbering) {
-                    return this.generateSlide(s);
+                    return this.generateSlide(s, undefined, template);
                 }
 
                 const slideIndex = index + 1;
 
                 if (slideIndex < start) {
-                    return this.generateSlide(s);
+                    return this.generateSlide(s, undefined, template);
                 }
 
                 const slideNumber = slideIndex - start + 1;
-                return this.generateSlide(s, slideNumber);
+                return this.generateSlide(s, slideNumber, template);
             })
             .join('\n');
         const logos = generateLogos(template);
@@ -91,12 +91,27 @@ export class SlideDeckGenerator {
 </html>`;
     }
 
-    private generateSlide(slide: Slide, slideNumber?: number): string {
-        let bgAttr = '';
+    private generateSlide(slide: Slide, slideNumber?: number, template?: Template): string {
+        let style = '';
+
         if (slide.backgroundImage) {
-            bgAttr = ` data-background-image="${slide.backgroundImage}"`;
+            style = `
+                background-image: url('${slide.backgroundImage}');
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+            `;
         } else if (slide.backgroundColor) {
-            bgAttr = ` data-background-color="${slide.backgroundColor}"`;
+            style = `background-color: ${slide.backgroundColor};`;
+        } else if (template?.backgroundImage) {
+            style = `
+                background-image: url('${template.backgroundImage}');
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+            `;
+        } else if (template?.backgroundColor) {
+            style = `background-color: ${template.backgroundColor};`;
         }
 
         const titleHtml = slide.title
@@ -119,13 +134,13 @@ export class SlideDeckGenerator {
         let content = '';
         if (slide.content) {
             if (slide.content.grid) {
-            content = generateGrid(slide.content.grid);
+                content = generateGrid(slide.content.grid);
             } else if (slide.content.containers) {
                 content = slide.content.containers.map(container => generateContainer(container)).join('\n');
             }
         }
         return `
-            <section${bgAttr} class="section-slide">
+            <section class="section-slide" style="${style}">
                 <div class="sdml-slide">
                     ${slideNumberHtml}
                     ${titleHtml}

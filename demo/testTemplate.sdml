@@ -1,9 +1,9 @@
 Presentation TestTemplate {
     numbered start 2
 
-    Template
+    Template {
         logos = [
-            logo "../assets/logo_company.png" TOP LEFT size 100
+            logo "../assets/logo_company.png" BOTTOM LEFT size 100
             logo "../assets/logo_school.svg" TOP RIGHT size 120 80
         ]
         companyName = "Langium Corporation"
@@ -12,9 +12,11 @@ Presentation TestTemplate {
         fontColor = "#222222"
         titlesSize = "2rem"
         backgroundColor = "white"
+    }
 
     Slide {
         title = "Bienvenue"
+        backgroundImage = "../assets/logo_company.png"
         grid 1:2 {
             1:1 {
                 text "Présentation \" Template \" "
