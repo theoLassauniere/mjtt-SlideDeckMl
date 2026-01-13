@@ -8,7 +8,7 @@ Presentation GridSlide {
         backgroundColor = "white"
 
     Slide {
-        title = "Premier Test"
+        title = "Second Test"
         grid 2:2 {
             1:1 {
                 text "Cellule 1:1"
