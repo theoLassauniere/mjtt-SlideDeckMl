@@ -115,17 +115,11 @@ export class SlideDeckGenerator {
         }
 
         const titleHtml = slide.title
-<<<<<<< HEAD
         ? `<h2 class="slide-title"${slide.titleSize ? ` style="font-size: ${slide.titleSize};"` : ''}>
             ${sanitizeTextContainerHtml(slide.title)}
         </h2>
         <hr class="slide-separator">`
         : '';
-=======
-            ? `<h2 class="slide-title">${sanitizeTextContainerHtml(slide.title)}</h2>
-            <hr class="slide-separator">`
-            : '';
->>>>>>> 373ebe3 (:bug: Fix de la background color et ajout de la background image)
 
         const slideNumberHtml = slideNumber !== undefined
             ? `<div class="slide-number">${slideNumber}</div>`
