@@ -35,7 +35,7 @@ const ctx = await esbuild.context({
     // VSCode's extension host is still using cjs, so we need to transform the code
     format: 'cjs',
     outExtension: {
-        '.js': '.cjs.js'
+        '.js': '.cjs'
     },
     loader: { '.ts': 'ts' },
     external: ['vscode'],
