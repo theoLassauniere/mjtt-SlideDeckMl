@@ -4,7 +4,6 @@
     "description": "The extension specific package",
     "version": "0.0.1",
     "displayName": "sdml",
-    "type": "module",
     "repository": "https://github.com/theoLassauniere/mjtt-SlideDeckMl",
     "engines": {
         "vscode": "^1.67.0"
