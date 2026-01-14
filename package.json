@@ -12,7 +12,9 @@
         "langium:generate": "npm run --workspace packages/language langium:generate",
         "langium:watch": "npm run --workspace packages/language langium:watch",
         "watch-dev": "concurrently -n LANGIUM,TSC,EXTENSION -c yellow,cyan,magenta \"npm run langium:watch\" \"npm run watch\" \"npm run --workspace packages/extension watch\"",
-        "dev": "npm run langium:generate && npm run build"
+        "dev": "npm run langium:generate && npm run build",
+        "package": "npm run --workspace packages/extension package",
+        "install:ext": "npm run package && code --install-extension ./mjtt-slide-deck-ml-0.0.1.vsix"
     },
     "devDependencies": {
         "@types/node": "~20.17.48",
