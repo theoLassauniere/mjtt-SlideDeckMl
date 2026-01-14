@@ -11,13 +11,13 @@ Presentation PremierTest {
     Slide {
         title = "Premier Test"
         titleSize = "4rem"
-        transition = "fade"
+        transition = fade
         text "Ceci est un test de présentation."
     }
 
     Slide {
         title = "Deuxième Test"
-        transition = "convex"
+        transition = convex
         text "Ceci est un deuxième test de présentation."
     }
 
@@ -28,13 +28,13 @@ Presentation PremierTest {
 
     Slide {
         title = "4 Test"
-        transition = "fade"
+        transition = fade
         text "Ceci est un 4 test de présentation."
     }
 
     Slide {
         title = "5 Test"
-        transition = "fade"
+        transition = fade
         text "Ceci est un 5 test de présentation."
     }
 }
