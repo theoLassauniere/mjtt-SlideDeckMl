@@ -21,6 +21,7 @@ Template:
         ('titlesSize' '=' titlesSize=STRING)
         ('backgroundColor' '=' backgroundColor=Color)?
         ('backgroundImage' '=' backgroundImage=STRING)?
+        ('transitions' '=' transitions=STRING)?
     '}';
 
 Logo:
@@ -35,8 +36,13 @@ Slide:
         ('backgroundColor' '=' backgroundColor=Color)?
         ('titleSize' '=' titleSize=STRING)?
         ('backgroundImage' '=' backgroundImage=STRING)?
+        ('transition' '=' transition=Transition)?
         (content=SlideContent)?
     '}';
+
+Transition returns string:
+      STRING
+;
 
 SlideContent:
     containers+=Container+ | grid=Grid;
