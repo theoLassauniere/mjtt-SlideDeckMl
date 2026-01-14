@@ -23,8 +23,6 @@ Presentation TestTemplate {
             }
             1:2 {
                 text "Changement style"
-                    fontSize = "3rem"
-                    fontColor = "#870909ff"
             }
         }
     }
