@@ -3,7 +3,6 @@
     "description": "The extension specific package",
     "version": "0.0.1",
     "displayName": "sdml",
-    "type": "module",
     "repository": "https://github.com/theoLassauniere/mjtt-SlideDeckMl",
     "engines": {
         "vscode": "^1.67.0"
@@ -27,7 +26,7 @@
     "activationEvents": [
         "onLanguage:slide-deck-ml"
     ],
-    "main": "./out/extension/main.cjs",
+    "main": "./out/extension/main.cjs.js",
     "scripts": {
         "clean": "shx rm -fr *.tsbuildinfo out syntaxes",
         "vscode:prepublish": "npm run build",
