@@ -12,13 +12,16 @@ Numbering:
     ('start' start=INT)?;
 
 Template:
-    'Template'
+    'Template' '{'
         ('logos' '=' '[' logos+=Logo* ']')?
         ('companyName' '=' companyName=STRING)?
         ('fontName' '=' fontName=STRING)
         ('fontSize' '=' fontSize=STRING)
         ('fontColor' '=' fontColor=Color)
-        ('backgroundColor' '=' backgroundColor=Color)?;
+        ('titlesSize' '=' titlesSize=STRING)
+        ('backgroundColor' '=' backgroundColor=Color)?
+        ('backgroundImage' '=' backgroundImage=STRING)?
+    '}';
 
 Logo:
     'logo'
@@ -30,6 +33,8 @@ Slide:
     'Slide' '{'
         ('title' '=' title=STRING)?
         ('backgroundColor' '=' backgroundColor=Color)?
+        ('titleSize' '=' titleSize=STRING)?
+        ('backgroundImage' '=' backgroundImage=STRING)?
         (content=SlideContent)?
     '}';
 
@@ -53,9 +58,28 @@ Container:
 
 TextContainer:
     'text'
-        text=STRING
         ('fontSize' '=' fontSize=STRING)?
-        ('fontColor' '=' fontColor=Color)?;
+        ('fontColor' '=' fontColor=Color)?
+        (
+            single=TextElement
+          |
+            '{' elements+=TextElement+ '}'
+        )
+    ;
+
+TextElement:
+      PlainText
+    | List
+;
+
+PlainText:
+    text=STRING
+;
+
+List:
+    (ordered?='ol' | unordered?='ul')
+        items+=STRING+
+;
 
 MediaContainer:
     'media'
@@ -65,8 +89,6 @@ CodeContainer:
     'code'
         language=ID
         code=CODE_BLOCK;
-
-// Types
 
 PositionSpec:
     '[' positions+=Position (positions+=Position)* ']'

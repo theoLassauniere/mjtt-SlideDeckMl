@@ -12,13 +12,50 @@ export function generateTemplateStyle(template: any): string {
     }
 
     .reveal .slides {
-        background-color: ${template.backgroundColor};
         height: 100%;
     }
 
-    .logo {
+    .logo-layer {
         position: absolute;
-        z-index: 10;
+        inset: 0;
+        pointer-events: none;
+    }
+
+    .logo-slot {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        padding: 1rem 16rem;
+    }
+
+    .logo {
+        pointer-events: auto;
+        object-fit: contain;
+    }
+
+    .logo-top-left {
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+
+    .logo-top-right {
+        justify-content: flex-end;
+        align-items: flex-start;
+    }
+
+    .logo-bottom-left {
+        justify-content: flex-start;
+        align-items: flex-end;
+    }
+
+    .logo-bottom-right {
+        justify-content: flex-end;
+        align-items: flex-end;
+    }
+
+    .logo-center {
+        justify-content: center;
+        align-items: center;
     }
 
     .reveal .text-container {
@@ -50,7 +87,7 @@ export function generateTemplateStyle(template: any): string {
         text-align: center;
         margin-top: 0.5rem;
         margin-bottom: 0.5rem;
-        font-size: 2.2em;
+        font-size: ${template.titlesSize ?? '2.2em'};
         font-weight: 600;
     }
 
@@ -79,25 +116,28 @@ export function generateTemplateStyle(template: any): string {
         opacity: 0.8;
         pointer-events: none;
     }
+
+    .text-container ul,
+    .text-container ol {
+        margin-left: 2rem;
+        margin-top: 0.5rem;
+    }
+
+    .text-container li {
+        margin: 0.3rem 0;
+    }
     `;
 }
 
 export function generateLogoStyle(logo: any): string {
-    let style = 'position:absolute; z-index:10;';
-
-    if (logo.positions?.includes('TOP')) style += 'top: 20px;';
-    if (logo.positions?.includes('BOTTOM')) style += 'bottom: 20px;';
-    if (logo.positions?.includes('LEFT')) style += 'left: 18%;';
-    if (logo.positions?.includes('RIGHT')) style += 'right: 18%;';
-
-    if (logo.positions?.includes('CENTER')) {
-        style += 'top:50%; left:50%; transform:translate(-50%, -50%);';
-    }
+    let style = 'z-index:10;';
 
     if (logo.width) {
         style += `width:${logo.width}px;`;
         style += `height:${logo.height ?? logo.width}px;`;
     }
+
+    style += 'object-fit:contain;';
 
     return style;
 }
@@ -105,11 +145,27 @@ export function generateLogoStyle(logo: any): string {
 export function generateLogos(template: any): string {
     if (!template.logos) return '';
 
-    return template.logos.map((logo: any) => {
-        const style = logo.positions
-            ? generateLogoStyle(logo)
-            : '';
+    return `
+        <div class="logo-layer">
+            ${template.logos.map((logo: any) => `
+                <div class="logo-slot ${getLogoPositionClass(logo)}">
+                    <img src="${logo.path}"
+                         class="logo"
+                         style="${generateLogoStyle(logo)}" />
+                </div>
+            `).join('')}
+        </div>
+    `;
+}
 
-        return `<img src="${logo.path}" class="logo" style="${style}">`;
-    }).join('\n');
+function getLogoPositionClass(logo: any): string {
+    const p = logo.positions ?? [];
+
+    if (p.includes('CENTER')) return 'logo-center';
+    if (p.includes('TOP') && p.includes('LEFT')) return 'logo-top-left';
+    if (p.includes('TOP') && p.includes('RIGHT')) return 'logo-top-right';
+    if (p.includes('BOTTOM') && p.includes('LEFT')) return 'logo-bottom-left';
+    if (p.includes('BOTTOM') && p.includes('RIGHT')) return 'logo-bottom-right';
+
+    return 'logo-top-left';
 }

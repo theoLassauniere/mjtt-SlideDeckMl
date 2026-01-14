@@ -1,27 +1,30 @@
 Presentation TestTemplate {
     numbered start 2
 
-    Template
+    Template {
         logos = [
-            logo "../assets/logo_company.png" TOP LEFT size 100
+            logo "../assets/logo_company.png" BOTTOM LEFT size 100
             logo "../assets/logo_school.svg" TOP RIGHT size 120 80
         ]
         companyName = "Langium Corporation"
         fontName = "Roboto"
         fontSize = "1rem"
         fontColor = "#222222"
+        titlesSize = "2rem"
         backgroundColor = "white"
+    }
 
     Slide {
         title = "Bienvenue"
+        backgroundImage = "../assets/background.jpg"
         grid 1:2 {
             1:1 {
                 text "Présentation \" Template \" "
             }
             1:2 {
-                text "Changement style"
-                    fontSize = "3rem"
+                text fontSize = "3rem"
                     fontColor = "#870909ff"
+                    "Changement style"
             }
         }
     }
@@ -43,9 +46,29 @@ Presentation TestTemplate {
         grid 1:2 {
             1:1 {
                 media "../assets/loup.jpg"
+                text ul "Un" "Cinq" "Huit"
             }
             1:2 {
                 text "Canis lupus, le Loup, plus spécifiquement désigné sous le nom de Loup gris, plus rarement sous ceux de Loup commun ou Loup vulgaire, est une espèce de mammifère carnivore de la famille des canidés."
+            }
+        }
+    }
+    Slide {
+        title = "Des supers listes"
+        grid 1:2 {
+            1:1 {
+                text {
+                    "Nuwa (chinois simplifié : 女娲 ; chinois traditionnel : 女媧 ; pinyin : nǚwā, aussi transcrit Nügua) est un personnage de la mythologie chinoise dont l’origine remonte à l’Antiquité. Déesse créatrice, elle a façonné les premiers hommes avec de la glaise, leur a donné le pouvoir de procréer, a réparé le ciel brisé. On lui prête souvent un corps de serpent. Elle forme un couple avec son frère Fuxi. À partir des Tang, ils sont présentés comme les inventeurs des rites du mariage, dont elle est la patronne. Elle est également donneuse d’enfants."
+                    ol "問天" "不周" "風裡希 鳳裡犧"
+                    "Test"
+                }
+            }
+            1:2 {
+                text {
+                    ul "Ctésias" "Aristote" "Pline l'Ancien"
+                    "Test"
+                }
+                media "../assets/loup.jpg"
             }
         }
     }
