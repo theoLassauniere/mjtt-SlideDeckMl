@@ -60,21 +60,25 @@ TextContainer:
         ('fontSize' '=' fontSize=STRING)?
         ('fontColor' '=' fontColor=Color)?
         (
-            text=STRING
+            single=TextElement
           |
-            list=List
+            '{' elements+=TextElement+ '}'
         )
     ;
 
-List:
-    (ordered?='ol' | unordered?='ul')
-    '{'
-        items+=ListItem+
-    '}'
+TextElement:
+      PlainText
+    | List
 ;
 
-ListItem:
-    text=STRING;
+PlainText:
+    text=STRING
+;
+
+List:
+    (ordered?='ol' | unordered?='ul')
+        items+=STRING+
+;
 
 MediaContainer:
     'media'

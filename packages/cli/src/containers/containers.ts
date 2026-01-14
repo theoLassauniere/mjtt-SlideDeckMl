@@ -1,4 +1,4 @@
-import { CodeContainer, TextContainer, Container, MediaContainer } from '../../../language/out/generated/ast.js';
+import { CodeContainer, TextContainer, Container, MediaContainer, PlainText, List, TextElement } from '../../../language/out/generated/ast.js';
 
 export function generateContainer(container: Container): string {
     switch (container.$type) {
@@ -28,20 +28,36 @@ export function generateTextContainer(container: TextContainer): string {
         ? ` style="${styleParts.join(' ')}"`
         : '';
 
-    if (container.text) {
-        const text = sanitizeTextContainerHtml(container.text);
-        return `<div class="text-container"${style}>${text}</div>`;
+    const elements: TextElement[] = container.single
+        ? [container.single]
+        : container.elements ?? [];
+
+    if (elements.length === 1 && elements[0].$type === 'PlainText') {
+        const el = elements[0] as PlainText;
+        return `<div class="text-container"${style}>${sanitizeTextContainerHtml(el.text)}</div>`;
     }
 
-    if (container.list) {
-        const tag = container.list.ordered ? 'ol' : 'ul';
-        const itemsHtml = container.list.items
-            .map(item => `<li>${sanitizeTextContainerHtml(item.text)}</li>`)
-            .join('');
-        return `<div class="text-container"${style}><${tag}>${itemsHtml}</${tag}></div>`;
-    }
+    const content = elements.map((el: TextElement) => {
+        if (el.$type === 'PlainText') {
+            const textEl = el as PlainText;
+            return `<p>${sanitizeTextContainerHtml(textEl.text)}</p>`;
+        }
 
-    return `<div class="text-container"${style}></div>`;
+        if (el.$type === 'List') {
+            const listEl = el as List;
+            const tag = listEl.ordered ? 'ol' : 'ul';
+
+            const itemsHtml = listEl.items
+                .map((item: string) => `<li>${sanitizeTextContainerHtml(item)}</li>`)
+                .join('');
+
+            return `<${tag}>${itemsHtml}</${tag}>`;
+        }
+
+        return '';
+    }).join('\n');
+
+    return `<div class="text-container"${style}>${content}</div>`;
 }
 
 export function sanitizeTextContainerHtml(text: string): string {
