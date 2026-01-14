@@ -18,11 +18,11 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     context.subscriptions.push(
         vscode.window.onDidChangeActiveTextEditor(async (editor) => {
             if (isSlideDeckFile(editor)) {
+                ensurePreviewPanel();
                 // If .sdml file opens in column 2, move it to column 1 (to prevent hidding preview)
                 if (editor.viewColumn === vscode.ViewColumn.Two) {
                     await vscode.commands.executeCommand('workbench.action.closeActiveEditor');
                     await vscode.window.showTextDocument(editor.document, vscode.ViewColumn.One);
-                    ensurePreviewPanel();
                 }
                 updatePreview();
             }
