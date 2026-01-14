@@ -52,7 +52,7 @@ Cell:
     '}';
 
 Container:
-    TextContainer | MediaContainer | CodeContainer
+    TextContainer | MediaContainer | CodeContainer | QuizContainer | PollContainer
 ;
 
 TextContainer:
@@ -80,6 +80,32 @@ List:
         items+=STRING+
 ;
 
+QuizContainer:
+    'quiz'
+        ('id' '=' quizId=STRING)?
+        ('showResults' '=' showResults=ResultMode)?
+        question=STRING
+        '{'
+            answers+=QuizAnswer+
+        '}'
+;
+
+QuizAnswer:
+    text=STRING
+    ('correct')?
+;
+
+PollContainer:
+    'poll'
+        ('id' '=' pollId=STRING)?
+        ('chart' '=' chartType=ChartType)?
+        ('showResults' '=' showResults=ResultMode)?
+        question=STRING
+        '{'
+            options+=STRING+
+        '}'
+;
+
 MediaContainer:
     'media'
         mediaLink=STRING;
@@ -94,6 +120,8 @@ Color returns string:
 
 type Position = 'LEFT' | 'RIGHT' | 'TOP' | 'BOTTOM' | 'CENTER';
 Position returns Position : LEFT | RIGHT | TOP | BOTTOM | CENTER;
+ResultMode returns string: 'auto' | 'onDemand';
+ChartType returns string: 'bar' | 'pie' | 'wordcloud';
 LEFT returns string: 'LEFT';
 RIGHT returns string: 'RIGHT';
 TOP returns string: 'TOP';

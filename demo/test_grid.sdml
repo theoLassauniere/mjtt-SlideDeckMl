@@ -48,4 +48,36 @@ Presentation GridSlide {
             }
         }
     }
+
+    Slide {
+        title = "Sondage"
+
+        poll
+            id = "poll-lang"
+            chart = bar
+            showResults = auto
+            "Quel langage utilisez-vous pour les performances ?"
+        {
+            "C"
+            "C++"
+            "Rust"
+            "Java"
+            "Python"
+        }
+    }
+
+    Slide {
+        title = "Quiz : Algorithmes de tri"
+
+        quiz
+            id = "quiz-sort-1"
+            showResults = onDemand
+            "Quel algorithme est le plus performant en moyenne ?"
+        {
+            "Bubble Sort"
+            "Quick Sort" correct
+            "Insertion Sort"
+            "Selection Sort"
+        }
+    }
 }

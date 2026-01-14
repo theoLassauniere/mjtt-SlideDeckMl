@@ -1,4 +1,4 @@
-import { CodeContainer, TextContainer, Container, MediaContainer, PlainText, List, TextElement } from '../../../language/out/generated/ast.js';
+import { CodeContainer, TextContainer, Container, MediaContainer, QuizContainer, PollContainer, PlainText, List, TextElement } from '../../../language/out/generated/ast.js';
 
 export function generateContainer(container: Container): string {
     switch (container.$type) {
@@ -8,6 +8,10 @@ export function generateContainer(container: Container): string {
             return generateMediaContainer(container as MediaContainer);
         case 'CodeContainer':
             return generateCodeContainer(container as CodeContainer);
+        case 'QuizContainer':
+            return generateQuizContainer(container as QuizContainer);
+        case 'PollContainer':
+            return generatePollContainer(container as PollContainer);
         default:
             return '';
     }

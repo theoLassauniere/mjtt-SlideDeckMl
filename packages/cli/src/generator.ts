@@ -87,6 +87,14 @@ export class SlideDeckGenerator {
             plugins: [ RevealHighlight ]
         });
     </script>
+    <script>
+        document.addEventListener('click', e => {
+            if (e.target.classList.contains('show-results')) {
+                const iframe = e.target.parentElement.querySelector('iframe');
+                iframe.classList.toggle('hidden');
+            }
+        });
+    </script>
 </body>
 </html>`;
     }

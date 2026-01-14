@@ -127,6 +127,23 @@ export function generateTemplateStyle(template: any): string {
     .text-container li {
         margin: 0.3rem 0;
     }
+
+    .quiz-container,
+    .poll-container {
+        text-align: center;
+        margin: 1rem 0;
+    }
+
+    iframe {
+        width: 100%;
+        height: 400px;
+        border: none;
+        margin-top: 1rem;
+    }
+
+    .hidden {
+        display: none;
+    }
     `;
 }
 
