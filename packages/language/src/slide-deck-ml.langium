@@ -12,14 +12,16 @@ Numbering:
     ('start' start=INT)?;
 
 Template:
-    'Template'
+    'Template' '{'
         ('logos' '=' '[' logos+=Logo* ']')?
         ('companyName' '=' companyName=STRING)?
         ('fontName' '=' fontName=STRING)
         ('fontSize' '=' fontSize=STRING)
         ('fontColor' '=' fontColor=Color)
         ('titlesSize' '=' titlesSize=STRING)
-        ('backgroundColor' '=' backgroundColor=Color)?;
+        ('backgroundColor' '=' backgroundColor=Color)?
+        ('backgroundImage' '=' backgroundImage=STRING)?
+    '}';
 
 Logo:
     'logo'
@@ -32,6 +34,7 @@ Slide:
         ('title' '=' title=STRING)?
         ('backgroundColor' '=' backgroundColor=Color)?
         ('titleSize' '=' titleSize=STRING)?
+        ('backgroundImage' '=' backgroundImage=STRING)?
         (content=SlideContent)?
     '}';
 
