@@ -13,7 +13,7 @@ Numbering:
 
 Template:
     'Template' '{'
-        ('logos' '=' '[' logos+=Logo* ']')?
+        ('logos' '=' '[' (logos+=Logo (',' logos+=Logo)*)? ']')?
         ('companyName' '=' companyName=STRING)?
         ('fontName' '=' fontName=STRING)
         ('fontSize' '=' fontSize=STRING)
@@ -25,10 +25,9 @@ Template:
     '}';
 
 Logo:
-    'path'
-        path=STRING
-        ('position' '=' position=Alignment)?
-        ('size' '=' width=INT (height=INT)?)?;
+    'path' '=' path=STRING
+    ('position' '=' position=Alignment)?
+    ('size' '=' width=INT (height=INT)?)?;
 
 Slide:
     'Slide' '{'
