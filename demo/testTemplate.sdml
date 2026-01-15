@@ -3,7 +3,7 @@ Presentation TestTemplate {
 
     Template {
         logos = [
-            logo "../assets/logo_company.png" position = BOTTOM LEFT  size = 100
+            logo "../assets/logo_company.png" position = BOTTOM BOTTOM  size = 100
             logo "../assets/logo_school.svg" position = TOP RIGHT size = 120 80
         ]
         companyName = "Langium Corporation"

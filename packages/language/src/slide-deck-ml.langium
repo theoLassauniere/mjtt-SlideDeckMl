@@ -24,7 +24,7 @@ Template:
     '}';
 
 Logo:
-    'logo'
+    'path'
         path=STRING
         ('position' '=' position=Alignment)?
         ('size' '=' width=INT (height=INT)?)?;
@@ -99,7 +99,6 @@ Alignment:
     vertical='CENTER' (horizontal=('LEFT' | 'RIGHT' | 'CENTER'))?
 ;
 
-// ...existing code...
 Color returns string:
     STRING | HEX_COLOR;
 
@@ -108,7 +107,7 @@ hidden terminal WS: /\s+/;
 terminal ID: /[_a-zA-Z][\w_]*/;
 terminal INT returns number: /[0-9]+/;
 terminal CODE_BLOCK: /```[\s\S]*?```/;
-terminal STRING: /"(\\.|[^"\\])*"|'(\\.|[^'\\])*'/; // Permet de \ des "" pour un texte
+terminal STRING: /"(\\.|[^"\\])*"|'(\\.|[^'\\])*'/;
 terminal HEX_COLOR: /#[0-9a-fA-F]{6}/;
 hidden terminal ML_COMMENT: /\/\*[\s\S]*?\*\//;
 hidden terminal SL_COMMENT: /\/\/[^\n\r]*/;
