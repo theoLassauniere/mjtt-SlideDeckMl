@@ -1,0 +1,45 @@
+Presentation LogoPaddingShowcase {
+    numbered start 1
+
+    Template {
+        logos = [
+            logo "../assets/logo_company.png" BOTTOM LEFT size 80
+            logo "../assets/logo_school.svg" TOP RIGHT size 100 60
+        ]
+        logoPadding = "0.5rem 3rem"
+        fontName = "Arial"
+        fontSize = "1.2rem"
+        fontColor = "#333333"
+        titlesSize = "2.5rem"
+        backgroundColor = "#f0f0f0"
+        transitions = fade
+    }
+
+    Slide {
+        title = "Logo Padding Feature"
+        text "This presentation demonstrates the new logoPadding feature that allows customizable spacing for logo positioning."
+    }
+    
+    Slide {
+        title = "Flexible Positioning"
+        grid 1:2 {
+            1:1 {
+                text {
+                    "With logoPadding, you can:"
+                    ul "Control vertical spacing (top/bottom)" "Control horizontal spacing (left/right)" "Use any CSS unit (rem, px, em, %)" "Maintain backward compatibility"
+                }
+            }
+            1:2 {
+                text {
+                    "Example values:"
+                    ol "\"1rem\" - uniform padding" "\"1rem 2rem\" - vertical horizontal" "\"1rem 2rem 3rem 4rem\" - top right bottom left"
+                }
+            }
+        }
+    }
+    
+    Slide {
+        title = "Current Configuration"
+        text "This presentation uses logoPadding = \"0.5rem 3rem\", which provides 0.5rem vertical spacing and 3rem horizontal spacing for the logos."
+    }
+}
