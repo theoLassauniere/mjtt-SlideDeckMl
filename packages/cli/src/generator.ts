@@ -81,7 +81,7 @@ export class SlideDeckGenerator {
         Reveal.initialize({
             hash: true,
             center: false,
-            transition: 'slide',
+            transition: '${template.transitions ?? 'slide'}',
             transitionSpeed: 'default',
             backgroundTransition: 'fade',
             plugins: [ RevealHighlight ]
@@ -125,6 +125,13 @@ export class SlideDeckGenerator {
             ? `<div class="slide-number">${slideNumber}</div>`
             : '';
         
+        const effectiveTransition =
+            slide.transition ?? template?.transitions;
+
+        const transitionAttr = effectiveTransition
+            ? ` data-transition="${effectiveTransition}"`
+            : '';
+
         let content = '';
         if (slide.content) {
             if (slide.content.grid) {
@@ -134,7 +141,7 @@ export class SlideDeckGenerator {
             }
         }
         return `
-            <section class="section-slide" style="${style}">
+            <section class="section-slide"${transitionAttr} style="${style}">
                 <div class="sdml-slide">
                     ${slideNumberHtml}
                     ${titleHtml}
