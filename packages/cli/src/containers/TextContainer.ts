@@ -25,7 +25,7 @@ export function generateTextContainer(container: TextContainer): string {
         ? ` style="${styleParts.join(' ')}"`
         : '';
 
-    const text = sanitizeTextContainerHtml(container.text);
+    const text = sanitizeTextContainerHtml(container.single  || container.elements?.join('') || '');
 
     return `<div class="text-container"${style}>${text}</div>`;
 }
