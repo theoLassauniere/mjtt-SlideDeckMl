@@ -23,7 +23,6 @@ export function registerValidationChecks(services: SlideDeckMlServices) {
         ],
         Template: validator.checkFontSize,
         Logo: [
-            validator.checkLogoPositions,
             validator.checkLogoPath
         ]
     };
@@ -59,66 +58,6 @@ export class SlideDeckMlValidator {
                 'fontSize must be a number followed by px or rem (e.g. "16px", "1rem").',
                 { node: template, property: 'fontSize' }
             );
-        }
-    }
-
-    checkLogoPositions(logo: Logo, accept: ValidationAcceptor): void {
-        const positions = logo.positions;
-        if (!positions || positions.length === 0) {
-            return;
-        }
-
-        if (positions.length === 1) {
-            if (positions[0] !== 'CENTER') {
-                accept(
-                    'error',
-                    'If there is only one logo position, it must be CENTER.',
-                    { node: logo, property: 'positions' }
-                );
-            }
-            return;
-        }
-
-        if (positions.length !== 2) {
-            accept(
-                'error',
-                'Logo positions must be either CENTER or exactly two compatible positions (e.g. TOP LEFT).',
-                { node: logo, property: 'positions' }
-            );
-            return;
-        }
-
-        const [p1, p2] = positions;
-
-        const forbiddenPairs = [
-            ['TOP', 'BOTTOM'],
-            ['BOTTOM', 'TOP'],
-            ['LEFT', 'RIGHT'],
-            ['RIGHT', 'LEFT'],
-            ['CENTER', 'LEFT'],
-            ['CENTER', 'RIGHT'],
-            ['CENTER', 'TOP'],
-            ['CENTER', 'BOTTOM'],
-            ['LEFT', 'CENTER'],
-            ['RIGHT', 'CENTER'],
-            ['TOP', 'CENTER'],
-            ['BOTTOM', 'CENTER'],
-            ['LEFT', 'LEFT'],
-            ['RIGHT', 'RIGHT'],
-            ['TOP', 'TOP'],
-            ['BOTTOM', 'BOTTOM'],
-            ['CENTER', 'CENTER']
-        ];
-
-        for (const [a, b] of forbiddenPairs) {
-            if (p1 === a && p2 === b) {
-                accept(
-                    'error',
-                    `Invalid logo position combination: ${p1} and ${p2} cannot be used together.`,
-                    { node: logo, property: 'positions' }
-                );
-                return;
-            }
         }
     }
 

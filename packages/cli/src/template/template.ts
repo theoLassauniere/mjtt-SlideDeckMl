@@ -19,51 +19,34 @@ export function generateTemplateStyle(template: any): string {
         position: absolute;
         inset: 0;
         pointer-events: none;
-    }
-
-    .logo-slot {
-        position: absolute;
-        inset: 0;
-        display: flex;
-        padding: 1rem 16rem;
-    }
-
-    .logo {
-        pointer-events: auto;
-        object-fit: contain;
-    }
-
-    .logo-top-left {
-        justify-content: flex-start;
-        align-items: flex-start;
-    }
-
-    .logo-top-right {
-        justify-content: flex-end;
-        align-items: flex-start;
-    }
-
-    .logo-bottom-left {
-        justify-content: flex-start;
-        align-items: flex-end;
-    }
-
-    .logo-bottom-right {
-        justify-content: flex-end;
-        align-items: flex-end;
-    }
-
-    .logo-center {
+        z-index: 100;
+        display: flex;  
         justify-content: center;
         align-items: center;
+    
+
+        & .logo-slot {
+            position: absolute;
+            pointer-events: none;
+            padding: 5px; 
+        
+
+            & .logo {
+                pointer-events: auto;
+                object-fit: contain;
+                margin: auto;
+                
+            }
+        }
     }
+        
+    
 
     .reveal .text-container {
         margin: 1rem 0;
     }
 
     .reveal .media-container {
-        margin: 0 15%;
         display: block;
         width: 70%;
     }
@@ -130,8 +113,24 @@ export function generateTemplateStyle(template: any): string {
     `;
 }
 
+export function generateLogos(template: any): string {
+    if (!template.logos) return '';
+
+    return `
+        <div class="logo-layer">
+            ${template.logos.map((logo: any) => `
+                <div class="logo-slot" style="${getLogoPositionStyle(logo)}">
+                    <img src="${logo.path}"
+                         class="logo"
+                         style="${generateLogoStyle(logo)}" />
+                </div>
+            `).join('')}
+        </div>
+    `;
+}
+
 export function generateLogoStyle(logo: any): string {
-    let style = 'z-index:10;';
+    let style = 'z-index:100;';
 
     if (logo.width) {
         style += `width:${logo.width}px;`;
@@ -143,30 +142,23 @@ export function generateLogoStyle(logo: any): string {
     return style;
 }
 
-export function generateLogos(template: any): string {
-    if (!template.logos) return '';
 
-    return `
-        <div class="logo-layer">
-            ${template.logos.map((logo: any) => `
-                <div class="logo-slot ${getLogoPositionClass(logo)}">
-                    <img src="${logo.path}"
-                         class="logo"
-                         style="${generateLogoStyle(logo)}" />
-                </div>
-            `).join('')}
-        </div>
-    `;
-}
+function getLogoPositionStyle(logo: any): string {
+    // Nouveau modèle: logo.position = { vertical?: 'TOP'|'BOTTOM'|'CENTER', horizontal?: 'LEFT'|'RIGHT'|'CENTER' }
+    const alignment = logo.position as { vertical?: string; horizontal?: string } | undefined;
 
-function getLogoPositionClass(logo: any): string {
-    const p = logo.positions ?? [];
+    const vertical = alignment?.vertical ?? 'TOP';
+    const horizontal = alignment?.horizontal ?? 'LEFT';
 
-    if (p.includes('CENTER')) return 'logo-center';
-    if (p.includes('TOP') && p.includes('LEFT')) return 'logo-top-left';
-    if (p.includes('TOP') && p.includes('RIGHT')) return 'logo-top-right';
-    if (p.includes('BOTTOM') && p.includes('LEFT')) return 'logo-bottom-left';
-    if (p.includes('BOTTOM') && p.includes('RIGHT')) return 'logo-bottom-right';
+    // Base: place via top/left/right/bottom
+    let style = '';
 
-    return 'logo-top-left';
+    // Vertical
+    if (vertical === 'TOP') style += 'top:0;';
+    else if (vertical === 'BOTTOM') style += 'bottom:0;';
+
+    // Horizontal
+    if (horizontal === 'LEFT') style += 'left:0;';
+    else if (horizontal === 'RIGHT') style += 'right:0;';
+    return style;
 }
