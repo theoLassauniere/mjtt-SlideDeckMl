@@ -1,33 +1,34 @@
 Presentation PositionSlide {
-    Template
+    Template {
         fontName = "Roboto"
         fontSize = "1rem"
         fontColor = "#222222"
+        titlesSize = "2rem"
         backgroundColor = "white"
-
+    }
     Slide {
         title = "Premier Test"
         grid 2:2 {
             1:1 {
-                position = [TOP RIGHT]
+                position = TOP RIGHT
                 text "Cellule 1:1"
                 media "../assets/fox.mp4"
             }
             1:2 {
-                position = [CENTER]
+                position = CENTER
                 grid 2:2 {
                     1:1 {
-                        position = [TOP LEFT]
+                        position = TOP LEFT
                         text "Cellule 1:1 dans 1:2"
                     }
                     2:2 {
-                        position = [BOTTOM RIGHT]
+                        position = BOTTOM RIGHT
                         text "Cellule 2:2 dans 1:2"
                     }
                 }
             }
             2:1-2 {
-                position = [BOTTOM CENTER]
+                position = BOTTOM CENTER
                 text "Cellule 2:1-2, qui prend toute la largeur du bas"
             }
         }

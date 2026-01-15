@@ -33,35 +33,27 @@ export function generateGrid(grid: Grid): string {
     return `<div class="grid-container" style="${gridStyle}">${cellsHtml}</div>`;
 }
 function positionToFlexCss(cell: Cell): string {
-    // Selon le code généré Langium, "position" peut être optionnel
-    const posList = (cell as any).position?.positions as string[] | undefined;
-    if (!posList || posList.length === 0) return '';
+    const alignment = (cell as any).position as { vertical?: string; horizontal?: string } | undefined;
+    if (!alignment) return '';
 
-    const pos = new Set(posList);
+    const vertical = alignment.vertical;     // 'TOP' | 'BOTTOM' | 'CENTER'
+    const horizontal = alignment.horizontal; // 'LEFT' | 'RIGHT' | 'CENTER' | undefined
 
-    // CENTER seul => centre horizontal + vertical
-    if (pos.size === 1 && pos.has('CENTER')) {
-        return `
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        `;
-    }
-    // vertical
+    // vertical -> justify-content
     const justify =
-        pos.has('TOP') ? 'flex-start' :
-        pos.has('BOTTOM') ? 'flex-end' :
+        vertical === 'TOP' ? 'flex-start' :
+        vertical === 'BOTTOM' ? 'flex-end' :
         'center';
 
-    // horizontal
+    // horizontal -> align-items
     const align =
-        pos.has('LEFT') ? 'flex-start' :
-        pos.has('RIGHT') ? 'flex-end' :
+        horizontal === 'LEFT' ? 'flex-start' :
+        horizontal === 'RIGHT' ? 'flex-end' :
         'center';
 
     const textAlign =
-        pos.has('LEFT') ? 'left' :
-        pos.has('RIGHT') ? 'right' :
+        horizontal === 'LEFT' ? 'left' :
+        horizontal === 'RIGHT' ? 'right' :
         'center';
 
     return `

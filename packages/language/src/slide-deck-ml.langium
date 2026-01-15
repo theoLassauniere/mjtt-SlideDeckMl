@@ -26,8 +26,8 @@ Template:
 Logo:
     'logo'
         path=STRING
-        (positions+=Position)*
-        ('size' width=INT (height=INT)?)?;
+        ('position' '=' position=Alignment)?
+        ('size' '=' width=INT (height=INT)?)?;
 
 Slide:
     'Slide' '{'
@@ -48,7 +48,7 @@ Grid:
 
 Cell:
     rowIndexStart=INT('-' rowIndexEnd=INT)? ':' columnIndexStart=INT('-' columnIndexEnd=INT)? '{'
-        ('position' '=' position=PositionSpec)?
+        ('position' '=' position=Alignment)?
         (containers+=Container* | grid=Grid)
     '}';
 
@@ -90,21 +90,18 @@ CodeContainer:
         language=ID
         code=CODE_BLOCK;
 
-PositionSpec:
-    '[' positions+=Position (positions+=Position)* ']'
+
+Alignment:
+    vertical=('TOP' | 'BOTTOM') (horizontal=('LEFT' | 'RIGHT' | 'CENTER'))?
+    |
+    horizontal=('LEFT' | 'RIGHT') (vertical=('TOP' | 'BOTTOM' | 'CENTER'))?
+    |
+    vertical='CENTER' (horizontal=('LEFT' | 'RIGHT' | 'CENTER'))?
 ;
 
+// ...existing code...
 Color returns string:
     STRING | HEX_COLOR;
-
-type Position = 'LEFT' | 'RIGHT' | 'TOP' | 'BOTTOM' | 'CENTER';
-Position returns Position : LEFT | RIGHT | TOP | BOTTOM | CENTER;
-LEFT returns string: 'LEFT';
-RIGHT returns string: 'RIGHT';
-TOP returns string: 'TOP';
-BOTTOM returns string: 'BOTTOM';
-CENTER returns string: 'CENTER';
-
 
 
 hidden terminal WS: /\s+/;

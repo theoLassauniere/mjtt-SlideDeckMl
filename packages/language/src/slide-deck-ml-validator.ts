@@ -23,7 +23,7 @@ export function registerValidationChecks(services: SlideDeckMlServices) {
         ],
         Template: validator.checkFontSize,
         Logo: [
-            validator.checkLogoPositions,
+            //validator.checkLogoPositions,
             validator.checkLogoPath
         ]
     };
@@ -62,7 +62,7 @@ export class SlideDeckMlValidator {
         }
     }
 
-    checkLogoPositions(logo: Logo, accept: ValidationAcceptor): void {
+    /*checkLogoPositions(logo: Logo, accept: ValidationAcceptor): void {
         const positions = logo.positions;
         if (!positions || positions.length === 0) {
             return;
@@ -120,7 +120,7 @@ export class SlideDeckMlValidator {
                 return;
             }
         }
-    }
+    }*/
 
     checkLogoPath(logo: Logo, accept: ValidationAcceptor): void {
         if (!logo.path) {
