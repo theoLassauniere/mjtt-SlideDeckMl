@@ -69,8 +69,8 @@ export class SlideDeckGenerator {
 </head>
 <body>
     <div class="reveal">
-        ${logos}
         <div class="slides">
+            ${logos}
             ${slides}
         </div>
     </div>

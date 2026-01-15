@@ -13,7 +13,7 @@ Numbering:
 
 Template:
     'Template' '{'
-        ('logos' '=' '[' logos+=Logo* ']')?
+        ('logos' '=' '[' (logos+=Logo (',' logos+=Logo)*)? ']')?
         ('companyName' '=' companyName=STRING)?
         ('fontName' '=' fontName=STRING)
         ('fontSize' '=' fontSize=STRING)
@@ -25,10 +25,9 @@ Template:
     '}';
 
 Logo:
-    'logo'
-        path=STRING
-        (positions+=Position)*
-        ('size' width=INT (height=INT)?)?;
+    'path' '=' path=STRING
+    ('position' '=' position=Alignment)?
+    ('size' '=' width=INT (height=INT)?)?;
 
 Slide:
     'Slide' '{'
@@ -53,7 +52,7 @@ Grid:
 
 Cell:
     rowIndexStart=INT('-' rowIndexEnd=INT)? ':' columnIndexStart=INT('-' columnIndexEnd=INT)? '{'
-        ('position' '=' position=PositionSpec)?
+        ('position' '=' position=Alignment)?
         (containers+=Container* | grid=Grid)
     '}';
 
@@ -95,24 +94,24 @@ CodeContainer:
         language=ID
         code=CODE_BLOCK;
 
+
+Alignment:
+    vertical=('TOP' | 'BOTTOM') (horizontal=('LEFT' | 'RIGHT' | 'CENTER'))?
+    |
+    horizontal=('LEFT' | 'RIGHT') (vertical=('TOP' | 'BOTTOM' | 'CENTER'))?
+    |
+    vertical='CENTER' (horizontal=('LEFT' | 'RIGHT' | 'CENTER'))?
+;
+
 Color returns string:
     STRING | HEX_COLOR;
-
-type Position = 'LEFT' | 'RIGHT' | 'TOP' | 'BOTTOM' | 'CENTER';
-Position returns Position : LEFT | RIGHT | TOP | BOTTOM | CENTER;
-LEFT returns string: 'LEFT';
-RIGHT returns string: 'RIGHT';
-TOP returns string: 'TOP';
-BOTTOM returns string: 'BOTTOM';
-CENTER returns string: 'CENTER';
-
 
 
 hidden terminal WS: /\s+/;
 terminal ID: /[_a-zA-Z][\w_]*/;
 terminal INT returns number: /[0-9]+/;
 terminal CODE_BLOCK: /```[\s\S]*?```/;
-terminal STRING: /"(\\.|[^"\\])*"|'(\\.|[^'\\])*'/; // Permet de \ des "" pour un texte
+terminal STRING: /"(\\.|[^"\\])*"|'(\\.|[^'\\])*'/;
 terminal HEX_COLOR: /#[0-9a-fA-F]{6}/;
 hidden terminal ML_COMMENT: /\/\*[\s\S]*?\*\//;
 hidden terminal SL_COMMENT: /\/\/[^\n\r]*/;
