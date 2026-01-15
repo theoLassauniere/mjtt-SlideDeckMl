@@ -14,6 +14,7 @@ Numbering:
 Template:
     'Template' '{'
         ('logos' '=' '[' logos+=Logo* ']')?
+        ('logoPadding' '=' logoPadding=STRING)?
         ('companyName' '=' companyName=STRING)?
         ('fontName' '=' fontName=STRING)
         ('fontSize' '=' fontSize=STRING)

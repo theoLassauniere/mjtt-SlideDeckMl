@@ -21,7 +21,10 @@ export function registerValidationChecks(services: SlideDeckMlServices) {
             validator.checkPresentationStartsWithCapital,
             validator.checkNumberedStart
         ],
-        Template: validator.checkFontSize,
+        Template: [
+            validator.checkFontSize,
+            validator.checkLogoPadding
+        ],
         Logo: [
             validator.checkLogoPositions,
             validator.checkLogoPath
@@ -45,6 +48,25 @@ export class SlideDeckMlValidator {
                 'warning',
                 'Presentation name should start with a capital letter.',
                 { node: presentation, property: 'name' }
+            );
+        }
+    }
+
+    checkLogoPadding(template: Template, accept: ValidationAcceptor): void {
+        if (!template.logoPadding) {
+            return;
+        }
+
+        const padding = template.logoPadding;
+        // Allow CSS padding formats: "1rem", "1rem 2rem", "1rem 2rem 3rem 4rem"
+        // Values can be in px, rem, em, or %
+        const paddingRegex = /^([0-9]+(\.[0-9]+)?(px|rem|em|%)(\s+[0-9]+(\.[0-9]+)?(px|rem|em|%)){0,3})$/;
+
+        if (!paddingRegex.test(padding)) {
+            accept(
+                'error',
+                'logoPadding must be valid CSS padding format (e.g. "1rem", "1rem 2rem", "1rem 2rem 3rem 4rem") with units px, rem, em, or %.',
+                { node: template, property: 'logoPadding' }
             );
         }
     }

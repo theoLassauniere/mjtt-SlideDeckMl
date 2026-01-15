@@ -1,4 +1,6 @@
 export function generateTemplateStyle(template: any): string {
+    const logoPadding = template.logoPadding || '1rem 16rem';
+    
     return `
     html, body {
         height: 100%;
@@ -25,7 +27,7 @@ export function generateTemplateStyle(template: any): string {
         position: absolute;
         inset: 0;
         display: flex;
-        padding: 1rem 16rem;
+        padding: ${logoPadding};
     }
 
     .logo {

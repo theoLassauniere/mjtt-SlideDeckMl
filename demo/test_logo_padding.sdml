@@ -1,0 +1,28 @@
+Presentation TestLogoPadding {
+    numbered start 1
+
+    Template {
+        logos = [
+            logo "../assets/logo_company.png" BOTTOM LEFT size 100
+            logo "../assets/logo_school.svg" TOP RIGHT size 120 80
+        ]
+        logoPadding = "2rem 4rem"
+        companyName = "Langium Corporation"
+        fontName = "Roboto"
+        fontSize = "1rem"
+        fontColor = "#222222"
+        titlesSize = "2rem"
+        backgroundColor = "white"
+        transitions = concave
+    }
+
+    Slide {
+        title = "Test Custom Logo Padding"
+        text "This presentation demonstrates custom logo padding with '2rem 4rem'."
+    }
+    
+    Slide {
+        title = "Logo Positioning"
+        text "Logos should be positioned with custom padding instead of the default '1rem 16rem'."
+    }
+}
