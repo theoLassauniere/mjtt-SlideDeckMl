@@ -70,10 +70,16 @@ EquationLine:
     content=EquationContent';';
 
 EquationContent:
-    line=(STRING | MarkedString);
+    line=(STRING | AnimatedLine);
+
+AnimatedLine:
+    prefix=STRING? (segments+=AnimatedSegment)+;
+
+AnimatedSegment:
+    marked=MarkedString suffix=STRING?;
 
 MarkedString:
-    prefix=STRING? START marked=STRING END suffix=STRING?;
+    START animated=STRING END;
 
 // Types
 

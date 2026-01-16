@@ -46,6 +46,10 @@ Presentation EquationBigTest {
                 "E_(\"mécanique\") = color(red)(E_(\"cinétique\")) + color(blue)(E_(\"potentielle\"))";
                 "color(red)(E_(\"cinétique\")) = 1/2 m v^2";
                 "color(blue)(E_(\"potentielle\")) = m g h";
+                "<=> E_(\"mécanique\") = color(red)(1/2 m v^2) + color(blue)(m g h)";
+                "<=> E_(\"mécanique\") = m (color(red)(1/2 v^2) + color(blue)(g h))";
+                (start)"\"test\""(end);
+                (start)"\"test\""(end)"\"between\""(start)"\"test\""(end)"\"withSuffix\"";
             }
     }
 }

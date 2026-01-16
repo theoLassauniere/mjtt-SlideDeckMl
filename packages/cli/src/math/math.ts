@@ -1,4 +1,4 @@
-import { EquationLine, MarkedString } from "slide-deck-ml-language";
+import { AnimatedLine, AnimatedSegment, EquationLine } from "slide-deck-ml-language";
 
 export function generateMathStyle(): string {
     return `
@@ -62,7 +62,7 @@ export function generateEquationLine(equationLine: EquationLine) {
     if (typeof equationLine.content.line === "string") {
         return generateSimpleEquationLine(equationLine);
     } else {
-        return generateEnhancedEquationLine(equationLine.content.line as MarkedString);
+        return generateEnhancedEquationLine(equationLine.content.line as AnimatedLine);
     }
 }
 
@@ -74,14 +74,24 @@ export function generateSimpleEquationLine(equationLine: EquationLine): string {
     `;
 }
 
-export function generateEnhancedEquationLine(markedString: MarkedString): string {
+export function generateEnhancedEquationLine(animatedLine: AnimatedLine): string {
     return `
                 <div class="animated-equation-display">
-                    ${markedString.prefix ? `<p id="prefix">${'`'}${markedString.prefix}${'`'}</p>` : ''}
-                    ${`<p id="marked">${'`'}${markedString.marked}${'`'}</p>`}
-                    ${markedString.suffix ? `<p id="suffix">${'`'}${markedString.suffix}${'`'}</p>` : ''}
+                    ${animatedLine.prefix ? `<p>${'`'}${animatedLine.prefix}${'`'}</p>` : ''}
+                    ${generateAnimatedSegment(animatedLine.segments)}
                 </div>
     `;
+}
+
+export function generateAnimatedSegment(segments: AnimatedSegment[]): string {
+    let stringBuilder = '';
+    segments.forEach(segment => {
+        stringBuilder += `
+                    ${`<p id="marked">${'`'}${segment.marked.animated}${'`'}</p>`}
+                    ${segment.suffix ? `<p>${'`'}${segment.suffix}${'`'}</p>` : ''}
+        `;
+    })
+    return stringBuilder;
 }
 
 export function generateEquationDescription(description: string): string {
