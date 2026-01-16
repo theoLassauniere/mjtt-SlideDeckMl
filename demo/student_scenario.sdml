@@ -18,10 +18,10 @@ Presentation StudentPresentation {
     Slide {
         title = "Projet SlideDeckML"
         text "Statut du projet : <strong>Fini</strong>"
-                text fontSize = "1.2rem"
-                    fontColor = "rgb(96, 17, 17)"
-                    "Lieu de développement"
-                media "../assets/polynice.jpg"
+        text fontSize = "1.2rem"
+             fontColor = "rgb(96, 17, 17)"
+             "Lieu de développement"
+        media "../assets/polynice.jpg"
     }
     Slide {
         title = "Les fonctionnalités du projet"

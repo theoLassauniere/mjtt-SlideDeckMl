@@ -1,0 +1,77 @@
+Presentation TeacherPresentation {
+    numbered
+
+    Template {
+        logos = [
+            logo "../assets/logo_school.svg" TOP RIGHT size 120
+        ]
+        companyName = "Polytech Nice"
+        fontName = "Roboto"
+        fontSize = "1rem"
+        fontColor = "#000000"
+        titlesSize = "2rem"
+        backgroundColor = "#ffebeb"
+    }
+
+    Slide {
+        title = "Introduction à Python"
+        text "Bienvenue dans ce cours d’introduction à la programmation en Python."
+        media "../assets/python.jpg"
+    }
+    Slide {
+        title = "Python : les bases"
+        text "<strong>C'est quoi Python ?</strong>"
+        "Python est un langage de programmation interprété, multiparadigme et multiplateformes. Il favorise la programmation impérative structurée, fonctionnelle et orientée objet. Il est doté d'un typage dynamique fort, d'une gestion automatique de la mémoire par ramasse-miettes et d'un système de gestion d'exceptions ; il est ainsi similaire à Perl, Ruby, Scheme, Smalltalk et Tcl.
+        Le langage Python est placé sous une licence libre proche de la licence BSD et fonctionne sur la plupart des plateformes informatiques, des smartphones aux ordinateurs centraux, de Windows à Unix avec notamment GNU/Linux en passant par macOS, ou encore Android, iOS, et peut aussi être traduit en Java ou .NET. Il est conçu pour optimiser la productivité des programmeurs en offrant des outils de haut niveau et une syntaxe simple à utiliser. "
+        "<strong>Pourquoi Python ?</strong>"
+        ul "Langage simple et lisible" "Très utilisé en science, web et IA" "Grande communauté"
+        ""
+    }
+    Slide {
+        title = "Variables et calculs"
+        grid 2:2 {
+            1:1 {
+                code python
+                ```python
+                a = 5
+                b = 3
+                c = a + b
+                print(c)
+                ```
+            }
+            1:2 {
+                equation {
+                    "a = 5";
+                    "b = 3";
+                    "c = a + b";
+                    "c = 8";
+                }
+            }
+            2 {
+                text "Python permet d'effectuer des calculs"
+            }
+        }
+    }
+    Slide {
+        title = "Les conditions"
+        grid 1:2 {
+            1:1 {
+                code python
+                ```python
+                age = 18
+                if age >= 18:
+                    print("Majeur")
+                else:
+                    print("Mineur")
+                ```
+            }
+            1:2 {
+                media "../assets/if_else_diagram.png"
+            }
+        }
+    }
+    Slide {
+        text "Merci pour votre attention !"
+            fontSize = "3rem"
+    }
+}

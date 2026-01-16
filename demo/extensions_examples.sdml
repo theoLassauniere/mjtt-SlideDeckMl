@@ -1,0 +1,24 @@
+Presentation validationErrorTest {
+
+    Template {
+        fontName = "Arial"
+        fontSize = "16px"
+        fontColor = "#222222"
+        titlesSize = "2rem"
+        backgroundColor = "white"
+    }
+
+    Slide {
+        title = "Les extensions que nous avons implémenté"
+        text ul "DSL Extension for Image and Text Placement" "DSL Extension for Mathematical Equations"
+            fontsize = "1.5rem"
+    }
+
+    Slide {
+        title = "Exemple Extension for Image and Text Placement"
+    }
+
+    Slide {
+        title = "Exemple Extension for Mathematical Equations"
+    }
+}
