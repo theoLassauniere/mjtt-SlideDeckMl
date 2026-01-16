@@ -72,7 +72,7 @@ export function generateCell(cell: Cell): string {
     const cellStyle = `
             grid-row: ${rowStart} / ${rowEnd};
             grid-column: ${colStart} / ${colEnd};
-            ${positionToFlexCss(cell)}            ${positionToFlexCss(cell)}
+            ${positionToFlexCss(cell)}
         `;
 
     const contentHtml = cell.containers.map(c => generateContainer(c)).join('\n');

@@ -1,6 +1,5 @@
 {
     "name": "mjtt-slide-deck-ml",
-    "name": "mjtt-slide-deck-ml",
     "description": "The extension specific package",
     "version": "0.0.1",
     "displayName": "sdml",
