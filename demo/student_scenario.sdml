@@ -1,0 +1,63 @@
+Presentation StudentPresentation {
+    numbered start 2
+
+    Template {
+        logos = [
+            logo "../assets/logo_company.png" TOP LEFT size 100
+            logo "../assets/logo_school.svg" TOP RIGHT size 120
+        ]
+        companyName = "Polytech Nice"
+        fontName = "Arial"
+        fontSize = "1rem"
+        fontColor = "#000000"
+        titlesSize = "2rem"
+        backgroundColor = "#ffe4b2"
+        transitions = zoom
+    }
+
+    Slide {
+        title = "Projet SlideDeckML"
+        text "Statut du projet : <strong>Fini</strong>"
+                text fontSize = "1.2rem"
+                    fontColor = "rgb(96, 17, 17)"
+                    "Lieu de développement"
+                media "../assets/polynice.jpg"
+    }
+    Slide {
+        title = "Les fonctionnalités du projet"
+        backgroundColor = "#d79a27"
+        text ul "Génération de Diaporama online et offline" "Template" "Positionnement des éléments" "Gestion de divers contenus (code, média, langage mathématique...)"
+    }
+    Slide {
+        title = "Frameworks utilisés"
+        grid 2:2 {
+            1:1 {
+                text "Langium"
+            }
+            1:2 {
+                text "Revealjs"
+            }
+            2:1 {
+                media "../assets/logo_company.jpg"
+            }
+            2:2 {
+                media "../assets/reveal.png"
+            }
+        }
+    }
+    Slide {
+        title = "Vidéo d'illustration de nos pratiques de travail"
+        media "../assets/code.mp4"
+    }
+    Slide {
+        title = "Conclusion"
+        code Python
+            ```
+            print("Merci de votre attention")
+            ```
+        code Javascript
+            ```
+            console.log("Bonne journée");
+            ```
+    }
+}
