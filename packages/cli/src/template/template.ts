@@ -21,6 +21,7 @@ export function generateTemplateStyle(template: any): string {
         pointer-events: none;
         z-index: 100;
         display: flex;  
+        gap: 10px;
         justify-content: center;
         align-items: center;
     
@@ -112,41 +113,38 @@ export function generateTemplateStyle(template: any): string {
 }
 
 export function generateLogos(template: any): string {
-    if (!template.logos) return '';
+    if (!template.logos?.length) return '';
 
-    return `
-        <div class="logo-layer">
-            ${template.logos.map((logo: any) => `
-                <div class="logo-slot" style="${getLogoPositionStyle(logo)}">
-                    <img src="${logo.path}"
-                         class="logo"
-                         style="${generateLogoStyle(logo)}" />
-                </div>
-            `).join('')}
-        </div>
-    `;
-}
+    const groups = new Map<string, { vertical: string; horizontal: string; logos: any[] }>();
 
-export function generateLogoStyle(logo: any): string {
-    let style = 'z-index:100;';
+    for (const logo of template.logos) {
+        const alignment = logo.position as { vertical?: string; horizontal?: string } | undefined;
+        const vertical = alignment?.vertical ?? 'CENTER';
+        const horizontal = alignment?.horizontal ?? 'CENTER';
+        const key = `${vertical}:${horizontal}`;
 
-    if (logo.width) {
-        style += `width:${logo.width}px;`;
-        style += `height:${logo.height ?? logo.width}px;`;
+        const existing = groups.get(key);
+        if (existing) {
+            existing.logos.push(logo);
+        } else {
+            groups.set(key, { vertical, horizontal, logos: [logo] });
+        }
     }
 
-    style += 'object-fit:contain;';
+    const html = Array.from(groups.values()).map(group => {
+        return `
+            <div class="logo-slot" style="${getLogoSlotPositionStyle(group.vertical, group.horizontal)}">
+                ${group.logos.map(logo => `
+                    <img src="${logo.path}" class="logo" style="${generateLogoStyle(logo)}" />
+                `).join('\n')}
+            </div>
+        `;
+    }).join('\n');
 
-    return style;
+    return `<div class="logo-layer">${html}</div>`;
 }
 
-
-function getLogoPositionStyle(logo: any): string {
-    const alignment = logo.position as { vertical?: string; horizontal?: string } | undefined;
-
-    const vertical = alignment?.vertical ?? 'TOP';
-    const horizontal = alignment?.horizontal ?? 'LEFT';
-
+function getLogoSlotPositionStyle(vertical: string, horizontal: string): string {
     let style = '';
 
     if (vertical === 'TOP') style += 'top:0;';
@@ -154,5 +152,16 @@ function getLogoPositionStyle(logo: any): string {
 
     if (horizontal === 'LEFT') style += 'left:0;';
     else if (horizontal === 'RIGHT') style += 'right:0;';
+    return style;
+}
+
+export function generateLogoStyle(logo: any): string {
+    let style = '';
+
+    if (logo.width) {
+        style += `width:${logo.width}px;`;
+        style += `height:${logo.height ?? logo.width}px;`;
+    }
+
     return style;
 }

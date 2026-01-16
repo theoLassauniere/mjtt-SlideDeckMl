@@ -3,8 +3,8 @@ Presentation TestTemplate {
 
     Template {
         logos = [
-            path = "../assets/logo_company.png" position = TOP LEFT  size = 100,
-            path = "../assets/logo_school.svg" position = TOP RIGHT size = 120 80
+            path = "../assets/logo_company.png" position = TOP RIGHT  size = 100,
+            path = "../assets/logo_school.svg" position = TOP LEFT size = 120 80
         ]
         companyName = "Langium Corporation"
         fontName = "Roboto"
