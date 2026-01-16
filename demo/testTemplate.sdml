@@ -3,11 +3,19 @@ Presentation TestTemplate {
     annotations
 
     Template {
-        logos = [
-            path = "../assets/logo_company.png" position = TOP RIGHT  size = 100,
-            path = "../assets/logo_school.svg" position = TOP LEFT size = 120 80
+        overlays = [
+            overlay
+                image "../assets/logo_company.png" size = 100
+                TOP LEFT,
+            overlay
+                image "../assets/logo_school.svg" size = 120 80
+                TOP RIGHT,
+            overlay
+                text "Polytech Nice Sophia"
+                    fontSize = "0.8rem"
+                    fontColor = "blue"
+                BOTTOM RIGHT
         ]
-        companyName = "Langium Corporation"
         fontName = "Roboto"
         fontSize = "1rem"
         fontColor = "#222222"

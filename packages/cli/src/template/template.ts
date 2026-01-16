@@ -1,3 +1,6 @@
+import { Template } from "../../../language/src/generated/ast.js";
+import { sanitizeTextContainerHtml } from "../utils/utils.js";
+
 export function generateTemplateStyle(template: any): string {
     return `
     html, body {
@@ -112,39 +115,52 @@ export function generateTemplateStyle(template: any): string {
     `;
 }
 
-export function generateLogos(template: any): string {
-    if (!template.logos?.length) return '';
+export function generateOverlays(template: Template): string {
+    if (!template.overlays) return '';
 
-    const groups = new Map<string, { vertical: string; horizontal: string; logos: any[] }>();
+    return template.overlays.map(o => {
+        const positionStyle = getOverlayPositionStyle(o);
 
-    for (const logo of template.logos) {
-        const alignment = logo.position as { vertical?: string; horizontal?: string } | undefined;
-        const vertical = alignment?.vertical ?? 'CENTER';
-        const horizontal = alignment?.horizontal ?? 'CENTER';
-        const key = `${vertical}:${horizontal}`;
-
-        const existing = groups.get(key);
-        if (existing) {
-            existing.logos.push(logo);
-        } else {
-            groups.set(key, { vertical, horizontal, logos: [logo] });
+        if (o.content.$type === 'OverlayText') {
+            return `
+                <div class="overlay-slot" style="${positionStyle}">
+                    <div class="overlay-content overlay-text"
+                         style="${getOverlayTextStyle(o.content)}">
+                        ${sanitizeTextContainerHtml(o.content.text)}
+                    </div>
+                </div>
+            `;
         }
-    }
 
-    const html = Array.from(groups.values()).map(group => {
-        return `
-            <div class="logo-slot" style="${getLogoSlotPositionStyle(group.vertical, group.horizontal)}">
-                ${group.logos.map(logo => `
-                    <img src="${logo.path}" class="logo" style="${generateLogoStyle(logo)}" />
-                `).join('\n')}
-            </div>
-        `;
+        if (o.content.$type === 'OverlayImage') {
+            return `
+                <div class="overlay-slot" style="${positionStyle}">
+                    <img class="overlay-content"
+                         src="${o.content.path}"
+                         style="${generateLogoStyle(o)}" />
+                </div>
+            `;
+        }
+
+        return '';
     }).join('\n');
-
-    return `<div class="logo-layer">${html}</div>`;
 }
 
-function getLogoSlotPositionStyle(vertical: string, horizontal: string): string {
+function getOverlayTextStyle(text: any): string {
+    let style = '';
+
+    if (text.fontSize) style += `font-size:${text.fontSize};`;
+    if (text.fontColor) style += `color:${text.fontColor};`;
+
+    return style;
+}
+
+function getOverlayPositionStyle(overlay: any): string {
+    const alignment = overlay.position as { vertical?: string; horizontal?: string } | undefined;
+
+    const vertical = alignment?.vertical ?? 'TOP';
+    const horizontal = alignment?.horizontal ?? 'LEFT';
+
     let style = '';
 
     if (vertical === 'TOP') style += 'top:0;';

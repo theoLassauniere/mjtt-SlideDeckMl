@@ -2,7 +2,7 @@ import { LangiumDocument } from 'langium';
 import * as fs from 'fs';
 import * as path from 'path';
 import { Presentation, Slide, Template } from '../../language/out/generated/ast.js';
-import { generateLogos, generateTemplateStyle } from './template/template.js';
+import { generateOverlays, generateTemplateStyle } from './template/template.js';
 import { generateGrid, generateGridStyle } from './grid/grid.js';
 import { generateContainer } from './containers/containers.js';
 import { sanitizeTextContainerHtml } from './utils/utils.js';
@@ -54,7 +54,7 @@ export class SlideDeckGenerator {
                 return this.generateSlide(s, slideNumber, template);
             })
             .join('\n');
-        const logos = generateLogos(template);
+        const overlays = generateOverlays(template);
         const templateStyle = generateTemplateStyle(template);
         const gridStyle = generateGridStyle();
         const hasAnnotations = presentation.annotations === true;
@@ -81,7 +81,7 @@ export class SlideDeckGenerator {
 <body>
     <div class="reveal">
         <div class="slides">
-            ${logos}
+            ${overlays}
             ${slides}
         </div>
     </div>
