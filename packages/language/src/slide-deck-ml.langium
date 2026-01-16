@@ -61,9 +61,10 @@ CodeContainer:
 
 MathContainer:
     'mathContainer'
-        'Equation' '{'
+        'equation' '{'
             equationLines+=EquationLine*
         '}'
+        ('animations' '{' animations+=Animation* '}')?
         ('description' '=' description=STRING)?;
 
 EquationLine:
@@ -81,8 +82,10 @@ AnimatedSegment:
 MarkedString:
     START animated=STRING END;
 
-// Types
+Animation:
+    lineNumber=INT '=' type=AnimationType;
 
+// Types
 Color returns string:
     STRING | HEX_COLOR;
 
@@ -93,6 +96,11 @@ RIGHT returns string: 'RIGHT';
 TOP returns string: 'TOP';
 BOTTOM returns string: 'BOTTOM';
 CENTER returns string: 'CENTER';
+
+type AnimationType = 'DEPLACER' | 'SIMPLIFIER';
+AnimationType returns AnimationType : DEPLACER | SIMPLIFIER;
+DEPLACER returns string: 'DEPLACER';
+SIMPLIFIER returns string: 'SIMPLIFIER';
 
 terminal START returns string: '(start)';
 terminal END returns string: '(end)';

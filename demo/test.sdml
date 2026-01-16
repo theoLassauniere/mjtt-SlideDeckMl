@@ -11,11 +11,4 @@ Presentation PremierTest {
         text
             text = "Ceci est un test de présentation."
     }
-    Slide {
-        title = "Ceci est un calcul de racine"
-        mathContainer
-            Equation {
-                
-            }
-    }
 }

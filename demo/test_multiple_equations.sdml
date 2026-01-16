@@ -16,7 +16,7 @@ Presentation EquationBigTest {
         grid 1:2 {
             1:1 {
                 mathContainer
-                    Equation {
+                    equation {
                         "x = (-b +- sqrt(b^2 - 4ac))/(2a)";
                         "x1 = (-7 + sqrt(49 - (-32)))/(8)";
                         "<=> x1 = (-7 + sqrt(81))/(8)";
@@ -28,12 +28,12 @@ Presentation EquationBigTest {
             }
             1:2 {
                 mathContainer
-                    Equation {
+                    equation {
                         "x2 = (-7 - sqrt(49 - (-32)))/(8)";
                         "<=> x2 = "(start)"(-7 - sqrt(81))/(8)"(end);
                         "<=> x2 = (-7 - 9)/(8)";
                         "<=> x2 = "(start)"(-16)/(8)"(end);
-                        "<=> x2 = "(start)"2"(end);
+                        "<=> x2 = "(start)"-2"(end);
                     }
                     description = "Des parties seront animées plus tard"
             }
@@ -42,14 +42,31 @@ Presentation EquationBigTest {
     Slide {
         title = "Définition de l'énergie mécanique"
         mathContainer
-            Equation {
+            equation {
                 "E_(\"mécanique\") = color(red)(E_(\"cinétique\")) + color(blue)(E_(\"potentielle\"))";
                 "color(red)(E_(\"cinétique\")) = 1/2 m v^2";
                 "color(blue)(E_(\"potentielle\")) = m g h";
                 "<=> E_(\"mécanique\") = color(red)(1/2 m v^2) + color(blue)(m g h)";
                 "<=> E_(\"mécanique\") = m (color(red)(1/2 v^2) + color(blue)(g h))";
-                (start)"\"test\""(end);
-                (start)"\"test\""(end)"\"between\""(start)"\"test\""(end)"\"withSuffix\"";
+            }
+    }
+    Slide {
+        title = "Définition de l'énergie mécanique"
+        mathContainer
+            equation {
+                "3x + 12 = -27x +6";
+                "<=> 3x + 12"(start)"+27x"(end)"= -27x"(start)"+27x"(end)"+ 6";
+                "<=> "(start)"3x + 27x"(end)" + 12 = 6";
+                "<=> "(start)"30x"(end)"+ 12 = 6";
+                "<=> 30x + 12"(start)"-12"(end)" = 6"(start)"-12"(end);
+                "<=> 30x = -6";
+                "<=> x = -6/30";
+                "<=> x = -1/5";
+            }
+            animations {
+                2 = DEPLACER
+                3 = SIMPLIFIER
+                4 = DEPLACER
             }
     }
 }
