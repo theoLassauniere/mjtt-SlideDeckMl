@@ -39,8 +39,6 @@ export function generateTemplateStyle(template: any): string {
             }
         }
     }
-        
-    
 
     .reveal .text-container {
         margin: 1rem 0;
