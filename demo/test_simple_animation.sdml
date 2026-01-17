@@ -23,10 +23,10 @@ Presentation SimpleAnimation {
     Slide {
         title = "Equation du premier degré par factorisation"
         equation
-            {{"3x + 12 = 36"}};
+            {{"3x + 12"}}" = "{{"36"}};
             "<=> "{{"3(x + 4)"}}" = "{{"3(12)"}}, FACTORISER;
             "<=> x + 4 = 12";
             "<=> x + 4 "{{"- 4"}}" = 12 "{{"- 4"}}, DEPLACER;
-            "<=> x = 8";
+            "<=> x = color(red)(8)";
     }
 }
