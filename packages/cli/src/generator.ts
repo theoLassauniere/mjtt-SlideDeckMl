@@ -120,6 +120,8 @@ export class SlideDeckGenerator {
             `;
         } else if (template?.backgroundColor) {
             style = `background-color: ${template.backgroundColor};`;
+        } else {
+            style = `background-color: #ffffff;`;
         }
 
         const titleHtml = slide.title

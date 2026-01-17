@@ -17,7 +17,7 @@ Template:
         ('companyName' '=' companyName=STRING)?
         ('fontName' '=' fontName=STRING)
         ('fontSize' '=' fontSize=STRING)
-        ('fontColor' '=' fontColor=Color)
+        ('fontColor' '=' fontColor=Color)?
         ('titlesSize' '=' titlesSize=STRING)
         ('backgroundColor' '=' backgroundColor=Color)?
         ('backgroundImage' '=' backgroundImage=STRING)?
