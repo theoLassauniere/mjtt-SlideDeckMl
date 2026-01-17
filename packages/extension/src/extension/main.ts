@@ -14,7 +14,51 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     ensurePreviewPanel();
     updatePreview();
     
-    // When user switches to a different editor tab
+    // Register a command to generate HTML from the current SlideDeckML file
+    context.subscriptions.push(
+        vscode.commands.registerCommand('slide-deck-ml.generateHtml', async () => {
+            const editor = vscode.window.activeTextEditor;
+            if (!editor || !isSlideDeckFile(editor)) {
+                vscode.window.showErrorMessage('Please open a .sdml file to generate its HTML');
+                return;
+            }
+            
+            try {
+                const result = await generateHtmlFromEditor(editor);
+                if ('error' in result) {
+                    vscode.window.showErrorMessage(`Error: ${result.error}${result.details ? ' - ' + result.details : ''}`);
+                    return;
+                }
+                
+                const documentUri = editor.document.uri;
+                const documentDir = path.dirname(documentUri.fsPath);
+                const generatedDir = path.join(documentDir, 'generated');
+                
+                const titleMatch = result.html.match(/<title>(.*?)<\/title>/);
+                const presentationName = titleMatch ? titleMatch[1] : 'presentation';
+                const outputPath = path.join(generatedDir, `${presentationName}.html`);
+                
+                const fs = require('fs');
+                if (!fs.existsSync(generatedDir)) {
+                    fs.mkdirSync(generatedDir, { recursive: true });
+                }
+                fs.writeFileSync(outputPath, result.html, 'utf-8');
+                
+                const openFile = await vscode.window.showInformationMessage(
+                    `HTML generated: ${path.basename(outputPath)}`,
+                    'Open in Browser'
+                );
+                
+                if (openFile === 'Open in Browser') {
+                    vscode.env.openExternal(vscode.Uri.file(outputPath));
+                }
+            } catch (error) {
+                vscode.window.showErrorMessage(`Failed to generate HTML: ${error}`);
+            }
+        })
+    );
+    
+    // When user switches to a different editor tab ensure Preview is shown/updated
     context.subscriptions.push(
         vscode.window.onDidChangeActiveTextEditor(async (editor) => {
             if (isSlideDeckFile(editor)) {
