@@ -32,6 +32,36 @@ export function generateGrid(grid: Grid): string {
 
     return `<div class="grid-container" style="${gridStyle}">${cellsHtml}</div>`;
 }
+function positionToFlexCss(cell: Cell): string {
+    const alignment = (cell as any).position as { vertical?: string; horizontal?: string } | undefined;
+    if (!alignment) return '';
+
+    const vertical = alignment.vertical;     // 'TOP' | 'BOTTOM' | 'CENTER'
+    const horizontal = alignment.horizontal; // 'LEFT' | 'RIGHT' | 'CENTER' | undefined
+
+    // vertical -> justify-content
+    const justify =
+        vertical === 'TOP' ? 'flex-start' :
+        vertical === 'BOTTOM' ? 'flex-end' :
+        'center';
+
+    // horizontal -> align-items
+    const align =
+        horizontal === 'LEFT' ? 'flex-start' :
+        horizontal === 'RIGHT' ? 'flex-end' :
+        'center';
+
+    const textAlign =
+        horizontal === 'LEFT' ? 'left' :
+        horizontal === 'RIGHT' ? 'right' :
+        'center';
+
+    return `
+        justify-content: ${justify};
+        align-items: ${align};
+        text-align: ${textAlign};
+    `;
+}
 
 export function generateCell(cell: Cell): string {
     const rowStart = cell.rowIndexStart ?? 1;
@@ -42,7 +72,7 @@ export function generateCell(cell: Cell): string {
     const cellStyle = `
             grid-row: ${rowStart} / ${rowEnd};
             grid-column: ${colStart} / ${colEnd};
-
+            ${positionToFlexCss(cell)}
         `;
 
     const contentHtml = cell.containers.map(c => generateContainer(c)).join('\n');

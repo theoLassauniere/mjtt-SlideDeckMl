@@ -15,6 +15,10 @@
     "bin": {
         "slide-deck-ml-cli": "./bin/cli.js"
     },
+    "main": "./out/generator.js",
+    "exports": {
+        ".": "./out/generator.js"
+    },
     "scripts": {
         "clean": "shx rm -fr *.tsbuildinfo out",
         "build": "tsc -b tsconfig.json",

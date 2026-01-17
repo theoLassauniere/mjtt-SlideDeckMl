@@ -2,30 +2,45 @@ grammar SlideDeckMl
 
 entry Presentation:
     'Presentation' name=ID '{'
+        numbered=Numbering?
         template=Template
         slides+=Slide*
     '}';
 
+Numbering:
+    'numbered'
+    ('start' start=INT)?;
+
 Template:
-    'Template'
-        ('logos' '=' '[' logos+=Logo (',' logos+=Logo)* ']')?
+    'Template' '{'
+        ('logos' '=' '[' (logos+=Logo (',' logos+=Logo)*)? ']')?
         ('companyName' '=' companyName=STRING)?
         ('fontName' '=' fontName=STRING)
         ('fontSize' '=' fontSize=STRING)
         ('fontColor' '=' fontColor=Color)
-        ('backgroundColor' '=' backgroundColor=Color)?;
+        ('titlesSize' '=' titlesSize=STRING)
+        ('backgroundColor' '=' backgroundColor=Color)?
+        ('backgroundImage' '=' backgroundImage=STRING)?
+        ('transitions' '=' transitions=Transition)?
+    '}';
 
 Logo:
-    'logo'
-        'path' '=' path=STRING
-        ('positions' '=' '[' positions+=Position (',' positions+=Position)* ']')?;
+    'path' '=' path=STRING
+    ('position' '=' position=Alignment)?
+    ('size' '=' width=INT (height=INT)?)?;
 
 Slide:
     'Slide' '{'
         ('title' '=' title=STRING)?
         ('backgroundColor' '=' backgroundColor=Color)?
+        ('titleSize' '=' titleSize=STRING)?
+        ('backgroundImage' '=' backgroundImage=STRING)?
+        ('transition' '=' transition=Transition)?
         (content=SlideContent)?
     '}';
+
+Transition returns string:
+      'none' | 'fade' | 'slide' | 'convex' | 'concave' | 'zoom';
 
 SlideContent:
     containers+=Container+ | grid=Grid;
@@ -37,6 +52,7 @@ Grid:
 
 Cell:
     rowIndexStart=INT('-' rowIndexEnd=INT)? ':' columnIndexStart=INT('-' columnIndexEnd=INT)? '{'
+        ('position' '=' position=Alignment)?
         (containers+=Container* | grid=Grid)
     '}';
 
@@ -46,17 +62,36 @@ Container:
 
 TextContainer:
     'text'
-        'text' '=' text=STRING
         ('fontSize' '=' fontSize=STRING)?
-        ('fontColor' '=' fontColor=Color)?;
+        ('fontColor' '=' fontColor=Color)?
+        (
+            single=TextElement
+          |
+            '{' elements+=TextElement+ '}'
+        )
+    ;
+
+TextElement:
+      PlainText
+    | List
+;
+
+PlainText:
+    text=STRING
+;
+
+List:
+    (ordered?='ol' | unordered?='ul')
+        items+=STRING+
+;
 
 MediaContainer:
     'media'
-        'mediaLink' '=' mediaLink=STRING;
+        mediaLink=STRING;
 
 CodeContainer:
-    'codeContainer'
-        'language' '=' language=ID
+    'code'
+        language=ID
         code=CODE_BLOCK;
 
 MathContainer:
@@ -81,17 +116,16 @@ AnimatedSegment:
 MarkedString:
     START animated=STRING END;
 
-// Types
+Alignment:
+    vertical=('TOP' | 'BOTTOM') (horizontal=('LEFT' | 'RIGHT' | 'CENTER'))?
+    |
+    horizontal=('LEFT' | 'RIGHT') (vertical=('TOP' | 'BOTTOM' | 'CENTER'))?
+    |
+    vertical='CENTER' (horizontal=('LEFT' | 'RIGHT' | 'CENTER'))?
+;
+
 Color returns string:
     STRING | HEX_COLOR;
-
-type Position = 'LEFT' | 'RIGHT' | 'TOP' | 'BOTTOM' | 'CENTER';
-Position returns Position : LEFT | RIGHT | TOP | BOTTOM | CENTER;
-LEFT returns string: 'LEFT';
-RIGHT returns string: 'RIGHT';
-TOP returns string: 'TOP';
-BOTTOM returns string: 'BOTTOM';
-CENTER returns string: 'CENTER';
 
 type AnimationType = 'DEPLACER' | 'SIMPLIFIER';
 AnimationType returns AnimationType : DEPLACER | SIMPLIFIER;
@@ -105,7 +139,7 @@ hidden terminal WS: /\s+/;
 terminal ID: /[_a-zA-Z][\w_]*/;
 terminal INT returns number: /[0-9]+/;
 terminal CODE_BLOCK: /```[\s\S]*?```/;
-terminal STRING: /"(\\.|[^"\\])*"|'(\\.|[^'\\])*'/; // Permet de \ des "" pour un texte
+terminal STRING: /"(\\.|[^"\\])*"|'(\\.|[^'\\])*'/;
 terminal HEX_COLOR: /#[0-9a-fA-F]{6}/;
 hidden terminal ML_COMMENT: /\/\*[\s\S]*?\*\//;
 hidden terminal SL_COMMENT: /\/\/[^\n\r]*/;

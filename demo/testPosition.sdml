@@ -1,6 +1,4 @@
-Presentation GridSlide {
-    numbered
-
+Presentation PositionSlide {
     Template {
         fontName = "Roboto"
         fontSize = "1rem"
@@ -8,35 +6,29 @@ Presentation GridSlide {
         titlesSize = "2rem"
         backgroundColor = "white"
     }
-
     Slide {
-        title = "Second Test"
+        title = "Premier Test"
         grid 2:2 {
             1:1 {
+                position = TOP RIGHT
                 text "Cellule 1:1"
                 media "../assets/fox.mp4"
             }
             1:2 {
+                position = CENTER
                 grid 2:2 {
                     1:1 {
+                        position = TOP LEFT
                         text "Cellule 1:1 dans 1:2"
                     }
                     2:2 {
+                        position = BOTTOM RIGHT
                         text "Cellule 2:2 dans 1:2"
-                    }
-                    2:1 {
-                        grid 1:2 {
-                            1:1 {
-                                text "Cellule 1:1 dans 2:1 dans 1:2"
-                            }
-                            1:2 {
-                                text "Cellule 1:2 dans 2:1 dans 1:2"
-                            }
-                        }
                     }
                 }
             }
             2:1-2 {
+                position = BOTTOM CENTER
                 text "Cellule 2:1-2, qui prend toute la largeur du bas"
             }
         }
@@ -49,3 +41,5 @@ Presentation GridSlide {
         }
     }
 }
+
+

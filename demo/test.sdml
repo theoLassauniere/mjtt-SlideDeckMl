@@ -1,14 +1,40 @@
 Presentation PremierTest {
 
-    Template
+    Template {
         fontName = "Roboto"
         fontSize = "3rem"
         fontColor = "#222222"
-        backgroundColor = "white"
+        titlesSize = "2rem"
+        backgroundImage = "../assets/logo_company.png"
+    }
 
     Slide {
         title = "Premier Test"
-        text
-            text = "Ceci est un test de présentation."
+        titleSize = "4rem"
+        transition = fade
+        text "Ceci est un test de présentation."
+    }
+
+    Slide {
+        title = "Deuxième Test"
+        transition = convex
+        text "Ceci est un deuxième test de présentation."
+    }
+
+    Slide {
+        title = "Troisième Test"
+        text "Ceci est un troisième test de présentation."
+    }
+
+    Slide {
+        title = "4 Test"
+        transition = fade
+        text "Ceci est un 4 test de présentation."
+    }
+
+    Slide {
+        title = "5 Test"
+        transition = fade
+        text "Ceci est un 5 test de présentation."
     }
 }

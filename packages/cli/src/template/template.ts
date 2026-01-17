@@ -12,13 +12,33 @@ export function generateTemplateStyle(template: any): string {
     }
 
     .reveal .slides {
-        background-color: ${template.backgroundColor};
         height: 100%;
     }
 
-    .logo {
+    .logo-layer {
         position: absolute;
-        z-index: 10;
+        inset: 0;
+        pointer-events: none;
+        z-index: 100;
+        display: flex;  
+        gap: 10px;
+        justify-content: center;
+        align-items: center;
+    
+
+        & .logo-slot {
+            position: absolute;
+            pointer-events: none;
+            padding: 5px; 
+        
+
+            & .logo {
+                pointer-events: auto;
+                object-fit: contain;
+                margin: auto;
+                
+            }
+        }
     }
 
     .reveal .text-container {
@@ -26,7 +46,6 @@ export function generateTemplateStyle(template: any): string {
     }
 
     .reveal .media-container {
-        margin: 0 15%;
         display: block;
         width: 70%;
     }
@@ -51,7 +70,7 @@ export function generateTemplateStyle(template: any): string {
         text-align: center;
         margin-top: 0.5rem;
         margin-bottom: 0.5rem;
-        font-size: 2.2em;
+        font-size: ${template.titlesSize ?? '2.2em'};
         font-weight: 600;
     }
 
@@ -71,32 +90,78 @@ export function generateTemplateStyle(template: any): string {
         flex-direction: column;
         align-items: stretch;
     }
+
+    .slide-number {
+        position: absolute;
+        bottom: 1rem;
+        right: 1.5rem;
+        font-size: 0.8em;
+        opacity: 0.8;
+        pointer-events: none;
+    }
+
+    .text-container ul,
+    .text-container ol {
+        margin-left: 2rem;
+        margin-top: 0.5rem;
+    }
+
+    .text-container li {
+        margin: 0.3rem 0;
+    }
     `;
 }
 
-export function generateLogoStyle(positions: string[]): string {
+export function generateLogos(template: any): string {
+    if (!template.logos?.length) return '';
+
+    const groups = new Map<string, { vertical: string; horizontal: string; logos: any[] }>();
+
+    for (const logo of template.logos) {
+        const alignment = logo.position as { vertical?: string; horizontal?: string } | undefined;
+        const vertical = alignment?.vertical ?? 'CENTER';
+        const horizontal = alignment?.horizontal ?? 'CENTER';
+        const key = `${vertical}:${horizontal}`;
+
+        const existing = groups.get(key);
+        if (existing) {
+            existing.logos.push(logo);
+        } else {
+            groups.set(key, { vertical, horizontal, logos: [logo] });
+        }
+    }
+
+    const html = Array.from(groups.values()).map(group => {
+        return `
+            <div class="logo-slot" style="${getLogoSlotPositionStyle(group.vertical, group.horizontal)}">
+                ${group.logos.map(logo => `
+                    <img src="${logo.path}" class="logo" style="${generateLogoStyle(logo)}" />
+                `).join('\n')}
+            </div>
+        `;
+    }).join('\n');
+
+    return `<div class="logo-layer">${html}</div>`;
+}
+
+function getLogoSlotPositionStyle(vertical: string, horizontal: string): string {
     let style = '';
 
-    if (positions.includes('TOP')) style += 'top: 20px;';
-    if (positions.includes('BOTTOM')) style += 'bottom: 20px;';
-    if (positions.includes('LEFT')) style += 'left: 18%;';
-    if (positions.includes('RIGHT')) style += 'right: 18%;';
-    if (positions.includes('CENTER')) {
-        style += 'top: 50%; left: 50%; transform: translate(-50%, -50%);';
-    }
-    style += 'height: 100px;';
+    if (vertical === 'TOP') style += 'top:0;';
+    else if (vertical === 'BOTTOM') style += 'bottom:0;';
 
+    if (horizontal === 'LEFT') style += 'left:0;';
+    else if (horizontal === 'RIGHT') style += 'right:0;';
     return style;
 }
 
-export function generateLogos(template: any): string {
-    if (!template.logos) return '';
+export function generateLogoStyle(logo: any): string {
+    let style = '';
 
-    return template.logos.map((logo: any) => {
-        const style = logo.positions
-            ? generateLogoStyle(logo.positions)
-            : '';
+    if (logo.width) {
+        style += `width:${logo.width}px;`;
+        style += `height:${logo.height ?? logo.width}px;`;
+    }
 
-        return `<img src="${logo.path}" class="logo" style="${style}">`;
-    }).join('\n');
+    return style;
 }

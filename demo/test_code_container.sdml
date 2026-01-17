@@ -1,22 +1,20 @@
 Presentation CodeEditorTest {
-    Template
+    Template {
         logos = [
-            logo
-                path = "../assets/logo_company.png"
-                positions = [TOP, LEFT],
-            logo
-                path = "../assets/logo_school.svg"
-                positions = [TOP, RIGHT]
+            path = "../assets/logo_company.png" position = TOP LEFT  size = 100,
+            path = "../assets/logo_school.svg" position = TOP RIGHT size = 120 80
         ]
         companyName = "Langium Corporation"
         fontName = "Roboto"
         fontSize = "1rem"
         fontColor = "#222222"
+        titlesSize = "2rem"
         backgroundColor = "white"
+    }
+
     Slide {
         title = "Ceci est une diapositive de code"
-        codeContainer
-            language = Python
+        code Python
             ```
 n = 3
 print("Je vais vous demander", n, "nombres")
@@ -31,14 +29,14 @@ print("Fin")
     }
     Slide {
         title = "Ceci est une seconde diapositive de code"
-        codeContainer
-            language = Javascript
+        code Javascript
             ```
 // Basic Javascript code
 let n = 6;
 n += 2; 
 console.log("Final n value : ", n);
             ```
+        text "Test"
     }
 }
 
