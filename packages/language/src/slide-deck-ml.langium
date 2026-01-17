@@ -25,17 +25,11 @@ Template:
     '}';
 
 OverlayElement:
-    'overlay'
-        content=OverlayContent
-        (position=Alignment)?;
+    content=OverlayContent
+    (position=Alignment)?;
 
 OverlayContent:
-      OverlayText | OverlayImage;
-
-OverlayText:
-    'text' text=STRING
-    ('fontSize' '=' fontSize=STRING)?
-    ('fontColor' '=' fontColor=Color)?;
+      TextContainer | OverlayImage;
 
 OverlayImage:
     'image' path=STRING

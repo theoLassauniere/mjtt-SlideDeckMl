@@ -22,8 +22,11 @@ export function registerValidationChecks(services: SlideDeckMlServices) {
             validator.checkNumberedStart
         ],
         Template: validator.checkFontSize,
-        OverlayElement: validator.checkOverlayElement,
-        MediaContainer: validator.checkMediaContainer
+        OverlayElement: [
+            validator.checkOverlayElement,
+            validator.checkOverlayTextIsPlainSingle,
+        ],
+        MediaContainer: validator.checkMediaContainer,
     };
     registry.register(checks, validator);
 }
@@ -63,7 +66,7 @@ export class SlideDeckMlValidator {
     checkOverlayElement(overlay: OverlayElement, accept: ValidationAcceptor): void {
         const content = overlay.content;
 
-        if (content.$type === 'OverlayText') {
+        if (content.$type === 'TextContainer') {
             return;
         }
 
@@ -101,6 +104,40 @@ export class SlideDeckMlValidator {
                     { node: content, property: 'path' }
                 );
             }
+        }
+    }
+
+    checkOverlayTextIsPlainSingle(overlay: OverlayElement, accept: ValidationAcceptor): void {
+        const content = overlay.content;
+
+        if (content.$type !== 'TextContainer') {
+            return;
+        }
+
+        if (content.elements && content.elements.length > 0) {
+            accept(
+                'error',
+                'Un overlay texte doit contenir un texte simple (pas de bloc { ... }).',
+                { node: content }
+            );
+            return;
+        }
+
+        if (!content.single) {
+            accept(
+                'error',
+                'Un overlay texte doit contenir exactement une seule ligne de texte.',
+                { node: content }
+            );
+            return;
+        }
+
+        if (content.single.$type !== 'PlainText') {
+            accept(
+                'error',
+                'Un overlay texte ne peut contenir que du texte brut (pas de liste).',
+                { node: content.single }
+            );
         }
     }
 

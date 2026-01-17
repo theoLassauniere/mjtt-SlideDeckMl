@@ -1,4 +1,4 @@
-import { Template } from "../../../language/src/generated/ast.js";
+import { PlainText, Template, TextContainer } from "../../../language/src/generated/ast.js";
 import { sanitizeTextContainerHtml } from "../utils/utils.js";
 
 export function generateTemplateStyle(template: any): string {
@@ -41,17 +41,13 @@ export function generateTemplateStyle(template: any): string {
         }
     }
 
-    .logo-layer .overlay-text {
+    .overlay-layer .overlay-text {
         font-weight: 600;
         opacity: 0.85;
         white-space: nowrap;
         line-height: 1.2;
         padding: 0.2em 0.4em;
         border-radius: 4px;
-    }
-
-    .logo-layer .overlay-image {
-        margin: 0;
     }
 
     .reveal .text-container {
@@ -131,12 +127,20 @@ export function generateOverlays(template: Template): string {
     const overlaysHtml = template.overlays.map(o => {
         const positionStyle = getOverlayPositionStyle(o);
 
-        if (o.content.$type === 'OverlayText') {
+        if (o.content.$type === 'TextContainer') {
+            const textContainer = o.content as TextContainer;
+            if (
+                !textContainer.single ||
+                textContainer.single.$type !== 'PlainText'
+            ) {
+                return '';
+            }
+            const plainText = textContainer.single as PlainText;
             return `
                 <div class="overlay-slot" style="${positionStyle}">
                     <div class="overlay-content overlay-text"
-                         style="${getOverlayTextStyle(o.content)}">
-                        ${sanitizeTextContainerHtml(o.content.text)}
+                         style="${getOverlayTextStyle(textContainer)}">
+                        ${sanitizeTextContainerHtml(plainText.text)}
                     </div>
                 </div>
             `;

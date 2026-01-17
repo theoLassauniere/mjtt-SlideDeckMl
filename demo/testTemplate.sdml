@@ -4,17 +4,15 @@ Presentation TestTemplate {
 
     Template {
         overlays = [
-            overlay
-                image "../assets/logo_company.png" size = 100
-                TOP LEFT,
-            overlay
-                image "../assets/logo_school.svg" size = 120 80
-                TOP RIGHT,
-            overlay
-                text "Polytech Nice Sophia"
-                    fontSize = "0.8rem"
-                    fontColor = "blue"
-                BOTTOM LEFT
+            image "../assets/logo_company.png" size = 100
+            TOP LEFT,
+            image "../assets/logo_school.svg" size = 120 80
+            TOP RIGHT,
+            text 
+                fontSize = "0.8rem"
+                fontColor = "blue"
+                "Polytech Nice Sophia"
+            BOTTOM LEFT
         ]
         fontName = "Roboto"
         fontSize = "1rem"
