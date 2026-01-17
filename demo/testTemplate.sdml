@@ -1,5 +1,6 @@
 Presentation TestTemplate {
     numbered start 2
+    annotations
 
     Template {
         logos = [

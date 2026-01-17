@@ -6,6 +6,14 @@ import { generateLogos, generateTemplateStyle } from './template/template.js';
 import { generateGrid, generateGridStyle } from './grid/grid.js';
 import { generateContainer } from './containers/containers.js';
 import { sanitizeTextContainerHtml } from './utils/utils.js';
+import {
+    generateAnnotationsCss,
+    generateAnnotationsStyle,
+    generateAnnotationsButtons,
+    generateAnnotationsScript,
+    generateAnnotationsConfig,
+    getAnnotationsPluginName
+} from './annotations/annotations.js';
 
 export class SlideDeckGenerator {
     
@@ -49,6 +57,7 @@ export class SlideDeckGenerator {
         const logos = generateLogos(template);
         const templateStyle = generateTemplateStyle(template);
         const gridStyle = generateGridStyle();
+        const hasAnnotations = presentation.annotations === true;
         
         return `<!DOCTYPE html>
 <html lang="fr">
@@ -61,10 +70,12 @@ export class SlideDeckGenerator {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/black.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/monokai.min.css">
+    ${hasAnnotations ? generateAnnotationsCss() : ''}
     
     <style>
         ${templateStyle}
         ${gridStyle}
+        ${hasAnnotations ? generateAnnotationsStyle() : ''}
     </style>
 </head>
 <body>
@@ -74,10 +85,12 @@ export class SlideDeckGenerator {
             ${slides}
         </div>
     </div>
+    ${hasAnnotations ? generateAnnotationsButtons() : ''}
 
     <!-- Reveal.js JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/highlight.min.js"></script>
+    ${hasAnnotations ? generateAnnotationsScript() : ''}
     <script>
         Reveal.initialize({
             hash: true,
@@ -85,7 +98,8 @@ export class SlideDeckGenerator {
             transition: '${template.transitions ?? 'slide'}',
             transitionSpeed: 'default',
             backgroundTransition: 'fade',
-            plugins: [ RevealHighlight ]
+            ${hasAnnotations ? generateAnnotationsConfig() : ''}
+            plugins: [ RevealHighlight${hasAnnotations ? `, ${getAnnotationsPluginName()}` : ''} ]
         });
     </script>
 </body>
