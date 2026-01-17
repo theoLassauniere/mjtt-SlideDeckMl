@@ -3,6 +3,7 @@ grammar SlideDeckMl
 entry Presentation:
     'Presentation' name=ID '{'
         numbered=Numbering?
+        (annotations?='annotations')?
         template=Template
         slides+=Slide*
     '}';

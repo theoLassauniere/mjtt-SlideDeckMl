@@ -1,9 +1,15 @@
 {
     "name": "mjtt-slide-deck-ml",
-    "description": "The extension specific package",
+    "displayName": "SlideDeck ML",
+    "description": "Create HTML presentations with Reveal.js using a simple DSL.",
     "version": "0.0.1",
-    "displayName": "sdml",
-    "repository": "https://github.com/theoLassauniere/mjtt-SlideDeckMl",
+    "publisher": "mjtt",
+    "author": "MJTT Team",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/theoLassauniere/mjtt-SlideDeckMl"
+    },
     "engines": {
         "vscode": "^1.67.0"
     },
@@ -21,6 +27,27 @@
             "language": "slide-deck-ml",
             "scopeName": "source.slide-deck-ml",
             "path": "syntaxes/slide-deck-ml.tmLanguage.json"
+        }],
+        "commands": [{
+            "command": "slide-deck-ml.generateHtml",
+            "title": "Generate HTML Presentation",
+            "category": "SlideDeck"
+        }],
+        "menus": {
+            "editor/context": [{
+                "command": "slide-deck-ml.generateHtml",
+                "when": "resourceLangId == slide-deck-ml",
+                "group": "navigation"
+            }],
+            "commandPalette": [{
+                "command": "slide-deck-ml.generateHtml",
+                "when": "resourceLangId == slide-deck-ml"
+            }]
+        },
+        "keybindings": [{
+            "command": "slide-deck-ml.generateHtml",
+            "key": "ctrl+shift+g",
+            "when": "resourceLangId == slide-deck-ml"
         }]
     },
     "activationEvents": [
