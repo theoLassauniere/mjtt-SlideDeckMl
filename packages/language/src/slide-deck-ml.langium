@@ -14,8 +14,7 @@ Numbering:
 
 Template:
     'Template' '{'
-        ('logos' '=' '[' (logos+=Logo (',' logos+=Logo)*)? ']')?
-        ('companyName' '=' companyName=STRING)?
+        ('overlays' '=' '[' (overlays+=OverlayElement (',' overlays+=OverlayElement)*)? ']')?
         ('fontName' '=' fontName=STRING)
         ('fontSize' '=' fontSize=STRING)
         ('fontColor' '=' fontColor=Color)
@@ -25,9 +24,15 @@ Template:
         ('transitions' '=' transitions=Transition)?
     '}';
 
-Logo:
-    'path' '=' path=STRING
-    ('position' '=' position=Alignment)?
+OverlayElement:
+    content=OverlayContent
+    (position=Alignment)?;
+
+OverlayContent:
+      TextContainer | OverlayImage;
+
+OverlayImage:
+    'image' path=STRING
     ('size' '=' width=INT (height=INT)?)?;
 
 Slide:

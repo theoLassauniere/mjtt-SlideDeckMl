@@ -1,10 +1,5 @@
 Presentation CodeEditorTest {
     Template {
-        logos = [
-            path = "../assets/logo_company.png" position = TOP LEFT  size = 100,
-            path = "../assets/logo_school.svg" position = TOP RIGHT size = 120 80
-        ]
-        companyName = "Langium Corporation"
         fontName = "Roboto"
         fontSize = "1rem"
         fontColor = "#222222"

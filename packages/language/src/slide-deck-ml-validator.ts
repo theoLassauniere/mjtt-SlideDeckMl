@@ -3,7 +3,7 @@ import type {
     SlideDeckMlAstType,
     Presentation,
     Template,
-    Logo,
+    OverlayElement,
     MediaContainer
 } from './generated/ast.js';
 import type { SlideDeckMlServices } from './slide-deck-ml-module.js';
@@ -22,9 +22,11 @@ export function registerValidationChecks(services: SlideDeckMlServices) {
             validator.checkNumberedStart
         ],
         Template: validator.checkFontSize,
-        Logo: [
-            validator.checkLogoPath
-        ]
+        OverlayElement: [
+            validator.checkOverlayElement,
+            validator.checkOverlayTextIsPlainSingle,
+        ],
+        MediaContainer: validator.checkMediaContainer,
     };
     registry.register(checks, validator);
 }
@@ -61,34 +63,85 @@ export class SlideDeckMlValidator {
         }
     }
 
-    checkLogoPath(logo: Logo, accept: ValidationAcceptor): void {
-        if (!logo.path) {
-            accept('error', 'Le chemin du logo est obligatoire.', { node: logo });
+    checkOverlayElement(overlay: OverlayElement, accept: ValidationAcceptor): void {
+        const content = overlay.content;
+
+        if (content.$type === 'TextContainer') {
             return;
         }
 
-        const filePath = logo.path;
-        const allowedExtensions = ['.png', '.jpg', '.jpeg', '.svg'];
-        const ext = path.extname(filePath).toLowerCase();
+        if (content.$type === 'OverlayImage') {
+            const filePath = content.path;
 
-        if (!allowedExtensions.includes(ext)) {
-            accept(
-                'error',
-                `Invalid logo file extension "${ext}". Allowed: ${allowedExtensions.join(', ')}`,
-                { node: logo, property: 'path' }
-            );
+            if (!filePath || filePath.trim().length === 0) {
+                accept(
+                    'error',
+                    'Le chemin de l’image overlay est obligatoire.',
+                    { node: content, property: 'path' }
+                );
+                return;
+            }
+
+            const allowedExtensions = ['.png', '.jpg', '.jpeg', '.svg'];
+            const ext = path.extname(filePath).toLowerCase();
+
+            if (!allowedExtensions.includes(ext)) {
+                accept(
+                    'error',
+                    `Extension de fichier invalide pour un overlay image : "${ext}".`,
+                    { node: content, property: 'path' }
+                );
+            }
+
+            const documentPath = overlay.$document?.uri.fsPath;
+            if (!documentPath) return;
+            const absolutePath = path.resolve(path.dirname(documentPath),filePath);
+
+            if (!fs.existsSync(absolutePath)) {
+                accept(
+                    'warning',
+                    `Le fichier image overlay n'existe pas : ${filePath}`,
+                    { node: content, property: 'path' }
+                );
+            }
+        }
+    }
+
+    checkOverlayTextIsPlainSingle(overlay: OverlayElement, accept: ValidationAcceptor): void {
+        const content = overlay.content;
+
+        if (content.$type !== 'TextContainer') {
+            return;
         }
 
-        if (filePath.trim().length === 0) {
+        if (content.elements && content.elements.length > 0) {
             accept(
                 'error',
-                'Logo path must not be empty.',
-                { node: logo, property: 'path' }
+                'Un overlay texte doit contenir un texte simple (pas de bloc { ... }).',
+                { node: content }
+            );
+            return;
+        }
+
+        if (!content.single) {
+            accept(
+                'error',
+                'Un overlay texte doit contenir exactement une seule ligne de texte.',
+                { node: content }
+            );
+            return;
+        }
+
+        if (content.single.$type !== 'PlainText') {
+            accept(
+                'error',
+                'Un overlay texte ne peut contenir que du texte brut (pas de liste).',
+                { node: content.single }
             );
         }
     }
 
-    checkMediaContainer(media: MediaContainer, accept: ValidationAcceptor, documentPath: string) {
+    checkMediaContainer(media: MediaContainer, accept: ValidationAcceptor) {
         const ext = path.extname(media.mediaLink).toLowerCase();
         const imageExtensions = ['.png', '.jpg', '.jpeg', '.svg'];
         const videoExtensions = ['.mp4', '.webm', '.ogg'];
@@ -97,6 +150,8 @@ export class SlideDeckMlValidator {
             accept('error', `Extension de fichier invalide pour mediaLink: ${media.mediaLink}`, { node: media, property: 'mediaLink' });
         }
 
+        const documentPath = media.$document?.uri.fsPath;
+        if (!documentPath) return;
         const absolutePath = path.resolve(path.dirname(documentPath), media.mediaLink);
         if (!fs.existsSync(absolutePath)) {
             accept('warning', `Le fichier media n'existe pas : ${media.mediaLink}`, { node: media, property: 'mediaLink' });
