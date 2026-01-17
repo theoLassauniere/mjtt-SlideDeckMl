@@ -32,8 +32,8 @@ Presentation MultipleEquations {
                         "x2 = (-7 - sqrt(49 - (-32)))/(8)";
                         "<=> x2 = (-7 - sqrt(81))/(8)";
                         "<=> x2 = (-7 - 9)/(8)";
-                        "<=> x2 = "(start)"(-16)/(8)"(end);
-                        "<=> x2 = "(start)"-2"(end), SIMPLIFIER;
+                        "<=> x2 = "{{"(-16)/(8)"}};
+                        "<=> x2 = "{{"-2"}}, SIMPLIFIER;
                     }
                     description = "Des parties seront animees plus tard"
             }

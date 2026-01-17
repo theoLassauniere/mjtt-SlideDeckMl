@@ -98,8 +98,8 @@ AnimationType returns AnimationType : DEPLACER | SIMPLIFIER;
 DEPLACER returns string: 'DEPLACER';
 SIMPLIFIER returns string: 'SIMPLIFIER';
 
-terminal START returns string: '(start)';
-terminal END returns string: '(end)';
+terminal START returns string: '{{';
+terminal END returns string: '}}';
 
 hidden terminal WS: /\s+/;
 terminal ID: /[_a-zA-Z][\w_]*/;
