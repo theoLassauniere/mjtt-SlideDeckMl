@@ -73,16 +73,13 @@ EquationContent:
     line=(STRING | AnimatedLine);
 
 AnimatedLine:
-    prefix=STRING? (segments+=AnimatedSegment)+ (',' animation=Animation)?;
+    prefix=STRING? (segments+=AnimatedSegment)+ (',' animation=AnimationType)?;
 
 AnimatedSegment:
     marked=MarkedString suffix=STRING?;
 
 MarkedString:
     START animated=STRING END;
-
-Animation:
-    lineNumber=INT '=' type=AnimationType;
 
 // Types
 Color returns string:

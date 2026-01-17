@@ -10,6 +10,7 @@ export function generateMathStyle(): string {
     .equation-line {
         display: flex;
         justify-content: center;
+        align-items: center;
         gap: 0.5rem;
         font-size: 1.8rem;
         transition: opacity 0.3s ease-in-out;

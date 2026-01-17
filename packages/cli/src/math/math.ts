@@ -1,4 +1,4 @@
-import { AnimatedLine, AnimatedSegment, EquationLine, MathContainer } from "slide-deck-ml-language";
+import { AnimatedLine, AnimatedSegment, EquationContent, EquationLine, MathContainer } from "slide-deck-ml-language";
 
 export function generateEquationLines(equationLines: EquationLine[], equationId: string): string {
     return equationLines.map((equationLine, index) => generateEquationLine(equationLine, equationId, index)).join('')
@@ -52,15 +52,16 @@ export function generateEquationControls(): string {
 
 export function generateAnimationAttributes(mathContainer: MathContainer): string {
     let result = mathContainer.equationLines
-        .filter(equationLine => typeof equationLine.content.line !== "string")
-        .map(equationLine => generateSingleAnimationAttribute(equationLine.content.line as AnimatedLine))
+        .map((equationLine, index) => generateSingleAnimationAttribute(equationLine.content, index))
         .join(',');
 
     // Clean les virgules en trop
     return result.replace(/,+/g, ',').replace(/^,|,$/g, '');
 }
 
-export function generateSingleAnimationAttribute(aniamtedLine: AnimatedLine): string {
-    if (!aniamtedLine.animation) return '';
-    return `${aniamtedLine.animation.lineNumber}:${aniamtedLine.animation.type}`
+export function generateSingleAnimationAttribute(content: EquationContent, index: number): string {
+    if (typeof content.line === "string") return '';
+    const animatedLine = content.line as AnimatedLine;
+    if (!animatedLine.animation) return '';
+    return `${index}:${animatedLine.animation}`
 }
