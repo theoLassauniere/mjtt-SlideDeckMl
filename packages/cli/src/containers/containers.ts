@@ -1,5 +1,5 @@
 import { CodeContainer, TextContainer, Container, MediaContainer, MathContainer } from '../../../language/out/generated/ast.js';
-import { generateAnimationsAttribute, generateEquationControls, generateEquationDescription, generateEquationLines } from '../math/math.js';
+import { generateAnimationAttributes, generateEquationControls, generateEquationDescription, generateEquationLines } from '../math/math.js';
 
 export function generateContainer(container: Container): string {
     switch (container.$type) {
@@ -87,12 +87,12 @@ export function generateMathContainer(container: MathContainer) {
     equationCounter++;
     const equationId = `eq-${equationCounter}`;
 
-    const animationsAttr = container.animations && container.animations.length > 0
-        ? `data-animations="${generateAnimationsAttribute(container.animations)}"` 
+    const animationsAttributes = generateAnimationAttributes(container);
+    const animationsMarker = animationsAttributes ? `data-animations="${animationsAttributes}"` 
         : '';
 
     return `
-            <div class="equation-wrapper" data-equation-id="${equationId}" ${animationsAttr}>
+            <div class="equation-wrapper" data-equation-id="${equationId}" ${animationsMarker}>
                 ${generateEquationLines(container.equationLines, equationId)}
                 ${generateEquationControls()}
                 ${container.description ? generateEquationDescription(container.description) : ''}

@@ -64,7 +64,6 @@ MathContainer:
         'equation' '{'
             equationLines+=EquationLine*
         '}'
-        ('animations' '{' animations+=Animation* '}')?
         ('description' '=' description=STRING)?;
 
 EquationLine:
@@ -74,7 +73,7 @@ EquationContent:
     line=(STRING | AnimatedLine);
 
 AnimatedLine:
-    prefix=STRING? (segments+=AnimatedSegment)+;
+    prefix=STRING? (segments+=AnimatedSegment)+ (',' animation=Animation)?;
 
 AnimatedSegment:
     marked=MarkedString suffix=STRING?;
