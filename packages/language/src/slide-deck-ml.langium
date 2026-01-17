@@ -126,10 +126,11 @@ Alignment:
 Color returns string:
     STRING | HEX_COLOR;
 
-type AnimationType = 'DEPLACER' | 'SIMPLIFIER';
-AnimationType returns AnimationType : DEPLACER | SIMPLIFIER;
+type AnimationType = 'DEPLACER' | 'SIMPLIFIER' | 'FACTORISER';
+AnimationType returns AnimationType : DEPLACER | SIMPLIFIER | FACTORISER;
 DEPLACER returns string: 'DEPLACER';
 SIMPLIFIER returns string: 'SIMPLIFIER';
+FACTORISER returns string: 'FACTORISER';
 
 terminal START returns string: '{{';
 terminal END returns string: '}}';

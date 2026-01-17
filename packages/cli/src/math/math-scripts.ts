@@ -34,27 +34,40 @@ export function generateMathStyle(): string {
     }
 
     .marked-segment.animating {
-        animation: pulse 0.5s ease-in-out;
+        animation: pulse 1s ease-in-out;
     }
 
     /* Animation DEPLACER - segments en rouge */
     .marked-segment.deplacer-highlight {
         color: #dc3545;
         font-weight: bold;
-        animation: pulse 0.6s ease-in-out;
+        animation: pulse 1s ease-in-out;
     }
 
     /* Animation SIMPLIFIER - fusion */
     .marked-segment.simplifier-source {
         color: #007bff;
         font-weight: bold;
-        animation: fadeAndMove 0.8s ease-in-out;
+        animation: fadeAndMove 1s ease-in-out;
     }
 
     .marked-segment.simplifier-target {
         color: #28a745;
         font-weight: bold;
-        animation: appearAndGrow 0.8s ease-in-out;
+        animation: appearAndGrow 1s ease-in-out;
+    }
+
+    /* Animation FACTORISER - fusion */
+    .marked-segment.factoriser-source {
+        color: #ff004c;
+        font-weight: bold;
+        animation: fadeAndMove 1s ease-in-out;
+    }
+
+    .marked-segment.factoriser-target {
+        color: #0400ff;
+        font-weight: bold;
+        animation: appearAndGrow 1s ease-in-out;
     }
 
     @keyframes pulse {
@@ -211,6 +224,9 @@ export function generateMathAnimationsScript(): string {
             case 'SIMPLIFIER':
                 executeSimplifierAnimation(currentLine, nextLine, callback);
                 break;
+            case 'FACTORISER':
+                executeFactoriserAnimation(currentLine, nextLine, callback);
+                break;
             default:
                 callback();
         }
@@ -261,6 +277,34 @@ export function generateMathAnimationsScript(): string {
                 });
                 targetSegments.forEach(seg => {
                     seg.classList.remove('simplifier-target');
+                });
+                callback();
+            }, 1000);
+        }, 400);
+    }
+
+    function executeFactoriserAnimation(currentLine, nextLine, callback) {
+        nextLine.classList.remove('hidden');
+
+        const sourceSegments = currentLine.querySelectorAll('.marked-segment');
+        const targetSegments = nextLine.querySelectorAll('.marked-segment');
+
+        // Animer les segments source
+        sourceSegments.forEach(seg => {
+            seg.classList.add('factoriser-source');
+        });
+
+        setTimeout(() => {
+            targetSegments.forEach(seg => {
+                seg.classList.add('factoriser-target');
+            });
+            
+            setTimeout(() => {
+                sourceSegments.forEach(seg => {
+                    seg.classList.remove('factoriser-source');
+                });
+                targetSegments.forEach(seg => {
+                    seg.classList.remove('factoriser-target');
                 });
                 callback();
             }, 1000);
