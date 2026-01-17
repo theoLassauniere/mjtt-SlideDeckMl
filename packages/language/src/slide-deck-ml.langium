@@ -95,11 +95,9 @@ CodeContainer:
         code=CODE_BLOCK;
 
 MathContainer:
-    'mathContainer'
-        'equation' '{'
-            equationLines+=EquationLine*
-        '}'
-        ('description' '=' description=STRING)?;
+    'equation'
+        equationLines+=EquationLine*
+    ('description' description=PlainText)?;
 
 EquationLine:
     content=EquationContent';';

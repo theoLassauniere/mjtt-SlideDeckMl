@@ -1,4 +1,4 @@
-import { AnimatedLine, AnimatedSegment, EquationContent, EquationLine, MathContainer } from "slide-deck-ml-language";
+import { AnimatedLine, AnimatedSegment, EquationContent, EquationLine, MathContainer, PlainText } from "slide-deck-ml-language";
 
 export function generateEquationLines(equationLines: EquationLine[], equationId: string): string {
     return equationLines.map((equationLine, index) => generateEquationLine(equationLine, equationId, index)).join('')
@@ -37,9 +37,9 @@ export function generateAnimatedSegment(segments: AnimatedSegment[], equationId:
     }).join('');
 }
 
-export function generateEquationDescription(description: string): string {
+export function generateEquationDescription(description: PlainText): string {
     return `
-                <p>${description}</p>`;
+                <p>${description.text}</p>`;
 }
 
 export function generateEquationControls(): string {

@@ -1,24 +1,23 @@
 Presentation SimpleAnimation {
 
-    Template
+    Template {
         fontName = "Times New Roman"
         fontSize = "1.4rem"
         fontColor = "#222222"
-        backgroundColor = "white"
+        titlesSize = "1.8rem"
+    }
 
     Slide {
         title = "Equation du premier degré"
-        mathContainer
-            equation {
-                "3x + 12 = -27x +6";
-                "<=> 3x + 12"{{"+27x"}}"= -27x"{{"+27x"}}"+ 6", DEPLACER;
-                "<=> "{{"3x + 27x"}}" + 12 = 6";
-                "<=> "{{"30x"}}"+ 12 = 6", SIMPLIFIER;
-                "<=> 30x + 12"{{"-12"}}" = 6"{{"-12"}}, DEPLACER;
-                "<=> 30x = -6";
-                "<=> 30x"{{"/30"}}" = -6"{{"/30"}}, DEPLACER;
-                "<=> x = "{{"-6/30"}};
-                "<=> x = "{{"-1/5"}}, SIMPLIFIER;
-            }
+        equation
+            "3x + 12 = -27x +6";
+            "<=> 3x + 12"{{"+27x"}}"= -27x"{{"+27x"}}"+ 6", DEPLACER;
+            "<=> "{{"3x + 27x"}}" + 12 = 6";
+            "<=> "{{"30x"}}"+ 12 = 6", SIMPLIFIER;
+            "<=> 30x + 12"{{"-12"}}" = 6"{{"-12"}}, DEPLACER;
+            "<=> 30x = -6";
+            "<=> 30x"{{"/30"}}" = -6"{{"/30"}}, DEPLACER;
+            "<=> x = "{{"-6/30"}};
+            "<=> x = "{{"-1/5"}}, SIMPLIFIER;
     }
 }
