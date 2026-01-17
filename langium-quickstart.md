@@ -3,7 +3,11 @@
 ## What's in the folder
 
 This folder contains all necessary files for your language extension.
- * `package.json` - this is the manifest file in which you declare your language support.
+- [package.json](./package.json) - The manifest file the main workspace package
+- [tsconfig.json](./tsconfig.json) - The base TypeScript compiler configuration
+- [tsconfig.build.json](./package.json) - Configuration used to build the complete source code.
+- [.gitignore](.gitignore) - Files ignored by git
+
  * `language-configuration.json` - this is the language configuration, defining the tokens that are used for comments and brackets.
  * `src/extension.ts` - this is the main code of the extension, which is responsible for launching a language server and client.
  * `src/language-server/language-id.langium` - this is the grammar definition of your language.
@@ -30,3 +34,12 @@ This folder contains all necessary files for your language extension.
 
 * To start using your extension with VS Code, copy it into the `<user home>/.vscode/extensions` folder and restart Code.
 * To share your extension with the world, read on https://code.visualstudio.com/docs about publishing an extension.
+
+# Workspace overview
+
+Depending on the selection during the project generation you will have one or more packages contained in the packages directory.
+Please check the specific projects here:
+
+- [packages/language](./packages/language/README.md) This package is always available and contains the language definition.
+- [packages/cli](./packages/cli/README.md) *Optional* Is only available if you chose to use the command-line interface.
+- [packages/extension](./packages/extension/langium-quickstart.md) *Optional* Contains the VSCode extension if you chose to create it.
