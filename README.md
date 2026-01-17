@@ -1,17 +1,61 @@
-# Workspace overview
+# SlideDeckML
 
-Depending on the selection during the project generation you will have one or more packages contained in the packages directory.
-Please check the specific projects here:
+## Équipe
 
-- [packages/language](./packages/language/README.md) This package is always available and contains the language definition.
-- [packages/cli](./packages/cli/README.md) *Optional* Is only available if you chose to use the command-line interface.
-- [packages/extension](./packages/extension/langium-quickstart.md) *Optional* Contains the VSCode extension if you chose to create it.
+**Nom de l’équipe :**  
+Equipe MJTT
 
-## What's in the folder?
+**Membres :**
+- Théo Lassaunière
+- Thibault Ripoche
+- Mathis Jullien
+- Julie Seyier
 
-Some file are contained in the root directory as well.
+## Objectif du projet
 
-- [package.json](./package.json) - The manifest file the main workspace package
-- [tsconfig.json](./tsconfig.json) - The base TypeScript compiler configuration
-- [tsconfig.build.json](./package.json) - Configuration used to build the complete source code.
-- [.gitignore](.gitignore) - Files ignored by git
+L’objectif de ce projet est de concevoir et implémenter un **langage spécifique au domaine (DSL)** nommé **SlideDeckML**, permettant de décrire des présentations de diapositives pour ensuite les générer en langages web.
+
+À partir d’un fichier SlideDeckML, le projet génère automatiquement une présentation HTML basée sur **Reveal.js**.
+
+Le projet repose sur **Langium** pour la définition de la grammaire, l’AST, la validation et la génération.
+
+## Cloner et lancer le projet
+
+### Cloner le dépôt
+
+```bash
+git clone https://github.com/<organisation-ou-user>/SlideDeckML.git
+cd SlideDeckML
+```
+
+### Lancer le projet
+
+#### Installation et build
+
+```bash
+npm install
+npm run build
+```
+
+#### Générer une présentation
+
+Lancer l'extension VSCode avec F5 où Run and Debug (Ctrl + Shift + D) > Run Extension
+
+Dans un terminal run :
+
+```bash
+
+```
+
+## Scénarios disponibles
+
+Les scénarios de démonstration des fonctionnalitées de SlideDeckML sont disponibles à la racine du dossier demo et sont :
+- 
+- 
+
+## Grammaire de SlideDeckML
+
+## Validation
+
+## Extensions
+
