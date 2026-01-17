@@ -18,7 +18,7 @@ export function generateTemplateStyle(template: any): string {
         height: 100%;
     }
 
-    .logo-layer {
+    .overlay-layer {
         position: absolute;
         inset: 0;
         pointer-events: none;
@@ -27,21 +27,31 @@ export function generateTemplateStyle(template: any): string {
         gap: 10px;
         justify-content: center;
         align-items: center;
-    
 
-        & .logo-slot {
+        & .overlay-slot {
             position: absolute;
             pointer-events: none;
             padding: 5px; 
-        
 
-            & .logo {
+            & .overlay-content {
+                margin: 0;
                 pointer-events: auto;
                 object-fit: contain;
-                margin: auto;
-                
             }
         }
+    }
+
+    .logo-layer .overlay-text {
+        font-weight: 600;
+        opacity: 0.85;
+        white-space: nowrap;
+        line-height: 1.2;
+        padding: 0.2em 0.4em;
+        border-radius: 4px;
+    }
+
+    .logo-layer .overlay-image {
+        margin: 0;
     }
 
     .reveal .text-container {
@@ -116,9 +126,9 @@ export function generateTemplateStyle(template: any): string {
 }
 
 export function generateOverlays(template: Template): string {
-    if (!template.overlays) return '';
+    if (!template.overlays || template.overlays.length === 0) return '';
 
-    return template.overlays.map(o => {
+    const overlaysHtml = template.overlays.map(o => {
         const positionStyle = getOverlayPositionStyle(o);
 
         if (o.content.$type === 'OverlayText') {
@@ -135,15 +145,21 @@ export function generateOverlays(template: Template): string {
         if (o.content.$type === 'OverlayImage') {
             return `
                 <div class="overlay-slot" style="${positionStyle}">
-                    <img class="overlay-content"
+                    <img class="overlay-content overlay-image"
                          src="${o.content.path}"
-                         style="${generateLogoStyle(o)}" />
+                         style="${generateLogoStyle(o.content)}" />
                 </div>
             `;
         }
 
         return '';
     }).join('\n');
+
+    return `
+        <div class="overlay-layer">
+            ${overlaysHtml}
+        </div>
+    `;
 }
 
 function getOverlayTextStyle(text: any): string {

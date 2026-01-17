@@ -14,7 +14,7 @@ Presentation TestTemplate {
                 text "Polytech Nice Sophia"
                     fontSize = "0.8rem"
                     fontColor = "blue"
-                BOTTOM RIGHT
+                BOTTOM LEFT
         ]
         fontName = "Roboto"
         fontSize = "1rem"
