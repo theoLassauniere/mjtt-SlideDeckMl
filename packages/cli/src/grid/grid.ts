@@ -1,7 +1,7 @@
 import { Grid, Cell } from '../../../language/out/generated/ast.js';
 import { generateContainer } from '../containers/containers.js';
 
-export function generateGridStyle(): string {
+export function generateGridStyle(debug: boolean = false): string {
     return `
     .grid-container {
         width: 100%;
@@ -9,7 +9,7 @@ export function generateGridStyle(): string {
     }
 
     .grid-cell {
-        border: 1px solid red;
+        ${debug ? 'border: 1px solid red;' : ''}
         display: flex;
         justify-content: center;
         align-items: center;
