@@ -9,12 +9,11 @@ Presentation StudentPresentation {
             image "../assets/logo_school.svg" size = 120 TOP RIGHT,
             text 
                 fontSize = "0.8rem"
-                fontColor = "blue"
-                "Polytech Nice Sophia"
+                "Domain System Language"
             BOTTOM LEFT
         }
         fontName = "Arial"
-        fontSize = "1rem"
+        fontSize = "1.4rem"
         fontColor = "#000000"
         titlesSize = "2rem"
         backgroundColor = "#ffe4b2"
@@ -23,28 +22,45 @@ Presentation StudentPresentation {
 
     Slide {
         title = "Projet SlideDeckML"
-        text "Statut du projet : <strong>Fini</strong>"
-        text fontSize = "1.2rem"
-             fontColor = "rgb(96, 17, 17)"
-             "Lieu de développement"
-        media "../assets/polynice.jpg"
+        grid 4:1 {
+            1:1 {
+                position CENTER
+                text "Statut du projet : <strong>Fini</strong>"
+                text
+                    fontSize = "1.8rem"
+                    fontColor = "rgb(96, 17, 17)"
+                    "Lieu de développement :"
+            }
+            2-4:1 {
+                position CENTER
+                media "../assets/polynice.jpg"
+                text "Polytech Nice Sophia"
+            }
+        }
     }
     Slide {
-        title = "Les fonctionnalités du projet"
+        title = "Fonctionnalités du projet"
         backgroundColor = "#d79a27"
-        text ul "Génération de Diaporama online et offline" "Template" "Positionnement des éléments" "Gestion de divers contenus (code, média, langage mathématique...)"
+        text {
+            "<strong>Les frameworks et technologies utilisées sont :</strong>"
+            ul "reveal.js" "Langium" "Github"
+        }
+        text {
+            "<strong>Les fonctionnalités principales sont :</strong>"
+            ol "Génération de Diaporama online et offline" "Template" "Positionnement des éléments" "Gestion de divers contenus (code, média, langage mathématique...)" "Annotations sur les slides" "Transitions entre les slides"
+        }
     }
     Slide {
-        title = "Frameworks utilisés"
+        title = "Justifications des frameworks utilisés"
         grid 2:2 {
             1:1 {
-                text "Langium"
+                text "Langium car c'est un framework puissant pour créer des langages spécifiques au domaine (DSL) basé sur TypeScript, offrant une intégration facile avec les outils de développement modernes et une grande flexibilité pour définir la syntaxe et la sémantique du langage."
             }
             1:2 {
-                text "Revealjs"
+                media "../assets/logo_company.png"
             }
             2:1 {
-                media "../assets/logo_company.jpg"
+                text "Revealjs car c'est un framework de présentation open-source très populaire et flexible, permettant de créer des diaporamas interactifs et visuellement attrayants avec une grande variété de fonctionnalités."
             }
             2:2 {
                 media "../assets/reveal.png"
@@ -52,18 +68,55 @@ Presentation StudentPresentation {
         }
     }
     Slide {
-        title = "Vidéo d'illustration de nos pratiques de travail"
+        title = "On peut jouer au morpion !"
+        grid 3:3 {
+            1:1 {
+                media appear =  1 "../assets/rond.png"
+            }
+            1:2 {
+                media appear =  8 "../assets/croix.png"
+            }
+            1:3 {
+                media appear =  5 "../assets/rond.png"
+            }
+            2:1 {
+                media appear =  2 "../assets/croix.png"
+            }
+            2:2 {
+                media appear =  4 "../assets/croix.png"
+            }
+            2:3 {
+                media appear =  7 "../assets/rond.png"
+            }
+            3:1 {
+                media appear =  3 "../assets/rond.png"
+            }
+            3:2 {
+                media appear =  6 "../assets/rond.png"
+            }
+            3:3 {
+                media appear =  9 "../assets/croix.png"
+            }
+        }
+    }
+    Slide {
+        title = "Vidéo de code"
+        text "Voici une vidéo montrant le développement du projet SlideDeckML.<br><br>"
         media "../assets/code.mp4"
     }
     Slide {
         title = "Conclusion"
-        code Python
-            ```
-            print("Merci de votre attention")
-            ```
-        code Javascript
-            ```
-            console.log("Bonne journée");
-            ```
+        grid 3:1 {
+            1:1 {
+                code Python
+                ```
+                print("Merci de votre attention")
+                ```
+            }
+            2-3:1 {
+                position CENTER
+                media "../assets/content.png"
+            }
+        }
     }
 }

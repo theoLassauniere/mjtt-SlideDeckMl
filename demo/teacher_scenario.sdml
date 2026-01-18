@@ -11,7 +11,7 @@ Presentation TeacherPresentation {
             BOTTOM LEFT
         }
         fontName = "Roboto"
-        fontSize = "1rem"
+        fontSize = "1.2rem"
         fontColor = "#000000"
         titlesSize = "2rem"
         backgroundColor = "#ffebeb"
@@ -19,40 +19,49 @@ Presentation TeacherPresentation {
 
     Slide {
         title = "Introduction à Python"
-        text "Bienvenue dans ce cours d’introduction à la programmation en Python."
-        media "../assets/python.jpg"
+        grid 2:1 {
+            1:1 {
+                text fontSize = "1.8rem" "Bienvenue dans ce cours d’introduction à la programmation en Python."
+            }
+            2:1 {
+                position = CENTER
+                media "../assets/python.png"
+            }
+        }
     }
     Slide {
         title = "Python : les bases"
-        text {
-            "<strong>C'est quoi Python ?</strong>"
-            "Python est un langage de programmation interprété, multiparadigme et multiplateformes. Il favorise la programmation impérative structurée, fonctionnelle et orientée objet. Il est doté d'un typage dynamique fort, d'une gestion automatique de la mémoire par ramasse-miettes et d'un système de gestion d'exceptions ; il est ainsi similaire à Perl, Ruby, Scheme, Smalltalk et Tcl.
+        text appear =  1 fontSize = "1.5rem" "<strong>C'est quoi Python ?</strong>"
+        text appear =  2 "Python est un langage de programmation interprété, multiparadigme et multiplateformes. Il favorise la programmation impérative structurée, fonctionnelle et orientée objet. Il est doté d'un typage dynamique fort, d'une gestion automatique de la mémoire par ramasse-miettes et d'un système de gestion d'exceptions ; il est ainsi similaire à Perl, Ruby, Scheme, Smalltalk et Tcl. <br/><br/>
             Le langage Python est placé sous une licence libre proche de la licence BSD et fonctionne sur la plupart des plateformes informatiques, des smartphones aux ordinateurs centraux, de Windows à Unix avec notamment GNU/Linux en passant par macOS, ou encore Android, iOS, et peut aussi être traduit en Java ou .NET. Il est conçu pour optimiser la productivité des programmeurs en offrant des outils de haut niveau et une syntaxe simple à utiliser. "
-            "<strong>Pourquoi Python ?</strong>"
-            ul "Langage simple et lisible" "Très utilisé en science, web et IA" "Grande communauté"
-        }
+        text appear =  3 fontSize = "1.5rem" "<strong>Pourquoi Python ?</strong>"
+        text appear =  4 ul "Langage simple et lisible" "Très utilisé en science, web et IA" "Grande communauté" "Beaucoup de bibliothèques"
     }
     Slide {
         title = "Variables et calculs"
         grid 2:2 {
             1:1 {
                 code python
-                ```python
-                a = 5
-                b = 3
-                c = a + b
-                print(c)
                 ```
+a = 5
+b = 3
+c = a + b
+print(c)
+                ```
+                steps [1|2|3-4]
             }
             1:2 {
+                text "Python permet d'effectuer des calculs mathématiques simples en utilisant des variables."
+            }
+            2:1 {
                 equation
                     "a = 5";
                     "b = 3";
                     "c = a + b";
                     "c = 8";
             }
-            2:1 {
-                text "Python permet d'effectuer des calculs"
+            2:2 {
+                text "Ici, on additionne deux variables a et b, et on stocke le résultat dans la variable c."
             }
         }
     }
@@ -61,22 +70,29 @@ Presentation TeacherPresentation {
         grid 1:2 {
             1:1 {
                 code python
-                ```python
-                age = 18
-                if age >= 18:
-                    print("Majeur")
-                else:
-                    print("Mineur")
+                ```age = 18
+if age >= 18:
+    print("Majeur")
+else:
+    print("Mineur")
                 ```
+                steps [1|2-3|4-5]
+                text "<br/><br/> Des conditions permettent de contrôler le flux d'exécution du programme."
             }
             1:2 {
-                media "../assets/if_else_diagram.png"
+                media "../assets/if_else_diagram.jpg"
             }
         }
     }
     Slide {
-        text 
-            fontSize = "3rem"
-            "Merci pour votre attention !"
+        grid 1:1 {
+            1:1 {
+                position = CENTER
+                text
+                    fontSize = "3.5rem"
+                    fontColor = "blue"
+                    "Merci pour <color=yellow>votre attention !</color>"
+            }
+        }
     }
 }

@@ -10,6 +10,7 @@ export function generateGridStyle(debug: boolean = false): string {
 
     .grid-cell {
         ${debug ? 'border: 1px solid red;' : ''}
+        min-height: 0;
         display: flex;
         justify-content: center;
         align-items: center;
