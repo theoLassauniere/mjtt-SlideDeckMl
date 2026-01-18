@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>ExtensionsExample</title>
+    
+    <!-- Reveal.js CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reset.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/black.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/monokai.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rajgoel/reveal.js-plugins@master/chalkboard/style.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        
+    html, body {
+        height: 100%;
+    }
+
+    .reveal {
+        font-family: Arial;
+        font-size: 1.6rem;
+        color: #222222;
+        height: 100%;
+    }
+
+    .reveal .slides {
+        height: 100%;
+    }
+
+    .overlay-layer {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 100;
+        display: flex;  
+        gap: 10px;
+        justify-content: center;
+        align-items: center;
+
+        & .overlay-slot {
+            position: absolute;
+            pointer-events: none;
+            padding: 5px; 
+
+            & .overlay-content {
+                margin: 0;
+                pointer-events: auto;
+                object-fit: contain;
+            }
+        }
+    }
+
+    .overlay-layer .overlay-text {
+        font-weight: 600;
+        opacity: 0.85;
+        white-space: nowrap;
+        line-height: 1.2;
+        padding: 0.2em 0.4em;
+        border-radius: 4px;
+    }
+
+    .reveal .text-container {
+        margin: 1rem 0;
+    }
+
+    .reveal .media-container {
+        display: block;
+        width: 70%;
+    }
+
+    .reveal .slides section.section-slide {
+        width: 100%;
+        height: 100% !important;
+    }
+
+    .reveal .slides section.section-slide > div.sdml-slide {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
+    .reveal .slides section.section-slide .slide-title {
+        font-family: Arial;
+        color: #222222;
+        position: relative;
+        text-align: center;
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+        font-size: 2rem;
+        font-weight: 600;
+    }
+
+    .reveal .slides section.section-slide .slide-separator {
+        width: 60%;
+        margin: 0 auto 2rem auto;
+        border: none;
+        border-top: 2px solid currentColor;
+        flex: 0 0 auto;
+    }
+
+    .reveal .slides section.section-slide .slide-content {
+        width: 100%;
+        flex: 1 1 auto;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .slide-number {
+        position: absolute;
+        bottom: 1rem;
+        right: 1.5rem;
+        font-size: 0.8em;
+        opacity: 0.8;
+        pointer-events: none;
+    }
+
+    .text-container ul,
+    .text-container ol {
+        margin-left: 2rem;
+        margin-top: 0.5rem;
+    }
+
+    .text-container li {
+        margin: 0.3rem 0;
+    }
+    
+        
+    .grid-container {
+        width: 100%;
+        height: 100%; 
+    }
+
+    .grid-cell {
+        
+        min-height: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+    
+        
+    .equation-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .equation-line {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1.8rem;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    .equation-line span {
+        font-size: 1.8rem;
+    }
+
+    .equation-line.hidden {
+        display: none;
+    }
+
+    .marked-segment {
+        transition: all 0.3s ease-in-out;
+    }
+
+    .marked-segment.highlight-red {
+        color: red;
+        font-weight: bold;
+    }
+
+    .marked-segment.animating {
+        animation: pulse 1s ease-in-out;
+    }
+
+    /* Animation DEPLACER - segments en rouge */
+    .marked-segment.deplacer-highlight {
+        color: #dc3545;
+        font-weight: bold;
+        animation: pulse 1s ease-in-out;
+    }
+
+    /* Animation SIMPLIFIER - fusion */
+    .marked-segment.simplifier-source {
+        color: #007bff;
+        font-weight: bold;
+        animation: fadeAndMove 1s ease-in-out;
+    }
+
+    .marked-segment.simplifier-target {
+        color: #28a745;
+        font-weight: bold;
+        animation: appearAndGrow 1s ease-in-out;
+    }
+
+    /* Animation FACTORISER - fusion */
+    .marked-segment.factoriser-source {
+        color: #ff004c;
+        font-weight: bold;
+        animation: fadeAndMove 1s ease-in-out;
+    }
+
+    .marked-segment.factoriser-target {
+        color: #0400ff;
+        font-weight: bold;
+        animation: appearAndGrow 1s ease-in-out;
+    }
+
+    @keyframes pulse {
+    0%, 100% { 
+        transform: scale(1); 
+        opacity: 1;
+    }
+    50% { 
+        transform: scale(1.15); 
+        opacity: 0.8;
+    }
+    }
+
+    @keyframes fadeAndMove {
+        0% { 
+            opacity: 1; 
+            transform: translateY(0) scale(1);
+        }
+        50% { 
+            opacity: 0.5; 
+            transform: translateY(10px) scale(0.9);
+        }
+        100% { 
+            opacity: 0.3; 
+            transform: translateY(20px) scale(0.8);
+        }
+    }
+
+    @keyframes appearAndGrow {
+        0% { 
+            transform: scale(0.8); 
+            opacity: 0.5;
+        }
+        50% { 
+            transform: scale(1.2); 
+            opacity: 1;
+        }
+        100% { 
+            transform: scale(1); 
+            opacity: 1;
+        }
+    }
+
+    .equation-controls button {
+        padding: 10px 20px;
+        border: none;
+        background: #007bff;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    .equation-controls button:hover:not(:disabled) {
+        background: #0056b3;
+    }
+
+    .equation-controls button:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+    }
+        
+        .reveal .slide-menu-button, .reveal .chalkboard-button {
+            position: fixed;
+            z-index: 30;
+            font-size: 24px;
+        }
+        .chalkboard-buttons {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            z-index: 30;
+            display: flex;
+            gap: 10px;
+        }
+        .chalkboard-buttons button {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 4px;
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .chalkboard-buttons button:hover {
+            background: rgba(0, 0, 0, 0.5);
+        }
+        
+        
+    
+    .reveal .media-container {
+        display: block;
+        width: 70%;
+    }
+
+    
+    .reveal .text-container {
+        margin: 1rem 0;
+
+        & ul,
+        & ol {
+        margin-left: 2rem;
+        margin-top: 0.5rem;
+        }
+
+         & li {
+        margin: 0.3rem 0;
+        }
+    }
+
+    
+    .reveal .slides section.section-slide {
+        width: 100%;
+        height: 100% !important;
+    }
+
+    .reveal pre code {
+        font-size: 1.1rem;
+        line-height: 1.2;
+    }
+
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            
+            
+            <section class="section-slide" style="background-color: white;">
+                <div class="sdml-slide">
+                    
+                    <h2 class="slide-title">
+            Les extensions que nous avons implémentées
+        </h2>
+        <hr class="slide-separator">
+                    <div class="slide-content">
+                        <div class="text-container"><ul><li>Support for Slide Annotations</li><li>DSL Extension for Mathematical Equations</li></ul></div>
+<div class="text-container">Les annotations permettent d'ajouter des notes aux diapositives.</div>
+<div class="text-container">L'extension pour les équations mathématiques permet d'écrire des formules mathématiques de manière claire et structurée.</div>
+                    </div>
+                </div>
+            </section>
+            
+
+            <section class="section-slide" style="background-color: white;">
+                <div class="sdml-slide">
+                    
+                    <h2 class="slide-title">
+            Exemple Support for Slide Annotations
+        </h2>
+        <hr class="slide-separator">
+                    <div class="slide-content">
+                        <div class="text-container">Cliquer sur le logo crayon en bas à gauche de l'écran et dessiner un mouton</div>
+                    </div>
+                </div>
+            </section>
+            
+
+            <section class="section-slide" style="background-color: white;">
+                <div class="sdml-slide">
+                    
+                    <h2 class="slide-title">
+            Calcul de racines d'un polynôme de degré 2
+        </h2>
+        <hr class="slide-separator">
+                    <div class="slide-content">
+                        <div class="grid-container" style="
+            display: grid;
+            grid-template-rows: repeat(1, 1fr);
+            grid-template-columns: repeat(2, 1fr);
+        "><div class="grid-cell" style="
+            grid-row: 1 / 2;
+            grid-column: 1 / 2;
+            
+        ">
+            <div class="equation-wrapper "  data-equation-id="eq-0" >
+                    
+                <div class="equation-line" data-step="0">
+                    `x = (-b +- sqrt(b^2 - 4ac))/(2a)`
+                </div>    
+                <div class="equation-line hidden" data-step="1">
+                    `x1 = (-7 + sqrt(49 - (-32)))/(8)`
+                </div>    
+                <div class="equation-line hidden" data-step="2">
+                    `<=> x1 = (-7 + sqrt(81))/(8)`
+                </div>    
+                <div class="equation-line hidden" data-step="3">
+                    `<=> x1 = (-7 + 9)/(8)`
+                </div>    
+                <div class="equation-line hidden" data-step="4">
+                    `<=> x1 = 1/4`
+                </div>
+                    
+                <div class="equation-controls hidden">
+                    <button class="prev-step">Précédent</button>
+                    <button class="next-step">Suivant</button>
+                </div>
+                
+            </div>
+    </div>
+<div class="grid-cell" style="
+            grid-row: 1 / 2;
+            grid-column: 2 / 3;
+            
+        ">
+            <div class="equation-wrapper "  data-equation-id="eq-1" data-animations="4:SIMPLIFIER">
+                    
+                <div class="equation-line" data-step="0">
+                    `x2 = (-7 - sqrt(49 - (-32)))/(8)`
+                </div>    
+                <div class="equation-line hidden" data-step="1">
+                    `<=> x2 = (-7 - sqrt(81))/(8)`
+                </div>    
+                <div class="equation-line hidden" data-step="2">
+                    `<=> x2 = (-7 - 9)/(8)`
+                </div>    
+                <div class="equation-line hidden" data-step="3">
+                    <span class="equation-part">`<=> x2 = `</span>
+                    
+                    <span class="marked-segment" data-segment-id="eq-1-seg-0">`(-16)/(8)`</span>
+                </div>    
+                <div class="equation-line hidden" data-step="4">
+                    <span class="equation-part">`<=> x2 = `</span>
+                    
+                    <span class="marked-segment" data-segment-id="eq-1-seg-0">`-2`</span>
+                </div>
+                    
+                <div class="equation-controls hidden">
+                    <button class="prev-step">Précédent</button>
+                    <button class="next-step">Suivant</button>
+                </div>
+                
+            </div>
+    </div></div>
+                    </div>
+                </div>
+            </section>
+            
+
+            <section class="section-slide" style="background-color: white;">
+                <div class="sdml-slide">
+                    
+                    <h2 class="slide-title">
+            Equation du premier degré
+        </h2>
+        <hr class="slide-separator">
+                    <div class="slide-content">
+                        
+            <div class="equation-wrapper "  data-equation-id="eq-2" data-animations="1:DEPLACER,3:SIMPLIFIER,4:DEPLACER,6:DEPLACER,8:SIMPLIFIER">
+                    
+                <div class="equation-line" data-step="0">
+                    `3x + 12 = -27x +6`
+                </div>    
+                <div class="equation-line hidden" data-step="1">
+                    <span class="equation-part">`<=> 3x + 12`</span>
+                    
+                    <span class="marked-segment" data-segment-id="eq-2-seg-0">`+27x`</span><span class="equation-part">`= -27x`</span>
+                    <span class="marked-segment" data-segment-id="eq-2-seg-1">`+27x`</span><span class="equation-part">`+ 6`</span>
+                </div>    
+                <div class="equation-line hidden" data-step="2">
+                    <span class="equation-part">`<=> `</span>
+                    
+                    <span class="marked-segment" data-segment-id="eq-2-seg-0">`3x + 27x`</span><span class="equation-part">` + 12 = 6`</span>
+                </div>    
+                <div class="equation-line hidden" data-step="3">
+                    <span class="equation-part">`<=> `</span>
+                    
+                    <span class="marked-segment" data-segment-id="eq-2-seg-0">`30x`</span><span class="equation-part">`+ 12 = 6`</span>
+                </div>    
+                <div class="equation-line hidden" data-step="4">
+                    <span class="equation-part">`<=> 30x + 12`</span>
+                    
+                    <span class="marked-segment" data-segment-id="eq-2-seg-0">`-12`</span><span class="equation-part">` = 6`</span>
+                    <span class="marked-segment" data-segment-id="eq-2-seg-1">`-12`</span>
+                </div>    
+                <div class="equation-line hidden" data-step="5">
+                    `<=> 30x = -6`
+                </div>    
+                <div class="equation-line hidden" data-step="6">
+                    <span class="equation-part">`<=> 30x`</span>
+                    
+                    <span class="marked-segment" data-segment-id="eq-2-seg-0">`/30`</span><span class="equation-part">` = -6`</span>
+                    <span class="marked-segment" data-segment-id="eq-2-seg-1">`/30`</span>
+                </div>    
+                <div class="equation-line hidden" data-step="7">
+                    <span class="equation-part">`<=> x = `</span>
+                    
+                    <span class="marked-segment" data-segment-id="eq-2-seg-0">`-6/30`</span>
+                </div>    
+                <div class="equation-line hidden" data-step="8">
+                    <span class="equation-part">`<=> x = `</span>
+                    
+                    <span class="marked-segment" data-segment-id="eq-2-seg-0">`-1/5`</span>
+                </div>
+                    
+                <div class="equation-controls hidden">
+                    <button class="prev-step">Précédent</button>
+                    <button class="next-step">Suivant</button>
+                </div>
+                
+            </div>
+    
+                    </div>
+                </div>
+            </section>
+            
+        </div>
+    </div>
+    
+    <div class="chalkboard-buttons">
+        <button onclick="RevealChalkboard.toggleNotesCanvas();" title="Annoter la slide (C)">
+            <i class="fas fa-pen"></i>
+        </button>
+        <button onclick="RevealChalkboard.toggleChalkboard();" title="Tableau noir (B)">
+            <i class="fas fa-chalkboard"></i>
+        </button>
+        <button onclick="RevealChalkboard.clear();" title="Effacer (DEL)">
+            <i class="fas fa-eraser"></i>
+        </button>
+    </div>
+    
+
+    <!-- Reveal.js JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/highlight.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/rajgoel/reveal.js-plugins@master/chalkboard/plugin.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            center: false,
+            transition: 'slide',
+            transitionSpeed: 'default',
+            backgroundTransition: 'fade',
+            chalkboard: {
+                theme: "chalkboard",
+                boardmarkerWidth: 3,
+                chalkWidth: 5,
+                chalkEffect: 1.0,
+                storage: "chalkboard",
+                toggleChalkboardButton: { left: "30px", bottom: "30px" },
+                toggleNotesButton: { left: "80px", bottom: "30px" },
+            },
+            plugins: [ RevealHighlight, RevealChalkboard ]
+        });
+    </script>
+
+    <!-- MathJax Integration -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=AM_CHTML"></script>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.equation-wrapper').forEach(wrapper => initEquationAnimation(wrapper));
+    });
+
+    function initEquationAnimation(wrapper) {
+        let currentStep = 0;
+        const lines = wrapper.querySelectorAll('.equation-line');
+        const maxSteps = lines.length - 1;
+        
+        const prevBtn = wrapper.querySelector('.prev-step');
+        const nextBtn = wrapper.querySelector('.next-step');
+        const controls = wrapper.querySelector('.equation-controls');
+        
+        // Récupérer les animations
+        const animations = parseAnimations(wrapper.getAttribute('data-animations'));
+        
+        // Masquer les contrôles s'il n'y a qu'une seule ligne
+        if (maxSteps === 0) {
+            return;
+        }
+        
+        // Afficher les contrôles
+        controls.classList.remove('hidden');
+        updateDisplay();
+        
+        let isAnimating = false;
+        
+        nextBtn.addEventListener('click', () => {
+            if (currentStep < maxSteps && !isAnimating) {
+                const nextStep = currentStep + 1;
+                const animation = animations[nextStep];
+                
+                if (animation) {
+                    isAnimating = true;
+                    executeAnimation(lines, currentStep, nextStep, animation, () => {
+                        currentStep = nextStep;
+                        updateDisplay();
+                        isAnimating = false;
+                    });
+                } else {
+                    currentStep = nextStep;
+                    updateDisplay();
+                }
+            }
+        });
+        
+        prevBtn.addEventListener('click', () => {
+            if (currentStep > 0 && !isAnimating) {
+                currentStep--;
+                updateDisplay();
+            }
+        });
+        
+        function updateDisplay() {
+            lines.forEach((line, index) => {
+                if (index <= currentStep) {
+                    line.classList.remove('hidden');
+                } else {
+                    line.classList.add('hidden');
+                }
+            });
+            
+            prevBtn.disabled = currentStep === 0;
+            nextBtn.disabled = currentStep === maxSteps;
+        }
+    }
+
+    function parseAnimations(animationsAttr) {
+        if (!animationsAttr) return {};
+        
+        const animations = {};
+        animationsAttr.split(',').forEach(anim => {
+            const [step, type] = anim.trim().split(':');
+            animations[parseInt(step)] = type;
+        });
+        
+        return animations;
+    }
+
+    function executeAnimation(lines, currentStep, nextStep, animationType, callback) {
+        const currentLine = lines[currentStep];
+        const nextLine = lines[nextStep];
+        
+        switch(animationType) {
+            case 'DEPLACER':
+                executeDeplacerAnimation(nextLine, callback);
+                break;
+            case 'SIMPLIFIER':
+                executeSimplifierAnimation(currentLine, nextLine, callback);
+                break;
+            case 'FACTORISER':
+                executeFactoriserAnimation(currentLine, nextLine, callback);
+                break;
+            default:
+                callback();
+        }
+    }
+
+    function executeDeplacerAnimation(nextLine, callback) {
+        // Afficher la ligne suivante
+        nextLine.classList.remove('hidden');
+        
+        // Mettre en surbrillance les segments marqués
+        const markedSegments = nextLine.querySelectorAll('.marked-segment');
+        
+        markedSegments.forEach(seg => {
+            seg.classList.add('deplacer-highlight');
+        });
+        
+        // Retirer la surbrillance après l'animation
+        setTimeout(() => {
+            markedSegments.forEach(seg => {
+                seg.classList.remove('deplacer-highlight');
+            });
+            callback();
+        }, 1000);
+    }
+
+    function executeSimplifierAnimation(currentLine, nextLine, callback) {
+        // Afficher la ligne suivante
+        nextLine.classList.remove('hidden');
+        
+        const sourceSegments = currentLine.querySelectorAll('.marked-segment');
+        const targetSegments = nextLine.querySelectorAll('.marked-segment');
+        
+        // Animer les segments source
+        sourceSegments.forEach(seg => {
+            seg.classList.add('simplifier-source');
+        });
+        
+        // Animer les segments cible après un court délai
+        setTimeout(() => {
+            targetSegments.forEach(seg => {
+                seg.classList.add('simplifier-target');
+            });
+            
+            // Nettoyer après l'animation
+            setTimeout(() => {
+                sourceSegments.forEach(seg => {
+                    seg.classList.remove('simplifier-source');
+                });
+                targetSegments.forEach(seg => {
+                    seg.classList.remove('simplifier-target');
+                });
+                callback();
+            }, 1000);
+        }, 400);
+    }
+
+    function executeFactoriserAnimation(currentLine, nextLine, callback) {
+        nextLine.classList.remove('hidden');
+
+        const sourceSegments = currentLine.querySelectorAll('.marked-segment');
+        const targetSegments = nextLine.querySelectorAll('.marked-segment');
+
+        // Animer les segments source
+        sourceSegments.forEach(seg => {
+            seg.classList.add('factoriser-source');
+        });
+
+        setTimeout(() => {
+            targetSegments.forEach(seg => {
+                seg.classList.add('factoriser-target');
+            });
+            
+            setTimeout(() => {
+                sourceSegments.forEach(seg => {
+                    seg.classList.remove('factoriser-source');
+                });
+                targetSegments.forEach(seg => {
+                    seg.classList.remove('factoriser-target');
+                });
+                callback();
+            }, 1000);
+        }, 400);
+    }
+    </script>
+    
+</body>
+</html>
