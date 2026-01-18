@@ -7,7 +7,7 @@ import { SlideDeckGenerator } from 'slide-deck-ml-cli';
 const services = createSlideDeckMlServices(NodeFileSystem).SlideDeckMl;
 const generator = new SlideDeckGenerator();
 
-export async function generateHtmlFromEditor(editor: vscode.TextEditor, webview?: vscode.Webview): Promise<{ html: string; title: string } | { error: string; details?: string }> {
+export async function generateHtmlFromEditor(editor: vscode.TextEditor, webview?: vscode.Webview, forPreview: boolean = true): Promise<{ html: string; title: string } | { error: string; details?: string }> {
     const fileContent = editor.document.getText();
     const document = services.shared.workspace.LangiumDocumentFactory.fromString(
         fileContent, 
@@ -23,7 +23,7 @@ export async function generateHtmlFromEditor(editor: vscode.TextEditor, webview?
     
     try {
         // Enable debug mode (with red borders) for preview only
-        let html = generator.generatePresentation(presentation, true);
+        let html = generator.generatePresentation(presentation, forPreview);
         if (webview) {
             html = convertLocalPathsToWebviewUris(html, editor.document.uri, webview);
         }

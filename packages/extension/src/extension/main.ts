@@ -24,7 +24,8 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
             }
             
             try {
-                const result = await generateHtmlFromEditor(editor);
+                // Pass forPreview=false to generate without debug red borders
+                const result = await generateHtmlFromEditor(editor, undefined, false);
                 if ('error' in result) {
                     vscode.window.showErrorMessage(`Error: ${result.error}${result.details ? ' - ' + result.details : ''}`);
                     return;
