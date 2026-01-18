@@ -38,7 +38,7 @@ La commande `npm run install:ext` compile le projet et installe automatiquement 
 - Preview interactive avec bordures de debug pour les grilles
 - Génération de fichiers HTML
 
-![Placeholder: Capture d'écran de l'extension avec coloration syntaxique]
+![Coloration syntaxique de l'extension](docs/images/syntax_color.png)
 
 ### Preview
 
@@ -48,7 +48,7 @@ La preview permet de visualiser le rendu en temps réel pendant l'édition :
 - **Affichage :** Panel à côté de l'éditeur, mise à jour automatique
 - **Mode debug :** Bordures rouges autour des cellules d'une grille pour faciliter l'écriture de slide ne mode preview'
 
-![Placeholder: Capture d'écran de la preview avec bordures de debug]
+![Preview avec bordures de debug](docs/images/preview.png)
 
 ### Génération de fichiers HTML
 
@@ -69,7 +69,8 @@ Pour générer un fichier HTML final (sans bordures de debug) depuis l'extension
 
 Exemple : `demo/test.sdml` → `demo/generated/test.html`
 
-![Placeholder: Capture d'écran du menu contextuel et du résultat de génération]
+![Menu contextuel de génération](docs/images/generate_command.png)
+![Résultat de génération](docs/images/generate_popup.png)
 
 ## Développement
 
@@ -116,18 +117,29 @@ Les scénarios de démonstration des fonctionnalités de SlideDeckML sont dispon
 
 ![Placeholder: Capture d'écran d'un exemple de scénario]
 
-## Grammaire de SlideDeckML
 
-![Placeholder: Diagramme de la grammaire SlideDeckML]
+## Domain Model de SlideDeckML
+
+![Domain Model](docs/images/domain_model.png)
 
 ## Extensions
 
 Nous avons mis en place les extensions suivantes dans notre langage :
 
-- **Support for Slide Annotations** : Permet d'annoter les slides pendant la présentation
+### Support for Slide Annotations
 
-![Placeholder: Exemple d'annotations sur une slide]
+Permet d'annoter les slides en temps réel pendant la présentation avec deux modes :
 
-- **DSL Extension for Mathematical Equations** : Support des équations mathématiques avec MathJax
+**Mode dessin** : Annotez directement sur les slides avec des outils de dessin
 
-![Placeholder: Exemple d'équations mathématiques]
+![Annotations sur une slide](docs/images/annotations.png)
+
+**Mode tableau blanc** : Utilisez un tableau blanc complet pour vos explications
+
+![Whiteboard](docs/images/whiteboard.png)
+
+### DSL Extension for Mathematical Equations
+
+Support complet des équations mathématiques avec MathJax, permettant d'écrire des formules complexes directement dans vos slides.
+
+![Équations mathématiques](docs/images/equation.png)
