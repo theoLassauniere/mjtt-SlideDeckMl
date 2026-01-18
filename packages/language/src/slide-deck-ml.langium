@@ -92,7 +92,7 @@ CodeContainer:
 ;
 
 ContainerOptions:
-    'indexApparition' '=' index=INT
+    'appear' '=' index=INT
 ;
 
 TextElement:

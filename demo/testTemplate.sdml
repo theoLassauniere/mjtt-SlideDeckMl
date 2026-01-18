@@ -27,11 +27,11 @@ Presentation TestTemplate {
         backgroundImage = "../assets/background.jpg"
         grid 1:2 {
             1:1 {
-                text indexApparition = 1 "Présentation \" Template \" "
+                text appear = 1 "Présentation \" Template \" "
             }
             1:2 {
                 text 
-                    indexApparition = 2
+                    appear = 2
                     fontSize = "3rem"
                     fontColor = "#870909ff"
                     "Changement style"
@@ -51,9 +51,8 @@ Presentation TestTemplate {
         title = "Hehehehe"
         media "../assets/fox.mp4"
         text "Hello <index=1>world</index>"
-        text "Hello <index=2>world</index>"
         text "Texte <color=red>rouge</color> et <color=#00ff00>vert</color>. Highlight reveal: mot <highlight color=#ffff00>important</highlight> puis normal."
-        text indexApparition =  3 "Zoom reveal: <zoom color=red>GROS</zoom>"
+        text appear =  3 "Zoom reveal: <zoom color=red>GROS</zoom>"
     }
     Slide {
         title = "UN LOUP"
@@ -63,8 +62,8 @@ Presentation TestTemplate {
                 text ul "Un" "Cinq" "Huit"
             }
             1:2 {
-                text indexApparition = 2 "Canis lupus, le Loup, plus spécifiquement désigné sous le nom de Loup gris, plus rarement sous ceux de Loup commun ou Loup vulgaire, est une espèce de mammifère carnivore de la famille des canidés."
-                code indexApparition = 3 Javascript
+                text appear = 2 "Canis lupus, le Loup, plus spécifiquement désigné sous le nom de Loup gris, plus rarement sous ceux de Loup commun ou Loup vulgaire, est une espèce de mammifère carnivore de la famille des canidés."
+                code appear = 3 Javascript
                 ```
                 console.log("Final n value : ", n);
                 ```
