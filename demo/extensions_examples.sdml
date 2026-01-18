@@ -24,6 +24,16 @@ Presentation ExtensionsExample {
     }
 
     Slide {
+            title = "Definition de l'energie mecanique"
+            equation
+                "E_(\"mecanique\") = color(red)(E_(\"cinetique\")) + color(blue)(E_(\"potentielle\"))";
+                "color(red)(E_(\"cinetique\")) = 1/2 m v^2";
+                "color(blue)(E_(\"potentielle\")) = m g h";
+                "<=> E_(\"mecanique\") = color(red)(1/2 m v^2) + color(blue)(m g h)";
+                "<=> E_(\"mecanique\") = m (color(red)(1/2 v^2) + color(blue)(g h))";
+        }
+
+    Slide {
         title = "Calcul de racines d'un polynôme de degré 2"
         grid 1:2 {
             1:1 {
