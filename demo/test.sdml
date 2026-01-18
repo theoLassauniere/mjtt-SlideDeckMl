@@ -2,7 +2,7 @@ Presentation PremierTest {
 
     Template {
         fontName = "Roboto"
-        fontSize = "1rem"
+        fontSize = "3rem"
         fontColor = "#222222"
         titlesSize = "2rem"
         backgroundImage = "../assets/logo_company.png"

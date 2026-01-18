@@ -1,0 +1,32 @@
+Presentation SimpleAnimation {
+
+    Template {
+        fontName = "Times New Roman"
+        fontSize = "1.4rem"
+        fontColor = "#222222"
+        titlesSize = "1.8rem"
+    }
+
+    Slide {
+        title = "Equation du premier degré"
+        equation
+            "3x + 12 = -27x +6";
+            "<=> 3x + 12"{{"+27x"}}"= -27x"{{"+27x"}}"+ 6", DEPLACER;
+            "<=> "{{"3x + 27x"}}" + 12 = 6";
+            "<=> "{{"30x"}}"+ 12 = 6", SIMPLIFIER;
+            "<=> 30x + 12"{{"-12"}}" = 6"{{"-12"}}, DEPLACER;
+            "<=> 30x = -6";
+            "<=> 30x"{{"/30"}}" = -6"{{"/30"}}, DEPLACER;
+            "<=> x = "{{"-6/30"}};
+            "<=> x = "{{"-1/5"}}, SIMPLIFIER;
+    }
+    Slide {
+        title = "Equation du premier degré par factorisation"
+        equation
+            {{"3x + 12"}}" = "{{"36"}};
+            "<=> "{{"3(x + 4)"}}" = "{{"3(12)"}}, FACTORISER;
+            "<=> x + 4 = 12";
+            "<=> x + 4 "{{"- 4"}}" = 12 "{{"- 4"}}, DEPLACER;
+            "<=> x = color(red)(8)";
+    }
+}

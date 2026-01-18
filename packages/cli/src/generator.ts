@@ -14,9 +14,10 @@ import {
     generateAnnotationsConfig,
     getAnnotationsPluginName
 } from './annotations/annotations.js';
+import { generateMathAnimationsScript, generateMathStyle } from './math/math-scripts.js';
 
 export class SlideDeckGenerator {
-    
+
     generateHtml(document: LangiumDocument, destination: string): void {
         const presentation = document.parseResult.value as Presentation;
         
@@ -27,9 +28,9 @@ export class SlideDeckGenerator {
 
         const htmlContent = this.generatePresentation(presentation);
         const outputPath = path.join(destination, `${presentation.name}.html`);
-        
+
         fs.mkdirSync(destination, { recursive: true });
-        
+
         fs.writeFileSync(outputPath, htmlContent, 'utf-8');
         console.log(`Fichier généré : ${outputPath}`);
     }
@@ -58,7 +59,8 @@ export class SlideDeckGenerator {
         const templateStyle = generateTemplateStyle(template);
         const gridStyle = generateGridStyle();
         const hasAnnotations = presentation.annotations === true;
-        
+        const mathStyle = generateMathStyle();
+
         return `<!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -75,6 +77,7 @@ export class SlideDeckGenerator {
     <style>
         ${templateStyle}
         ${gridStyle}
+        ${mathStyle}
         ${hasAnnotations ? generateAnnotationsStyle() : ''}
         ${generatecontainersStyle()}
     </style>
@@ -103,6 +106,10 @@ export class SlideDeckGenerator {
             plugins: [ RevealHighlight${hasAnnotations ? `, ${getAnnotationsPluginName()}` : ''} ]
         });
     </script>
+
+    <!-- MathJax Integration -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=AM_CHTML"></script>
+    ${generateMathAnimationsScript()}
 </body>
 </html>`;
     }
@@ -128,6 +135,8 @@ export class SlideDeckGenerator {
             `;
         } else if (template?.backgroundColor) {
             style = `background-color: ${template.backgroundColor};`;
+        } else {
+            style = `background-color: #ffffff;`;
         }
 
         const titleHtml = slide.title
