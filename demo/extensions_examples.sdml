@@ -10,11 +10,11 @@ Presentation ExtensionsExample {
     }
 
     Slide {
-        title = "Les extensions que nous avons implémenté"
+        title = "Les extensions que nous avons implémentées"
         text 
             fontSize = "1.5rem"
             ul "Support for Slide Annotations" "DSL Extension for Mathematical Equations"
-            text "Les annotations permettent d'ajouter des notes aux diapositives, visibles uniquement dans le mode présentation."
+            text "Les annotations permettent d'ajouter des notes aux diapositives."
             text "L'extension pour les équations mathématiques permet d'écrire des formules mathématiques de manière claire et structurée."
     }
 

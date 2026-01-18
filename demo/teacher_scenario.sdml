@@ -91,7 +91,7 @@ else:
                 text
                     fontSize = "3.5rem"
                     fontColor = "blue"
-                    "Merci pour <color=yellow>votre attention !</color>"
+                    "Merci pour <color=gold>votre attention !</color>"
             }
         }
     }

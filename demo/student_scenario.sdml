@@ -24,7 +24,7 @@ Presentation StudentPresentation {
         title = "Projet SlideDeckML"
         grid 4:1 {
             1:1 {
-                position CENTER
+                position = CENTER
                 text "Statut du projet : <strong>Fini</strong>"
                 text
                     fontSize = "1.8rem"
@@ -32,7 +32,7 @@ Presentation StudentPresentation {
                     "Lieu de développement :"
             }
             2-4:1 {
-                position CENTER
+                position = CENTER
                 media "../assets/polynice.jpg"
                 text "Polytech Nice Sophia"
             }
@@ -114,7 +114,7 @@ Presentation StudentPresentation {
                 ```
             }
             2-3:1 {
-                position CENTER
+                position = CENTER
                 media "../assets/content.png"
             }
         }
