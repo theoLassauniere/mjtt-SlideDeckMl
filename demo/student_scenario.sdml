@@ -9,7 +9,7 @@ Presentation StudentPresentation {
             image "../assets/logo_school.svg" size = 120 TOP RIGHT,
             text 
                 fontSize = "0.8rem"
-                "Domain System Language"
+                "Domain Specific Language"
             BOTTOM LEFT
         }
         fontName = "Arial"
