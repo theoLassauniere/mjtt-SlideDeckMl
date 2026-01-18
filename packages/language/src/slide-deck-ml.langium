@@ -89,6 +89,7 @@ CodeContainer:
         options=(ContainerOptions)?
         language=ID
         code=CODE_BLOCK
+        ('steps' steps=STEP_RANGES)?
 ;
 
 ContainerOptions:
@@ -108,16 +109,6 @@ List:
     (ordered?='ol' | unordered?='ul')
         items+=STRING+
 ;
-
-MediaContainer:
-    'media'
-        mediaLink=STRING;
-
-CodeContainer:
-    'code'
-        language=ID
-        code=CODE_BLOCK
-        ('steps' steps=STEP_RANGES)?;
 
 MathContainer:
     'equation'
