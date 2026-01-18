@@ -1,0 +1,25 @@
+Presentation validationErrorTest {
+
+    numbered start 0 // erreur : Le paramètre 'start' de 'numbered' doit être un entier >= 1.
+
+    Template {
+        overlays = {
+            image "logo.txt" TOP LEFT // erreur : Extension de fichier invalide pour un overlay image : ".txt".
+        }
+        fontName = "Roboto"
+        fontSize = "16pt" // erreur : fontSize must be a number followed by px or rem (e.g. "16px", "1rem").
+        fontColor = "#222222"
+        titlesSize = "2rem"
+        backgroundColor = "white"
+    }
+
+    Slide {
+        title = "Media dont l'extension est invalide"
+        media "video.avi" // erreur : Extension de fichier invalide pour mediaLink: video.avi
+    }
+
+    Slide {
+        title = "Media manquant"
+        media "../assets/inexistant.png"
+    }
+}

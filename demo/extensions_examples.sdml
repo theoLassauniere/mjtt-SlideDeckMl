@@ -1,0 +1,61 @@
+Presentation ExtensionsExample {
+    annotations
+
+    Template {
+        fontName = "Arial"
+        fontSize = "1.6rem"
+        fontColor = "#222222"
+        titlesSize = "2rem"
+        backgroundColor = "white"
+    }
+
+    Slide {
+        title = "Les extensions que nous avons implémentées"
+        text 
+            fontSize = "1.5rem"
+            ul "Support for Slide Annotations" "DSL Extension for Mathematical Equations"
+            text "Les annotations permettent d'ajouter des notes aux diapositives."
+            text "L'extension pour les équations mathématiques permet d'écrire des formules mathématiques de manière claire et structurée."
+    }
+
+    Slide {
+        title = "Exemple Support for Slide Annotations"
+        text "Cliquer sur le logo crayon en bas à gauche de l'écran et dessiner un mouton"
+    }
+
+    Slide {
+        title = "Calcul de racines d'un polynôme de degré 2"
+        grid 1:2 {
+            1:1 {
+                equation
+                    "x = (-b +- sqrt(b^2 - 4ac))/(2a)";
+                    "x1 = (-7 + sqrt(49 - (-32)))/(8)";
+                    "<=> x1 = (-7 + sqrt(81))/(8)";
+                    "<=> x1 = (-7 + 9)/(8)";
+                    "<=> x1 = 1/4";
+            }
+            1:2 {
+                equation
+                    "x2 = (-7 - sqrt(49 - (-32)))/(8)";
+                    "<=> x2 = (-7 - sqrt(81))/(8)";
+                    "<=> x2 = (-7 - 9)/(8)";
+                    "<=> x2 = "{{"(-16)/(8)"}};
+                    "<=> x2 = "{{"-2"}}, SIMPLIFIER;
+            }
+        }
+    }
+
+    Slide {
+        title = "Equation du premier degré"
+        equation
+            "3x + 12 = -27x +6";
+            "<=> 3x + 12"{{"+27x"}}"= -27x"{{"+27x"}}"+ 6", DEPLACER;
+            "<=> "{{"3x + 27x"}}" + 12 = 6";
+            "<=> "{{"30x"}}"+ 12 = 6", SIMPLIFIER;
+            "<=> 30x + 12"{{"-12"}}" = 6"{{"-12"}}, DEPLACER;
+            "<=> 30x = -6";
+            "<=> 30x"{{"/30"}}" = -6"{{"/30"}}, DEPLACER;
+            "<=> x = "{{"-6/30"}};
+            "<=> x = "{{"-1/5"}}, SIMPLIFIER;
+    }
+}
