@@ -16,6 +16,10 @@ L’objectif de ce projet est de concevoir et implémenter un **langage spécifi
 
 Le projet repose sur **Langium** pour la définition de la grammaire, l’AST, la validation et la génération.
 
+**Exemple de rendu d'une slide :**
+
+![Exemple de slide](docs/images/slide_example.png)
+
 ## Cloner le dépôt
 
 ```bash
@@ -114,9 +118,6 @@ Les scénarios de démonstration des fonctionnalités de SlideDeckML sont dispon
 - **student_scenario.sdml** : Scénario 1 de l'énoncé (étudiant)
 - **teacher_scenario.sdml** : Scénario 2 de l'énoncé (enseignant)
 - **validation_error_example.sdml** : Exemples de warnings et erreurs détectés par le validateur
-
-![Placeholder: Capture d'écran d'un exemple de scénario]
-
 
 ## Domain Model de SlideDeckML
 
