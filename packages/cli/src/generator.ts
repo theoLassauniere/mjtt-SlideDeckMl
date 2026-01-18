@@ -26,7 +26,7 @@ export class SlideDeckGenerator {
             return;
         }
 
-        const htmlContent = this.generatePresentation(presentation);
+        const htmlContent = this.generatePresentation(presentation, false);
         const outputPath = path.join(destination, `${presentation.name}.html`);
 
         fs.mkdirSync(destination, { recursive: true });
@@ -35,7 +35,7 @@ export class SlideDeckGenerator {
         console.log(`Fichier généré : ${outputPath}`);
     }
 
-    public generatePresentation(presentation: Presentation): string {
+    public generatePresentation(presentation: Presentation, debug: boolean = false): string {
         const template = presentation.template;
         const numbering = presentation.numbered;
         const start = numbering?.start ?? 1;
@@ -57,7 +57,7 @@ export class SlideDeckGenerator {
             .join('\n');
         const overlays = generateOverlays(template);
         const templateStyle = generateTemplateStyle(template);
-        const gridStyle = generateGridStyle();
+        const gridStyle = generateGridStyle(debug);
         const hasAnnotations = presentation.annotations === true;
         const mathStyle = generateMathStyle();
 

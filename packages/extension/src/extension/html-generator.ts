@@ -22,7 +22,8 @@ export async function generateHtmlFromEditor(editor: vscode.TextEditor, webview?
     }
     
     try {
-        let html = generator.generatePresentation(presentation);
+        // Enable debug mode (with red borders) for preview only
+        let html = generator.generatePresentation(presentation, true);
         if (webview) {
             html = convertLocalPathsToWebviewUris(html, editor.document.uri, webview);
         }
