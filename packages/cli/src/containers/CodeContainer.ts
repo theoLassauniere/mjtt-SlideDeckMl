@@ -6,7 +6,7 @@ export function generateCodeContainer(codeContainer: CodeContainer) {
     let steps = '';
 
     if (codeContainer.steps) {
-        // gadre que les steps
+        // garde que les steps
         steps = "=\"" + codeContainer.steps.slice(1, -1) + "\"";
     }
 
