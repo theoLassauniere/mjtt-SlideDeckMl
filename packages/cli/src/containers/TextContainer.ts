@@ -24,7 +24,6 @@ export function generateTextContainer(container: TextContainer): string {
     const styleParts: string[] = [];
     const fragment = containerOptionsToFragment(container.options);
 
-
     if (container.fontSize) {
         styleParts.push(`font-size: ${container.fontSize};`);
     }
@@ -44,7 +43,6 @@ export function generateTextContainer(container: TextContainer): string {
     if (elements.length === 1 && elements[0].$type === 'PlainText') {
         const el = elements[0] as PlainText;
         return `<div class="text-container${fragment.className}"${fragment.attrs}${style}>${sanitizeTextContainerHtml(el.text)}</div>`;
-
     }
 
     const content = elements.map((el: TextElement) => {

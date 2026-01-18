@@ -62,7 +62,6 @@ Cell:
         (containers+=Container* | grid=Grid)
     '}';
 
-
 Container:
     TextContainer | MediaContainer | CodeContainer | MathContainer
 ;
@@ -93,9 +92,8 @@ CodeContainer:
 ;
 
 ContainerOptions:
-    'animation' '=' animation=INT
+    'indexApparition' '=' index=INT
 ;
-
 
 TextElement:
       PlainText
