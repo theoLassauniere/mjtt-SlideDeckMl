@@ -4,7 +4,7 @@ import * as path from 'path';
 import { Presentation, Slide, Template } from '../../language/out/generated/ast.js';
 import { generateOverlays, generateTemplateStyle } from './template/template.js';
 import { generateGrid, generateGridStyle } from './grid/grid.js';
-import { generateContainer } from './containers/containers.js';
+import { generateContainer, generatecontainersStyle } from './containers/containers.js';
 import { sanitizeTextContainerHtml } from './utils/utils.js';
 import {
     generateAnnotationsCss,
@@ -76,6 +76,7 @@ export class SlideDeckGenerator {
         ${templateStyle}
         ${gridStyle}
         ${hasAnnotations ? generateAnnotationsStyle() : ''}
+        ${generatecontainersStyle()}
     </style>
 </head>
 <body>

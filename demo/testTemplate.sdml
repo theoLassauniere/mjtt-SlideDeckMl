@@ -3,7 +3,7 @@ Presentation TestTemplate {
     annotations
 
     Template {
-        overlays = [
+        overlays = {
             image "../assets/logo_company.png" size = 100
             TOP LEFT,
             image "../assets/logo_school.svg" size = 120 80
@@ -13,7 +13,7 @@ Presentation TestTemplate {
                 fontColor = "blue"
                 "Polytech Nice Sophia"
             BOTTOM LEFT
-        ]
+        }
         fontName = "Roboto"
         fontSize = "1rem"
         fontColor = "#222222"

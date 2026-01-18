@@ -19,7 +19,6 @@ ${cleaned}
 
 export function generateCodeContainerDefaultStyle(): string {
     return `
-
     .reveal .slides section.section-slide {
         width: 100%;
         height: 100% !important;
@@ -28,6 +27,5 @@ export function generateCodeContainerDefaultStyle(): string {
     .reveal pre code {
         font-size: 1.1rem;
         line-height: 1.2;
-    }
-`;
+    }`;
 }

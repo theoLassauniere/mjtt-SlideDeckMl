@@ -14,7 +14,7 @@ Numbering:
 
 Template:
     'Template' '{'
-        ('overlays' '=' '[' (overlays+=OverlayElement (',' overlays+=OverlayElement)*)? ']')?
+        ('overlays' '=' '{' (overlays+=OverlayElement (',' overlays+=OverlayElement)*)? '}')?
         ('fontName' '=' fontName=STRING)
         ('fontSize' '=' fontSize=STRING)
         ('fontColor' '=' fontColor=Color)
