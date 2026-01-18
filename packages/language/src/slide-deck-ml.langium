@@ -62,12 +62,14 @@ Cell:
         (containers+=Container* | grid=Grid)
     '}';
 
+
 Container:
     TextContainer | MediaContainer | CodeContainer | MathContainer
 ;
 
 TextContainer:
     'text'
+        options=ContainerOptions?
         ('fontSize' '=' fontSize=STRING)?
         ('fontColor' '=' fontColor=Color)?
         (
@@ -76,6 +78,24 @@ TextContainer:
             '{' elements+=TextElement+ '}'
         )
     ;
+
+MediaContainer:
+    'media'
+        options=(ContainerOptions)?
+        mediaLink=STRING
+;
+
+CodeContainer:
+    'code'
+        options=(ContainerOptions)?
+        language=ID
+        code=CODE_BLOCK
+;
+
+ContainerOptions:
+    ('animation' '=' animation=INT)?
+;
+
 
 TextElement:
       PlainText
