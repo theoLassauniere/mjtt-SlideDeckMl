@@ -24,5 +24,10 @@ export function generateCodeContainerDefaultStyle(): string {
         width: 100%;
         height: 100% !important;
     }
+
+    .reveal pre code {
+        font-size: 1.1rem;
+        line-height: 1.2;
+    }
 `;
 }
