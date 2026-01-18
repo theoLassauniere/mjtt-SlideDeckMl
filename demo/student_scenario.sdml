@@ -1,13 +1,18 @@
 Presentation StudentPresentation {
     numbered 
     start 2
+    annotations
 
     Template {
-        logos = [
-            logo "../assets/logo_company.png" TOP LEFT size 100
-            logo "../assets/logo_school.svg" TOP RIGHT size 120
-        ]
-        companyName = "Polytech Nice"
+        overlays = {
+            image "../assets/logo_company.png" size = 100 TOP LEFT,
+            image "../assets/logo_school.svg" size = 120 TOP RIGHT,
+            text 
+                fontSize = "0.8rem"
+                fontColor = "blue"
+                "Polytech Nice Sophia"
+            BOTTOM LEFT
+        }
         fontName = "Arial"
         fontSize = "1rem"
         fontColor = "#000000"
