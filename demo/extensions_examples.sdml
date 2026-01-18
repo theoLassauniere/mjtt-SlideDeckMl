@@ -1,4 +1,4 @@
-Presentation validationErrorTest {
+Presentation ExtensionsExample {
 
     Template {
         fontName = "Arial"
@@ -10,8 +10,10 @@ Presentation validationErrorTest {
 
     Slide {
         title = "Les extensions que nous avons implémenté"
-        text ul "DSL Extension for Image and Text Placement" "DSL Extension for Mathematical Equations"
-            fontsize = "1.5rem"
+        text 
+            fontSize = "1.5rem"
+            ul "DSL Extension for Image and Text Placement" "DSL Extension for Mathematical Equations"
+            
     }
 
     Slide {
@@ -32,7 +34,7 @@ Presentation validationErrorTest {
         title = "Calcul de racines d'un polynôme de degré 2"
         grid 1:2 {
             1:1 {
-                equation appear = 1
+                equation
                     "x = (-b +- sqrt(b^2 - 4ac))/(2a)";
                     "x1 = (-7 + sqrt(49 - (-32)))/(8)";
                     "<=> x1 = (-7 + sqrt(81))/(8)";
@@ -63,6 +65,7 @@ Presentation validationErrorTest {
             "<=> x = "{{"-6/30"}};
             "<=> x = "{{"-1/5"}}, SIMPLIFIER;
     }
+
     Slide {
         title = "Equation du premier degré par factorisation"
         equation

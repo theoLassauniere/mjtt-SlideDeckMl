@@ -45,14 +45,13 @@ Presentation TeacherPresentation {
                 ```
             }
             1:2 {
-                equation {
+                equation
                     "a = 5";
                     "b = 3";
                     "c = a + b";
                     "c = 8";
-                }
             }
-            2 {
+            2:1 {
                 text "Python permet d'effectuer des calculs"
             }
         }
@@ -76,7 +75,8 @@ Presentation TeacherPresentation {
         }
     }
     Slide {
-        text "Merci pour votre attention !"
+        text 
             fontSize = "3rem"
+            "Merci pour votre attention !"
     }
 }

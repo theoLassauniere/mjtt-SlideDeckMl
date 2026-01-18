@@ -1,5 +1,6 @@
 Presentation StudentPresentation {
-    numbered start 2
+    numbered 
+    start 2
 
     Template {
         logos = [
