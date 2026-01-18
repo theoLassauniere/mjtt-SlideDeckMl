@@ -93,7 +93,7 @@ CodeContainer:
 ;
 
 ContainerOptions:
-    ('animation' '=' animation=INT)?
+    'animation' '=' animation=INT
 ;
 
 
