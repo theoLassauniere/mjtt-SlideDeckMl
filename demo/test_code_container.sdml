@@ -21,7 +21,7 @@ for i in range(n):
         print(x, "est négatif ou nul")
 print("Fin")
             ```
-        steps [1-3|5-8|9]
+        steps [1-3|4-8|9]
     }
     Slide {
         title = "Ceci est une seconde diapositive de code"
