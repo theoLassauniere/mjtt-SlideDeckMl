@@ -5,7 +5,7 @@ entry Presentation:
         numbered=Numbering?
         (annotations?='annotations')?
         template=Template
-        slides+=Slide*
+        slides+=Slide+
     '}';
 
 Numbering:
