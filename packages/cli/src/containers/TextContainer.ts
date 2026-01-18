@@ -1,5 +1,5 @@
 import { TextContainer, TextElement, PlainText, List } from '../../../language/out/generated/ast.js';
-import { sanitizeTextContainerHtml } from '../utils/utils.js';
+import { sanitizeTextContainerHtml, containerOptionsToFragment } from '../utils/utils.js';
 
 export function generateTextContainerDefaultStyle(): string {
     return `
@@ -22,6 +22,7 @@ export function generateTextContainerDefaultStyle(): string {
 
 export function generateTextContainer(container: TextContainer): string {
     const styleParts: string[] = [];
+    const fragment = containerOptionsToFragment(container.options);
 
     if (container.fontSize) {
         styleParts.push(`font-size: ${container.fontSize};`);
@@ -41,7 +42,7 @@ export function generateTextContainer(container: TextContainer): string {
 
     if (elements.length === 1 && elements[0].$type === 'PlainText') {
         const el = elements[0] as PlainText;
-        return `<div class="text-container"${style}>${sanitizeTextContainerHtml(el.text)}</div>`;
+        return `<div class="text-container${fragment.className}"${fragment.attrs}${style}>${sanitizeTextContainerHtml(el.text)}</div>`;
     }
 
     const content = elements.map((el: TextElement) => {
@@ -64,5 +65,5 @@ export function generateTextContainer(container: TextContainer): string {
         return '';
     }).join('\n');
 
-    return `<div class="text-container"${style}>${content}</div>`;
+    return `<div class="text-container${fragment.className}"${fragment.attrs}>${content}</div>`;
 }

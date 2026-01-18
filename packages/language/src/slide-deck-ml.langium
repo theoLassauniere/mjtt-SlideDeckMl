@@ -68,6 +68,7 @@ Container:
 
 TextContainer:
     'text'
+        options=ContainerOptions?
         ('fontSize' '=' fontSize=STRING)?
         ('fontColor' '=' fontColor=Color)?
         (
@@ -76,6 +77,23 @@ TextContainer:
             '{' elements+=TextElement+ '}'
         )
     ;
+
+MediaContainer:
+    'media'
+        options=(ContainerOptions)?
+        mediaLink=STRING
+;
+
+CodeContainer:
+    'code'
+        options=(ContainerOptions)?
+        language=ID
+        code=CODE_BLOCK
+;
+
+ContainerOptions:
+    'appear' '=' index=INT
+;
 
 TextElement:
       PlainText
@@ -103,6 +121,7 @@ CodeContainer:
 
 MathContainer:
     'equation'
+        options=ContainerOptions?
         equationLines+=EquationLine*
     ('description' description=PlainText)?;
 
