@@ -77,6 +77,7 @@ Pour contribuer au projet :
 
 ```bash
 npm install
+# Puis
 npm run langium:generate # Génère le parseur depuis la grammaire
 npm run build # Compile TypeScript
 # ou
