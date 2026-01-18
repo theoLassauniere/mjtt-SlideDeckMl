@@ -59,7 +59,7 @@ Presentation TestTemplate {
         grid 1:2 {
             1:1 {
                 media "../assets/loup.jpg"
-                text ul "Un" "Cinq" "Huit"
+                text ul "<index=1>Un</index>" "Cinq" "Huit"
             }
             1:2 {
                 text appear = 2 "Canis lupus, le Loup, plus spécifiquement désigné sous le nom de Loup gris, plus rarement sous ceux de Loup commun ou Loup vulgaire, est une espèce de mammifère carnivore de la famille des canidés."

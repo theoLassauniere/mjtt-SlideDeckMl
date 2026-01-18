@@ -121,6 +121,7 @@ CodeContainer:
 
 MathContainer:
     'equation'
+        options=ContainerOptions?
         equationLines+=EquationLine*
     ('description' description=PlainText)?;
 
