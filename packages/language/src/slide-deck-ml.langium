@@ -17,7 +17,7 @@ Template:
         ('overlays' '=' '[' (overlays+=OverlayElement (',' overlays+=OverlayElement)*)? ']')?
         ('fontName' '=' fontName=STRING)
         ('fontSize' '=' fontSize=STRING)
-        ('fontColor' '=' fontColor=Color)
+        ('fontColor' '=' fontColor=Color)?
         ('titlesSize' '=' titlesSize=STRING)
         ('backgroundColor' '=' backgroundColor=Color)?
         ('backgroundImage' '=' backgroundImage=STRING)?
@@ -63,7 +63,7 @@ Cell:
     '}';
 
 Container:
-    TextContainer | MediaContainer | CodeContainer
+    TextContainer | MediaContainer | CodeContainer | MathContainer
 ;
 
 TextContainer:
@@ -100,6 +100,25 @@ CodeContainer:
         language=ID
         code=CODE_BLOCK;
 
+MathContainer:
+    'equation'
+        equationLines+=EquationLine*
+    ('description' description=PlainText)?;
+
+EquationLine:
+    content=EquationContent';';
+
+EquationContent:
+    line=(STRING | AnimatedLine);
+
+AnimatedLine:
+    prefix=STRING? (segments+=AnimatedSegment)+ (',' animation=AnimationType)?;
+
+AnimatedSegment:
+    marked=MarkedString suffix=STRING?;
+
+MarkedString:
+    START animated=STRING END;
 
 Alignment:
     vertical=('TOP' | 'BOTTOM') (horizontal=('LEFT' | 'RIGHT' | 'CENTER'))?
@@ -111,6 +130,15 @@ Alignment:
 
 Color returns string:
     STRING | HEX_COLOR;
+
+type AnimationType = 'DEPLACER' | 'SIMPLIFIER' | 'FACTORISER';
+AnimationType returns AnimationType : DEPLACER | SIMPLIFIER | FACTORISER;
+DEPLACER returns string: 'DEPLACER';
+SIMPLIFIER returns string: 'SIMPLIFIER';
+FACTORISER returns string: 'FACTORISER';
+
+terminal START returns string: '{{';
+terminal END returns string: '}}';
 
 hidden terminal WS: /\s+/;
 terminal ID: /[_a-zA-Z][\w_]*/;

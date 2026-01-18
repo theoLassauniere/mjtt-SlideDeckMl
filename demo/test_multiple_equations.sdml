@@ -1,0 +1,46 @@
+Presentation MultipleEquations {
+
+    Template {
+        fontName = "Times New Roman"
+        fontSize = "1.4rem"
+        fontColor = "#222222"
+        titlesSize = "1.8rem"
+    }
+
+    Slide {
+        title = "Premier Test"
+        text
+            "Ceci est un test de presentation."
+    }
+    Slide {
+        title = "Ceci est un calcul de racine"
+        grid 1:2 {
+            1:1 {
+                equation
+                     "x = (-b +- sqrt(b^2 - 4ac))/(2a)";
+                    "x1 = (-7 + sqrt(49 - (-32)))/(8)";
+                    "<=> x1 = (-7 + sqrt(81))/(8)";
+                    "<=> x1 = (-7 + 9)/(8)";
+                    "<=> x1 = 1/4";
+            }
+            1:2 {
+                equation 
+                    "x2 = (-7 - sqrt(49 - (-32)))/(8)";
+                    "<=> x2 = (-7 - sqrt(81))/(8)";
+                    "<=> x2 = (-7 - 9)/(8)";
+                    "<=> x2 = "{{"(-16)/(8)"}};
+                    "<=> x2 = "{{"-2"}}, SIMPLIFIER;
+                description "Des parties seront animees plus tard"
+            }
+        }
+    }
+    Slide {
+        title = "Definition de l'energie mecanique"
+        equation 
+            "E_(\"mecanique\") = color(red)(E_(\"cinetique\")) + color(blue)(E_(\"potentielle\"))";
+            "color(red)(E_(\"cinetique\")) = 1/2 m v^2";
+            "color(blue)(E_(\"potentielle\")) = m g h";
+            "<=> E_(\"mecanique\") = color(red)(1/2 m v^2) + color(blue)(m g h)";
+            "<=> E_(\"mecanique\") = m (color(red)(1/2 v^2) + color(blue)(g h))";
+    }
+}

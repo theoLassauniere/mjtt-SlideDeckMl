@@ -10,7 +10,7 @@ export function generateTemplateStyle(template: any): string {
     .reveal {
         font-family: ${template.fontName};
         font-size: ${template.fontSize};
-        color: ${template.fontColor};
+        color: ${template.fontColor || '#000000'};
         height: 100%;
     }
 
